@@ -25,13 +25,13 @@
 
     -   [3. Specific Requirements](#3-specific-requirements)
 
-        -   [3.1 Functionality – Data Backend](#31-functionality--data-backend)
+        -   [3.1 Functionality â€“ Data Backend](#31-functionality--data-backend)
 
             -   [3.1.1 Read data given over API endpoints](#311-read-data-given-over-api-endpoints)
             -   [3.1.2 Parse data](#312-parse-data)
             -   [3.1.3 Provide data](#313-provide-data)
 
-        -   [3.2 Functionality – User Interface](#32-functionality--user-interface)
+        -   [3.2 Functionality â€“ User Interface](#32-functionality--user-interface)
 
             -   [3.2.1 User system](#321-user-system)
             -   [3.2.3 Flashcard boxes](#323-flashcard-boxes)
@@ -126,7 +126,7 @@
 
 ## 3. Specific Requirements
 
-### 3.1 Functionality – Data Backend
+### 3.1 Functionality â€“ Data Backend
 
 #### 3.1.1 Read data given over API endpoints
 
@@ -134,7 +134,7 @@
 
 #### 3.1.3 Provide data
 
-### 3.2 Functionality – User Interface
+### 3.2 Functionality â€“ User Interface
 
 #### 3.2.1 User system
 
