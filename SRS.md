@@ -1,4 +1,4 @@
-Project - Cooken | Software Requirements Specification
+Project - cooken | Software Requirements Specification
 ======
 Version <1.0>
 ======
