@@ -78,10 +78,10 @@ to the project Glossary.]
 [This subsection should provide a complete list of all documents referenced elsewhere in the SRS.  Each document should be identified by title, report number (if applicable), 
 date, and publishing organization.  Specify the sources from which the references can be obtained. This information may be provided by reference to an appendix or to another 
 document.]
-| Title                                                                           | Date       | Publishing organization   |
-| --------------------------------------------------------------------------------|:----------:| ------------------------- |
-| [Topic](URL)                                                                    | XX.XX.XXXX | <author>                  |
-| --------------------------------------------------------------------------------|:----------:| ------------------------- |
+| Title                                        | Date       | Publishing organization   |
+| ---------------------------------------------|:----------:| ------------------------- |
+| [Topic](URL)                                 | XX.XX.XXXX | <author>                  |
+| ---------------------------------------------|:----------:| ------------------------- |
 
 
 ### 1.5 Overview
@@ -120,7 +120,18 @@ and security.
 Where application development tools, such as requirements tools, modeling tools, etc., are employed to capture the functionality, this section document will refer to the 
 availability of that data, indicating the location and name of the tool that is used to capture the data.]
 
-#### 3.1.1 Functional Requirement One
+#### 3.1.1 Login
+
+#### 3.1.2 Inventory of all ingredients at home
+
+#### 3.1.3 Add ingredients from predefined list of all possible ingredients
+
+#### 3.1.4 Find recipes with own ingredients
+
+#### 3.1.5 Save links to recipes
+
+#### 3.1.6 Comment on recipe
+
 [The requirement description.]
 
 ## 3.2 Usability
