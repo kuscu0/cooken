@@ -8,7 +8,7 @@ With this use case the user can search for recipes. Recipes displayed in the res
 
 ## 1.2 Mockup
 
-![Mockup](find-recipes.jpg)
+![Mockup](../Mockups/find-recipes_mockup.jpg)
 
 ## 1.3 Screenshot
 --
