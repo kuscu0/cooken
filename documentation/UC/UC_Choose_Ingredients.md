@@ -1,6 +1,6 @@
-# Use-Case Specification: Shopping List
+# Use-Case Specification: Choose Ingredients
 
-# 1. Shopping List
+# 1. Choose Ingredients
 
 ## 1.1 Brief Description
 --
