@@ -81,6 +81,8 @@ There are two subsystems:
 | [GitHub](https://github.com/kuscu0/cooken)    | 21.10.2020 | <Cooken Team>             |
 | [Blog](https://cooken264100434.wordpress.com/)| 21.10.2020 | <Cooken Team>             |
 | [UCD](use_case_diagram.png)                   | 21.10.2020 | <Cooken Team>             |
+| [Use case: find recipes](UC/find-recipes/UC_Find_Recipes.md) | 21.10.2020 | <Cooken Team>             |
+| [Use case: choose ingredients](UC/choose-ingredients/UC_Choose_Ingredients.md) | 21.10.2020 | <Cooken Team>             |
 | --------------------------------------------- |:----------:| ------------------------- |
 
 
