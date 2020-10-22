@@ -6,7 +6,7 @@
 --
 
 ## 1.2 Mockup
-![Choose Ingredient Category](../Mockups/uc_choose_ingredient_category.png)
+![Choose Ingredient Category](../Mockups/uc_choose_ingredient_category_mockup.png)
 
 ## 1.3 Screenshot
 --
