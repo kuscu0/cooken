@@ -6,11 +6,10 @@
 --
 
 ## 1.2 Mockup
---
+![Choose Ingredient Category](../Mockups/uc_choose_ingredient_category.png)
 
 ## 1.3 Screenshot
-### Home Page
-![Choose Ingredient Category](../Screenshots/uc_choose_ingredient_category.png)
+--
 
 # 2. Flow of Events
 --
