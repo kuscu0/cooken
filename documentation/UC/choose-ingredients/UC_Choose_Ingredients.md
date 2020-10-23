@@ -6,7 +6,7 @@
 --
 
 ## 1.2 Mockup
-![Choose Ingredient Category](uc_choose_ingredient_category_mockup.png)
+![Choose Ingredients](choose_ingredients_mockup.png)
 
 ## 1.3 Screenshot
 --
@@ -18,7 +18,7 @@
 --
 
 ### Activity Diagram
---
+![activity-diagram](choose_ingredients_diagram.png)
 
 ### .feature File
 --
