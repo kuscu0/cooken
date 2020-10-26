@@ -18,7 +18,7 @@
 --
 
 ### Activity Diagram
-![activity-diagram](choose_ingredients_diagram.png)
+![activity-diagram](activity-diagram.jpg)
 
 ### .feature File
 --

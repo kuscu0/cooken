@@ -19,7 +19,7 @@ With this use case the user can search for recipes. Recipes displayed in the res
 
 ### Activity Diagram
 
-![activity-diagram](find-recipes-diagram.jpg)
+![activity-diagram](activity-diagram.jpg)
 
 ### .feature File
 --
