@@ -6,7 +6,7 @@
 --
 
 ## 1.2 Mockup
-![Choose Ingredients](choose_ingredients_mockup.png)
+![Choose Ingredients](mockup.png)
 
 ## 1.3 Screenshot
 --
