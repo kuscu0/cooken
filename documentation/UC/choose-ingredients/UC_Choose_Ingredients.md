@@ -3,7 +3,8 @@
 # 1. Choose Ingredients
 
 ## 1.1 Brief Description
---
+
+With this use case the user can quickly choose ingredients to manage. These ingredients are in a databse and categorized. The individual ingredients can then be managed.
 
 ## 1.2 Mockup
 ![Choose Ingredients](mockup.png)
