@@ -14,12 +14,12 @@ Feature: Choose Ingredients
     Given The website was visited
     When I click the Quick Search Bar
     And I enter a search term that is not empty
-    And The term entered matches at least one Ingredient Name in the database table
+    And The term entered matches at least one Ingredient Name in the database ingredients table
     Then All Ingredients matching are displayed
 
   Scenario: Ingredient not found
     Given The website was visited
     When I click the Quick Search Bar
     And I enter a search term that is not empty
-    And The term entered matches no Ingredient Name in the database table
+    And The term entered matches no Ingredient Name in the database ingredients table
     Then A Text "No Ingredients found" is displayed
