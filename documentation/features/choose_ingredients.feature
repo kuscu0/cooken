@@ -3,6 +3,10 @@ Feature: Choose Ingredients
 
   Scenario: Show all Categories
       Given The website was visited
+      Then All Ingredients of this Category are displayed
+       
+  Scenario: Show all Ingredients of a Category
+      Given The website was visited
        When I click on a Category Tile
        Then All Ingredients of this Category are displayed
 
