@@ -14,10 +14,10 @@ t_apiReq = 0
 t_idSearch = 0
 t_fileWrite = 0
 
-startPage = 500
-endPage = 1000
+startPage = 6000
+endPage = 7000
 currentPage = 0
-threadsToUse = 4
+threadsToUse = 7
 remainingIdsLoggingInterval = 15
 
 def getAllPrevIds():
@@ -53,29 +53,31 @@ def idsCollector():
 	global t_firstReq
 	global t_idSearch
 
+	try:
+		for page in range(startPage, endPage):
+			currentPage = page
+			t1 = time.time()
+			firstRequest = requests.get(pageUrl(page))
+			html = firstRequest.text
+			t_firstReq += time.time() - t1
+			t1 = time.time()
+			jsonStart = html.find('<script type="application/ld+json">',
+								html.find('<script type="application/ld+json">') + 1)
+			jsonEnd = html.find("</script>", jsonStart)
+			entries = html[jsonStart:jsonEnd]
+			ids = re.findall("https://www\\.chefkoch\\.de/rezepte/(\\d+)/.*\\.html", entries)
+			t_idSearch += time.time() - t1
 
-	for page in range(startPage, endPage):
-		currentPage = page
-		t1 = time.time()
-		firstRequest = requests.get(pageUrl(page))
-		html = firstRequest.text
-		t_firstReq += time.time() - t1
-		t1 = time.time()
-		jsonStart = html.find('<script type="application/ld+json">',
-							html.find('<script type="application/ld+json">') + 1)
-		jsonEnd = html.find("</script>", jsonStart)
-		entries = html[jsonStart:jsonEnd]
-		ids = re.findall("https://www\\.chefkoch\\.de/rezepte/(\\d+)/.*\\.html", entries)
-		t_idSearch += time.time() - t1
-
-		for id in ids:
-			if id in allIds:
-				continue
-			allIds.append(id)
-			pendingIdsLock.acquire()
-			pendingIds.append(id)
-			pendingIdsLock.release()
-	print("ids collector is done")
+			for id in ids:
+				if id in allIds:
+					continue
+				allIds.append(id)
+				pendingIdsLock.acquire()
+				pendingIds.append(id)
+				pendingIdsLock.release()
+		print("ids collector is done")
+	except:
+		print("ids collector ran into an error")
 	allIdsFound = True
 
 def recipeDataDownloader():
@@ -109,27 +111,30 @@ def main():
 	getAllPrevIds()
 	t_total = time.time()
 
-	threading.Thread(target=statusPrinter).start()
-	idsCollectorThread = threading.Thread(target=idsCollector)
-	idsCollectorThread.start()
-	apiThreads = []
-	for i in range(threadsToUse):
-		apiThreads.append(threading.Thread(target=recipeDataDownloader))
-		apiThreads[i].start()
+	try:
+		threading.Thread(target=statusPrinter).start()
+		idsCollectorThread = threading.Thread(target=idsCollector)
+		idsCollectorThread.start()
+		apiThreads = []
+		for i in range(threadsToUse):
+			apiThreads.append(threading.Thread(target=recipeDataDownloader))
+			apiThreads[i].start()
 
-	idsCollectorThread.join()
-	for thread in apiThreads:
-		thread.join()
+		idsCollectorThread.join()
+		for thread in apiThreads:
+			thread.join()
 
-	t_total = time.time() - t_total
+		t_total = time.time() - t_total
 
-	print("t_total: " + str(t_total))
-	print("t_firstReq: " + str(t_firstReq))
-	print("t_apiReq: " + str(t_apiReq))
-	print("t_idSearch: " + str(t_idSearch))
-	print("t_fileWrite: " + str(t_fileWrite))
+		print("t_total: " + str(t_total))
+		print("t_firstReq: " + str(t_firstReq))
+		print("t_apiReq: " + str(t_apiReq))
+		print("t_idSearch: " + str(t_idSearch))
+		print("t_fileWrite: " + str(t_fileWrite))
 
-	print("last page: " + str(currentPage))
+		print("last page: " + str(currentPage))
+	except:
+		print("error in main method")
 
 	writeAllIds()
 
