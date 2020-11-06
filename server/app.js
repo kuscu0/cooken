@@ -3,7 +3,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
-var mongo = require('mongodb');
+
+var DBConnection = require('./db/Connection')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -22,7 +23,12 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+var localDB = new DBConnection("mongodb://127.0.0.1:27017");
+localDB.testDB();
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+console.log("Up and running")
 
 module.exports = app;
