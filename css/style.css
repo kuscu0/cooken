@@ -1,0 +1,116 @@
+body, html {
+    padding: 0;
+    margin: 0;
+}
+
+.main-logo {
+    width: 20%;
+    margin: 2% 2% 2% 2%;
+}
+
+.main-heading {
+    text-align: center;
+    color: #4d4d4d;
+    font-family: "Roboto Thin", serif;
+    font-size: 2vw;
+}
+
+button {
+    background-color: #0092FF;
+    color: white;
+    padding: 0.5% 2%;
+    margin: 1%;
+    border-radius: 10px;
+    font-size: 1vw;
+    border: none;
+    cursor: pointer;
+    float: right;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.tiles {
+    margin-left: 15%;
+}
+
+.tile {
+    position: relative;
+    width: 17.5%;
+    transition: transform .2s;
+    float: left;
+    margin: 5%;
+    cursor: pointer;
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform .2s;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+}
+
+.tile:hover .image{
+     /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    filter: blur(3px);
+}
+
+.tile:hover {
+    transform: scale(1.5);
+}
+
+.tile:hover .overlay {
+    opacity: 1;
+}
+
+.text {
+    color: #333333;
+    font-family: "Roboto Thin", serif;
+    font-weight: bold;
+    font-size: 2vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.left {
+    margin-left: 17.5%;
+}
+
+
+
+input[type=text] {
+    width: 25%;
+    float: bottom;
+    box-sizing: border-box;
+    border: 2px solid #333333;
+    border-radius: 10px;
+    font-size: 0.9vw;
+    background-color: white;
+    background-image: url('../res/searchicon.png');
+    background-size: 5%;
+    background-position: 2% 50%;
+    background-repeat: no-repeat;
+    padding: 0.75% 1% 0.75% 2%;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    margin-left: calc(75% / 2);
+    margin-top: 7.5%;
+}
