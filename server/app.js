@@ -24,7 +24,6 @@ app.use(sassMiddleware({
 app.use(express.static(path.join(__dirname, 'public')));
 
 var localDB = new DBConnection("mongodb://127.0.0.1:27017");
-localDB.testDB();
 
 app.set('DB', localDB);
 
