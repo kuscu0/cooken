@@ -1,0 +1,26 @@
+form {
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+
+	> input {
+		border-radius: 0;
+		border: none;
+		border-bottom: 1px solid grey;
+		padding: .25rem .125rem;
+		transition: border-color .25s ease;
+
+		&:hover, &:focus {
+			border-bottom: 1px solid lightskyblue;
+			outline: none;
+		}
+	}
+
+	> label {
+
+	}
+
+	> button {
+		margin-left: auto;
+	}
+}

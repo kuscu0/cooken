@@ -1,0 +1,13 @@
+button {
+	background-color: #0092FF;
+	color: white;
+	border: none;
+	padding: .5rem;
+	border-radius: 10px;
+	transition: filter .25s ease;
+	cursor: pointer;
+
+	&:hover {
+		filter: brightness(1.125);
+	}
+}
