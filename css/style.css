@@ -1,18 +1,21 @@
 body, html {
     padding: 0;
     margin: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
 .main-logo {
-    width: 20%;
-    margin: 2% 2% 2% 2%;
+    width: 15%;
+    margin: 1% 1% 1% 1%;
 }
 
 .main-heading {
     text-align: center;
     color: #4d4d4d;
     font-family: "Roboto Thin", serif;
-    font-size: 2vw;
+    font-size: 2.5rem;
+    margin-top: -1%;
 }
 
 button {
@@ -31,8 +34,15 @@ button:hover {
     opacity: 0.8;
 }
 
-.tiles {
+#tiles {
     margin-left: 15%;
+    width: 70%;
+    list-style-type: none;
+    max-height: 55%;
+    overflow-x: auto;
+    border-color: lightgray;
+    border-width: 1px;
+    border-style: solid;
 }
 
 .tile {
@@ -40,11 +50,13 @@ button:hover {
     width: 17.5%;
     transition: transform .2s;
     float: left;
-    margin: 5%;
     cursor: pointer;
+    margin-left: 10%;
+    margin-bottom: 5%;
+    margin-top: 5%;
 }
 
-.image {
+.tile-image {
     display: block;
     width: 100%;
     height: auto;
@@ -63,7 +75,7 @@ button:hover {
     transition: .5s ease;
 }
 
-.tile:hover .image{
+.tile:hover .tile-image{
      /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     filter: blur(3px);
 }
@@ -76,13 +88,13 @@ button:hover {
     opacity: 1;
 }
 
-.text {
+.tile-text {
     color: #333333;
     font-family: "Roboto Thin", serif;
     font-weight: bold;
     font-size: 2vw;
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -111,6 +123,8 @@ input[type=text] {
     padding: 0.75% 1% 0.75% 2%;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
-    margin-left: calc(75% / 2);
-    margin-top: 7.5%;
+
+    position: fixed;
+    bottom: 10%;
+    left: calc(75% / 2);
 }

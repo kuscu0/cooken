@@ -17,34 +17,71 @@
 
 
 
-    <div class="tiles">
-        <div class="tile">
-            <img src="res/fruits.png" class="image" alt="Fruits">
-            <div class="overlay">
-                <div class="text">Fruits</div>
-            </div>
-        </div>
+    <ul id="tiles">
+        <li class="category tile">
+            <img src="res/fruits.png" class="category tile-image" alt="Fruits">
+            <p class="overlay tile-text">Fruits</p>
+        </li>
 
-        <div class="tile">
-            <img src="res/vegetables.png" class="image" alt="Vegetables">
-            <div class="overlay">
-                <div class="text">Vegetables</div>
-            </div>
-        </div>
+        <li class="category tile">
+            <img src="res/vegetables.png" class="tile-image" alt="Vegetables">
+            <p class="overlay tile-text">Vegetables</p>
+        </li>
 
-        <div class="tile">
-            <img src="res/meat.png" class="image" alt="Meat">
-            <div class="overlay">
-                <div class="text">Meat</div>
-            </div>
-        </div>
-    </div>
+        <li class="category tile">
+            <img src="res/meat.png" class="tile-image" alt="Meat">
+            <p class="overlay tile-text">Meat</p>
+        </li>
 
-    <form>
-        <label>
-            <input type="text" name="search" placeholder="Quick Search...">
-        </label>
-    </form>
+        <li class="fruits tile">
+            <img src="res/orange.png" class="tile-image" alt="Orange">
+            <p class="overlay tile-text">Orange</p>
+        </li>
 
+        <li class="fruits tile">
+            <img src="res/orange.png" class="tile-image" alt="Orange">
+            <p class="overlay tile-text">Orange</p>
+        </li>
+
+        <li class="fruits tile">
+            <img src="res/orange.png" class="tile-image" alt="Orange">
+            <p class="overlay tile-text">Orange</p>
+        </li>
+
+        <li class="fruits tile">
+            <img src="res/orange.png" class="tile-image" alt="Orange">
+            <p class="overlay tile-text">Orange</p>
+        </li>
+
+        <li class="fruits tile">
+            <img src="res/orange.png" class="tile-image" alt="Orange">
+            <p class="overlay tile-text">Orange</p>
+        </li>
+
+        <li class="fruits tile">
+            <img src="res/orange.png" class="tile-image" alt="Orange">
+            <p class="overlay tile-text">Orange</p>
+        </li>
+
+        <li class="fruits tile">
+            <img src="res/orange.png" class="tile-image" alt="Orange">
+            <p class="overlay tile-text">Orange</p>
+        </li>
+
+        <li class="fruits tile">
+            <img src="res/orange.png" class="tile-image" alt="Orange">
+            <p class="overlay tile-text">Orange</p>
+        </li>
+
+        <li class="fruits tile">
+            <img src="res/orange.png" class="tile-image" alt="Orange">
+            <p class="overlay tile-text">Orange</p>
+        </li>
+    </ul>
+
+    <input type="text" id="search-bar" onkeyup="search()" name="search" placeholder="Quick Search..." title="Type in an ingredient">
+
+    <script src="js/loadSite.js"></script>
+    <script src="js/search.js"></script>
 </body>
 </html>
