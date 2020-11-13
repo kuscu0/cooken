@@ -24,7 +24,7 @@ button {
     padding: 0.5% 2%;
     margin: 1%;
     border-radius: 10px;
-    font-size: 1vw;
+    font-size: 1.5rem;
     border: none;
     cursor: pointer;
     float: right;
@@ -81,7 +81,7 @@ button:hover {
 }
 
 .tile:hover {
-    transform: scale(1.5);
+    transform: scale(1.25);
 }
 
 .tile:hover .overlay {
