@@ -4,6 +4,7 @@ class Connection {
         this.uri = uri;
         this.client = new this.MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
         this.CryptoJS = require("crypto-js");
+        this.connectionErr = require("./connectionErr");
     }
 
     testDB() {
@@ -13,7 +14,7 @@ class Connection {
             }
             const collection = this.client.db("cooken").collection("recipes");
             // perform actions on the collection object
-            collection.insertOne({name: "Spätzle", persons: "20000"}, err => {
+            collection.insertOne({name: "Spätzle", persons: "20002"}, err => {
                 if (err) {
                     console.log(err);
                 } else {
@@ -27,8 +28,6 @@ class Connection {
         let newPW = this.CryptoJS.SHA256(usrPW).toString();
         let client = this.client;
         return new Promise(function (resolve, reject) {
-
-
             function createUser(MongoClient, usrName, usrPW, usrEmail) {
                 return new Promise(function (resolve, reject) {
                     MongoClient.connect(err => {
@@ -37,12 +36,11 @@ class Connection {
                         }
                         const collection = MongoClient.db("cooken").collection("users");
                         // perform actions on the collection object
-
                         collection.insertOne({name: usrName, password: usrPW, email: usrEmail}, err => {
                             if (err) {
                                 reject(err);
                             } else {
-                                resolve(`User ${usrName} creation successful`);
+                                resolve(`success`);
                             }
                         });
                     });
@@ -63,7 +61,6 @@ class Connection {
         let newPW = this.CryptoJS.SHA256(usrPW).toString();
         let client = this.client;
         return new Promise(function (resolve, reject) {
-
             function updateUser(MongoClient, usrName, usrPW, usrEmail) {
                 return new Promise(function (resolve, reject) {
                     MongoClient.connect(err => {
@@ -75,7 +72,7 @@ class Connection {
                             if (err) {
                                 reject(err);
                             } else {
-                                resolve(`User ${usrName} update successful`);
+                                resolve(`success`);
                             }
                         });
                     });
@@ -94,33 +91,67 @@ class Connection {
 
     removeUser(usrName) {
         let client = this.client;
-        return new Promise(function (resolve, reject){
-
-        function removeUser(MongoClient, usrName) {
-            return new Promise(function (resolve, reject) {
-                MongoClient.connect(err => {
-                    if (err) {
-                        reject(err);
-                    }
-                    const collection = MongoClient.db("cooken").collection("users");
-                    collection.remove({name: usrName}, err => {
+        return new Promise(function (resolve, reject) {
+            function removeUser(MongoClient, usrName) {
+                return new Promise(function (resolve, reject) {
+                    MongoClient.connect(err => {
                         if (err) {
                             reject(err);
-                        } else {
-                            resolve(`User ${usrName} removal successful`);
                         }
+                        const collection = MongoClient.db("cooken").collection("users");
+                        collection.remove({name: usrName}, err => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(`success`);
+                            }
+                        });
                     });
                 });
-            });
-        }
+            }
 
-        removeUser(client, usrName)
-            .then(value => {
-                resolve(value);
-            })
-            .catch(err => {
-                reject(err);
-            });
+            removeUser(client, usrName)
+                .then(value => {
+                    resolve(value);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    }
+
+    checkUser(usrName, usrPW) {
+        let client = this.client;
+        let newPW = this.CryptoJS.SHA256(usrPW).toString();
+        let _this = this;
+        return new Promise(function (resolve, reject) {
+            function checkUser(MongoClient, usrName, usrPW) {
+                return new Promise(function (resolve, reject) {
+                    MongoClient.connect(err => {
+                        if (err) {
+                            reject(err);
+                        }
+                        const collection = MongoClient.db("cooken").collection("users");
+                        collection.findOne({name: usrName}, function (err, result) {
+                            if (err) reject(err);
+                            else {
+                                if (usrPW == result.password) {
+                                    resolve("success");
+                                } else {
+                                    reject(new _this.connectionErr("Wrong Credentials"));
+                                }
+                            }
+                        });
+                    })
+                })
+            }
+            checkUser(client, usrName, newPW)
+                .then(value => {
+                    resolve(value)
+                })
+                .catch(err => {
+                    reject(err);
+                });
         });
     }
 }

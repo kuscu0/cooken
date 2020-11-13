@@ -8,6 +8,24 @@ Content-Type: application/json
 }
 
 ###
+POST http://127.0.0.1:3000/users/check
+Content-Type: application/json
+
+{
+  "name": "httpTestUser",
+  "password": "httpTestUserPW"
+}
+
+###
+POST http://127.0.0.1:3000/users/check
+Content-Type: application/json
+
+{
+  "name": "httpTestUser",
+  "password": "wrongPassword"
+}
+
+###
 POST http://127.0.0.1:3000/users/update
 Content-Type: application/json
 

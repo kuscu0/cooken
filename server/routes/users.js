@@ -26,7 +26,7 @@ router.post('/update', function (req, res, next) {
             console.log(value);
         }).catch(err => {
             res.status(err.statusCode || 500).json(err);
-            console.log(err)
+            console.log(err);
     });
 });
 
@@ -40,6 +40,18 @@ router.post('/remove', function (req, res, next) {
             res.status(err.statusCode || 500).json(err);
             console.log(err);
     });
-})
+});
+
+router.post('/check', function (req, res, next) {
+    let DB = req.app.get('DB');
+    DB.checkUser(req.body.name, req.body.password)
+        .then(value => {
+            res.send(value);
+            console.log(value);
+        }).catch(err => {
+            res.status(err.statusCode || 512).json(err.name);
+            console.log(err);
+    });
+});
 
 module.exports = router;
