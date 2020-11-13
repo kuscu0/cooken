@@ -1,0 +1,44 @@
+POST http://localhost:3000/users/create
+Content-Type: application/json
+
+{
+  "name": "httpTestUser",
+  "password": "httpTestUserPW",
+  "email": "http@testUser.de"
+}
+
+###
+POST http://127.0.0.1:3000/users/check
+Content-Type: application/json
+
+{
+  "name": "httpTestUser",
+  "password": "httpTestUserPW"
+}
+
+###
+POST http://127.0.0.1:3000/users/check
+Content-Type: application/json
+
+{
+  "name": "httpTestUser",
+  "password": "wrongPassword"
+}
+
+###
+POST http://127.0.0.1:3000/users/update
+Content-Type: application/json
+
+{
+  "name": "httpTestUser",
+  "password": "NewHttpTestUserPW",
+  "email": "newMail@testUser.de"
+}
+
+###
+POST http://127.0.0.1:3000/users/remove
+Content-Type: application/json
+
+{
+  "name": "httpTestUser"
+}
