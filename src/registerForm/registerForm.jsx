@@ -1,6 +1,7 @@
 import React from "react";
 import "./registerForm.scss";
 import {SimpleButton} from "../simpleButton/simpleButton";
+import {serverAddress} from "../globals";
 
 export class RegisterForm extends React.Component {
 
@@ -32,20 +33,20 @@ export class RegisterForm extends React.Component {
 
 	async registerUser() {
 		const formParams = new URLSearchParams([
-			["username", this.state.username],
+			["name", this.state.username],
 			["email", this.state.email],
 			["password", this.state.password],
 		]);
 
-		// const response = await fetch("SERVER/register", {
-		// 	method: "POST",
-		// 	mode: "cors",
-		// 	body: formParams
-		// });
-		// const responseData = await response.json;
-		// // success?
-		// if (responseData) {
-		//
-		// }
+		const response = await fetch(`${serverAddress}/users/create`, {
+			method: "POST",
+			mode: "cors",
+			body: formParams
+		});
+		const responseData = await response.json;
+		// success?
+		if (responseData) {
+
+		}
 	}
 }
