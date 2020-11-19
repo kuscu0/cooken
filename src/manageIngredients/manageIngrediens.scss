@@ -1,8 +1,4 @@
 
-.main-logo {
-	width: 20%;
-	margin: 2% 2% 2% 2%;
-}
 
 .main-heading {
 	text-align: center;
@@ -11,114 +7,110 @@
 	font-size: 2vw;
 }
 
-button {
-	background-color: #0092FF;
-	color: white;
-	padding: .51rem 1rem;
-	margin: 1rem;
-	border-radius: 10px;
-	font-size: 1.25rem;
-	border: none;
-	cursor: pointer;
-}
+.manageIngredients {
+	position: relative;
 
-button:hover {
-	opacity: 0.8;
-}
+	.tiles {
+		width: 70%;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-around;
+		flex-wrap: wrap;
 
-.tiles {
-	width: 70%;
-	margin: 0 auto;
-	display: flex;
-	justify-content: space-around;
-	flex-wrap: wrap;
+		> .tile {
+			position: relative;
+			width: 16rem;
+			height: 8rem;
+			transition: transform .2s;
+			margin: 2rem;
+			cursor: pointer;
 
-	> .tile {
-		position: relative;
-		width: 16rem;
-		height: 8rem;
-		transition: transform .2s;
-		margin: 2rem;
-		cursor: pointer;
+			&:hover {
+				transform: scale(1.2);
 
-		&:hover {
-			transform: scale(1.2);
+				> .image {
+					filter: blur(3px);
+				}
+
+				> .overlay {
+					opacity: 1;
+				}
+			}
 
 			> .image {
-				filter: blur(3px);
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+				transition: transform .2s;
 			}
 
 			> .overlay {
-				opacity: 1;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 100%;
+				width: 100%;
+				opacity: 0;
+				transition: .5s ease;
+
+
 			}
 		}
+	}
 
-		> .image {
-			display: block;
-			width: 100%;
-			height: 100%;
-			object-fit: contain;
-			transition: transform .2s;
-		}
+	.text {
+		color: #333333;
+		font-family: "Roboto Thin", serif;
+		font-weight: bold;
+		font-size: 2vw;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+		text-align: center;
+	}
 
-		> .overlay {
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			height: 100%;
-			width: 100%;
-			opacity: 0;
-			transition: .5s ease;
+	.search {
+		position: sticky;
+		bottom: 0;
+		width: 100%;
+		height: 6rem;
+		background-color: #ffffffbb;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-top: 2px solid #333333;
 
-
+		> input {
+			width: 20rem;
+			border: 2px solid #333333;
+			border-radius: 10px;
+			font-size: 1rem;
+			padding: .5rem;
 		}
 	}
+
 }
 
-.text {
-	color: #333333;
-	font-family: "Roboto Thin", serif;
-	font-weight: bold;
-	font-size: 2vw;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-	text-align: center;
-}
-
-.tile:hover {
-}
-
-.tile:hover .overlay {
-}
-
-
-
-.left {
-	margin-left: 17.5%;
-}
-
-
-
-input[type=text] {
-	width: 25%;
-	box-sizing: border-box;
-	border: 2px solid #333333;
-	border-radius: 10px;
-	font-size: 0.9vw;
-	background-color: white;
-	//background-image: url('/img/logo.png');
-	background-size: 5%;
-	background-position: 2% 50%;
-	background-repeat: no-repeat;
-	padding: 0.75% 1% 0.75% 2%;
-	-webkit-transition: width 0.4s ease-in-out;
-	transition: width 0.4s ease-in-out;
-	margin-left: calc(75% / 2);
-	margin-top: 7.5%;
-}
+//input[type=text] {
+//	width: 25%;
+//	box-sizing: border-box;
+//	border: 2px solid #333333;
+//	border-radius: 10px;
+//	font-size: 0.9vw;
+//	background-color: white;
+//	//background-image: url('/img/logo.png');
+//	background-size: 5%;
+//	background-position: 2% 50%;
+//	background-repeat: no-repeat;
+//	padding: 0.75% 1% 0.75% 2%;
+//	-webkit-transition: width 0.4s ease-in-out;
+//	transition: width 0.4s ease-in-out;
+//	margin-left: calc(75% / 2);
+//	margin-top: 7.5%;
+//}

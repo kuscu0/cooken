@@ -4,7 +4,6 @@ import ManageIngredients from "./manageIngredients/manageIngredients";
 import {Route, BrowserRouter, Switch, Link} from "react-router-dom";
 import Home from "./home/Home";
 import {RegisterForm} from "./registerForm/registerForm";
-import Header from "./header/header";
 import {SimpleButton} from "./simpleButton/simpleButton";
 
 class App extends Component {
