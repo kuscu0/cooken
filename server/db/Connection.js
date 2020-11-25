@@ -5,6 +5,8 @@ class Connection {
         this.client = new this.MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
         this.CryptoJS = require("crypto-js");
         this.connectionErr = require("./connectionErr");
+        this.rCImport = require("./recipeControl");
+        this.recipeControl = new this.rCImport(this.client);
     }
 
     testDB() {
@@ -152,6 +154,33 @@ class Connection {
                 .catch(err => {
                     reject(err);
                 });
+        });
+    }
+
+    createRecipe(rData) {
+        const recipeControl = this.recipeControl;
+        return new Promise(function (resolve, reject) {
+            recipeControl.createRecipe(rData)
+                .then(value => resolve(value))
+                .catch(err => reject(err));
+        });
+    }
+
+    updateRecipe(rData) {
+        const recipeControl = this.recipeControl;
+        return new Promise(function (resolve,reject) {
+            recipeControl.updateRecipe(rData)
+                .then(value => resolve(value))
+                .catch(err => reject(err));
+        });
+    }
+
+    removeRecipe(title) {
+        const recipeControl = this.recipeControl;
+        return new Promise(function (resolve, reject) {
+            recipeControl.removeRecipe(title)
+                .then(value => resolve(value))
+                .catch(err => reject(err));
         });
     }
 }

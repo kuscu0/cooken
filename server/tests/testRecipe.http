@@ -1,0 +1,46 @@
+POST http://localhost:3000/recipes/create
+Content-Type: application/json
+
+{
+  "rData": {
+    "title": "TestRecipe",
+    "subTitle": "TestSubTitle",
+    "rating": 3,
+    "difficulty": 10,
+    "time": 30,
+    "siteUrl": "http://www.soulback.de",
+    "tags": ["Tag1", "Tag2", "Tag3"],
+    "servings": 2,
+    "instructions": "I don't know, just eat hard boiled eggs",
+    "ingredientGroups": ["Roastbeef", "Hühnchen", "Pizza"]
+  }
+}
+
+###
+
+POST http://localhost:3000/recipes/update
+Content-Type: application/json
+
+{
+  "rData": {
+    "title": "TestRecipe",
+    "subTitle": "TestSubTitleDifferent",
+    "rating": 3,
+    "difficulty": 10,
+    "time": 30,
+    "siteUrl": "http://www.soulback.de",
+    "tags": ["Tag1", "Tag2", "Tag3"],
+    "servings": 2,
+    "instructions": "I don't know, just eat hard boiled eggs",
+    "ingredientGroups": ["Roastbeef", "Hühnchen", "Pizza"]
+  }
+}
+
+###
+
+POST http://localhost:3000/recipes/remove
+Content-Type: application/json
+
+{
+  "title": "TestRecipe"
+}
