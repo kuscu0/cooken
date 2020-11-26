@@ -6,7 +6,7 @@ import SimpleButton from "../../basics/simpleButton/simpleButton";
 
 export default function RecipeSearch() {
 	return (
-		<div className="recipeSearch">
+		<div className="recipeSearch paddedPage">
 			<div className="optionsBar">
 				<InputText placeholder="Search..."/>
 				<DropDown

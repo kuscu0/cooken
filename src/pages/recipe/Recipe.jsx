@@ -2,7 +2,7 @@ import "./Recipe.scss";
 
 export default function Recipe() {
 	return (
-		<div className="recipePage">
+		<div className="recipePage paddedPage">
 			<h1>Spaghetti Carbonara</h1>
 			<img src="/img/carbonara.jpg" alt="carbonara" className="recipeImage"/>
 			<div className="ingredients">

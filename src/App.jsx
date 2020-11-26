@@ -40,7 +40,6 @@ export default function App() {
 						<Route path="/" component={Home}/>
 					</Switch>
 				</main>
-
 			</div>
 		</BrowserRouter>
 	);
