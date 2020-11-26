@@ -1,0 +1,39 @@
+
+
+.dropDown {
+	position: relative;
+
+	> * {
+		padding: .25rem;
+	}
+
+	> .expander {
+		cursor: pointer;
+		user-select: none;
+		background: #f9f9f9;
+		width: 100%;
+	}
+
+	> .dropDownArea {
+		position: absolute;
+		top: 100%;
+		width: 100%;
+		height: max-content;
+		background: #f9f9f9;
+		border-top: 1px solid grey;
+		opacity: 0;
+		visibility: hidden;
+		transform: scale(.95) translateY(-1rem);
+		transition: all .25s ease;
+	}
+
+	&.expanded {
+
+
+		> .dropDownArea {
+			opacity: 1;
+			visibility: visible;
+			transform: scale(1) translateY(0);
+		}
+	}
+}

@@ -1,41 +1,18 @@
-import React from "react";
 import "./registerForm.scss";
-import {SimpleButton} from "../../basics/simpleButton/simpleButton";
 import {serverAddress} from "../../globals";
+import {useState} from "react";
+import SimpleButton from "../../basics/simpleButton/simpleButton";
 
-export class RegisterForm extends React.Component {
+export default function RegisterForm() {
+	const [username, setUsername] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
-	constructor(props) {
-		super(props);
-
-		this.registerUser = this.registerUser.bind(this)
-
-		this.state = {
-			username: "",
-			email: "",
-			password: "",
-		}
-	}
-
-	render() {
-		return (
-			<form>
-				<label htmlFor="registerUsername">Username</label>
-				<input type="text" id="registerUsername" onChange={e => this.setState({ ...this.state, username: e.target.value})}/>
-				<label htmlFor="registerEmail">E-Mail</label>
-				<input type="text" id="registerEmail" onChange={e => this.setState({ ...this.state, email: e.target.value})}/>
-				<label htmlFor="registerPassword">Password</label>
-				<input type="password" id="registerPassword" onChange={e => this.setState({ ...this.state, password: e.target.value})}/>
-				<SimpleButton clicked={this.registerUser} type="button">Register</SimpleButton>
-			</form>
-		)
-	}
-
-	async registerUser() {
+	async function registerUser() {
 		const formParams = new URLSearchParams([
-			["name", this.state.username],
-			["email", this.state.email],
-			["password", this.state.password],
+			["name", username],
+			["email", email],
+			["password", password],
 		]);
 
 		const response = await fetch(`${serverAddress}/users/create`, {
@@ -49,4 +26,16 @@ export class RegisterForm extends React.Component {
 
 		}
 	}
+
+	return (
+		<form>
+			<label htmlFor="registerUsername">Username</label>
+			<input type="text" id="registerUsername" onChange={e => setUsername(e.target.value)}/>
+			<label htmlFor="registerEmail">E-Mail</label>
+			<input type="text" id="registerEmail" onChange={e => setEmail(e.target.value)}/>
+			<label htmlFor="registerPassword">Password</label>
+			<input type="password" id="registerPassword" onChange={e => setPassword(e.target.value)}/>
+			<SimpleButton clicked={registerUser} type="button">Register</SimpleButton>
+		</form>
+	)
 }

@@ -1,8 +1,9 @@
-import React from "react";
 import "./_simpleButton.scss";
 
-export class SimpleButton extends React.Component {
-	render() {
-		return <button type="button" className={this.props.className + " simpleButton"} onClick={this.props.clicked}>{this.props.children}</button>;
-	}
+export default function SimpleButton(props) {
+	return (
+		<button type="button" className={props.className + " simpleButton"} onClick={props.clicked}>
+			{props.children}
+		</button>
+	);
 }

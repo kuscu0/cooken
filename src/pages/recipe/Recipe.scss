@@ -1,0 +1,43 @@
+
+
+.recipePage {
+	width: #{m}in(80vw, 70rem);
+	margin: 2rem auto;
+
+	> h1 {
+
+	}
+
+	> .recipeImage {
+		max-height: 30rem;
+		width: 100%;
+		object-fit: contain;
+	}
+
+	> .ingredients {
+		> .ingredientGroup {
+
+			> table {
+				width: 100%;
+				border-collapse: collapse;
+
+				tr {
+
+					&:nth-child(odd) {
+						background: #f9f9f9;
+					}
+
+					td {
+						height: 2rem;
+						padding: .25rem;
+
+						&:first-child {
+							text-align: right;
+						}
+					}
+				}
+			}
+		}
+	}
+
+}

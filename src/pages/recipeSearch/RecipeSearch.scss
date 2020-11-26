@@ -1,0 +1,25 @@
+.recipeSearch {
+	width: #{m}in(80vw, 70rem);
+	margin: 2rem auto;
+	display: flex;
+	flex-direction: column;
+
+	> .optionsBar {
+		display: flex;
+		align-items: center;
+		gap: .25rem;
+		margin-bottom: 1rem;
+
+		> .searchButton {
+			margin-left: auto;
+			font-size: 1.25rem;
+		}
+	}
+
+	> .results {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 1.5rem;
+	}
+}
