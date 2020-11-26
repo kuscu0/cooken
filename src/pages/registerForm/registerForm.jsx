@@ -1,7 +1,7 @@
 import React from "react";
 import "./registerForm.scss";
-import {SimpleButton} from "../simpleButton/simpleButton";
-import {serverAddress} from "../globals";
+import {SimpleButton} from "../../basics/simpleButton/simpleButton";
+import {serverAddress} from "../../globals";
 
 export class RegisterForm extends React.Component {
 

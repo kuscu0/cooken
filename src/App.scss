@@ -1,5 +1,9 @@
 $headerHeight: 6rem;
 
+.App {
+	position: relative;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -7,6 +11,9 @@ header {
 	background: #F3B62C;
 	padding: 0 1rem;
 	height: $headerHeight;
+	position: sticky;
+	top: 0;
+	z-index: 1;
 
 	> .logo {
 		img {
@@ -33,13 +40,20 @@ header {
 			line-height: $headerHeight;
 			padding: 0 3rem;
 			transition: background-color .25s ease;
+			box-sizing: border-box;
+			border-top: 4px solid transparent;
 
-			&:hover:not(.current) {
+			&:hover {
 				background: #ffffff33;
+				border-top: 4px solid #ffffff55;
 			}
 
-			&:active, .current {
+			&:active {
 				background: #ffffff66;
+			}
+
+			&.current {
+				border-top: 4px solid #ffffffaa;
 			}
 		}
 	}
