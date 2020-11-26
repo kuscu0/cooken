@@ -26,11 +26,11 @@ export default function LoginForm() {
 	}
 
 	return (
-		<form className="registerForm">
+		<form className="userForm">
 			<label htmlFor="registerEmail">E-Mail</label>
-			<input type="text" id="registerEmail" onChange={e => setEmail(e.target.value)}/>
+			<input type="text" autoComplete="email" id="registerEmail" onChange={e => setEmail(e.target.value)}/>
 			<label htmlFor="registerPassword">Password</label>
-			<input type="password" id="registerPassword" onChange={e => setPassword(e.target.value)}/>
+			<input type="password" autoComplete="password" id="registerPassword" onChange={e => setPassword(e.target.value)}/>
 			<SimpleButton clicked={login} type="button">Login</SimpleButton>
 		</form>
 	)

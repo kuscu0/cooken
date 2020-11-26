@@ -28,8 +28,13 @@ export default function RecipeSearch() {
 						title: "Spaghetti Carbonara",
 						img: "/img/carbonara.jpg",
 						url: "/recipe"
-					}).map(recipe => (
-						<RecipeTile recipeUrl={recipe.url} recipeTitle={recipe.title} recipeImg={recipe.img}/>
+					}).map((recipe, i) => (
+						<RecipeTile
+							recipeUrl={recipe.url}
+							recipeTitle={recipe.title}
+							recipeImg={recipe.img}
+							key={i}
+						/>
 					))
 				}
 			</div>

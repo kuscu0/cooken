@@ -28,13 +28,13 @@ export default function RegisterForm() {
 	}
 
 	return (
-		<form className="registerForm">
+		<form className="userForm">
 			<label htmlFor="registerUsername">Username</label>
-			<input type="text" id="registerUsername" onChange={e => setUsername(e.target.value)}/>
+			<input type="text" autoComplete="username" id="registerUsername" onChange={e => setUsername(e.target.value)}/>
 			<label htmlFor="registerEmail">E-Mail</label>
-			<input type="text" id="registerEmail" onChange={e => setEmail(e.target.value)}/>
+			<input type="text" autoComplete="email" id="registerEmail" onChange={e => setEmail(e.target.value)}/>
 			<label htmlFor="registerPassword">Password</label>
-			<input type="password" id="registerPassword" onChange={e => setPassword(e.target.value)}/>
+			<input type="password" autoComplete="password" id="registerPassword" onChange={e => setPassword(e.target.value)}/>
 			<SimpleButton clicked={registerUser} type="button">Register</SimpleButton>
 		</form>
 	)

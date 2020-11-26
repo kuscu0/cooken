@@ -11,8 +11,8 @@ export default function ManageIngredients() {
 			<h1 className="main-heading">Choose ingredients you'd like to turn into a delicious meal.</h1>
 			<div className="tiles">
 				{
-					categories.map(category => (
-						<div className="tile">
+					categories.map((category, i) => (
+						<div className="tile" key={i}>
 							<img src={ category.imgUrl } className="image" alt={ category.title }/>
 							<div className="overlay">
 								<div className="text">{ category.title }</div>

@@ -23,8 +23,13 @@ export default function MyProfile() {
 		<div className="myProfile paddedPage">
 			<h1>My Recipes</h1>
 			{
-				randomRecipes.map(recipe => (
-					<RecipeTile recipeUrl={recipe.url} recipeTitle={recipe.title} recipeImg={recipe.img}/>
+				randomRecipes.map((recipe, i) => (
+					<RecipeTile
+						recipeUrl={recipe.url}
+						recipeTitle={recipe.title}
+						recipeImg={recipe.img}
+						key={i}
+					/>
 				))
 			}
 		</div>
