@@ -1,7 +1,7 @@
-import "./registerForm.scss";
+import "./RegisterForm.scss";
 import {serverAddress} from "../../globals";
 import {useState} from "react";
-import SimpleButton from "../../basics/simpleButton/simpleButton";
+import SimpleButton from "../../basics/simpleButton/SimpleButton";
 
 export default function RegisterForm() {
 	const [username, setUsername] = useState("");
@@ -28,7 +28,7 @@ export default function RegisterForm() {
 	}
 
 	return (
-		<form>
+		<form className="registerForm">
 			<label htmlFor="registerUsername">Username</label>
 			<input type="text" id="registerUsername" onChange={e => setUsername(e.target.value)}/>
 			<label htmlFor="registerEmail">E-Mail</label>

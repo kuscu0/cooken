@@ -2,7 +2,7 @@ import "./RecipeSearch.scss";
 import InputText from "../../basics/inputText/InputText";
 import DropDown from "../../basics/dropDown/DropDown";
 import RecipeTile from "../../basics/recipeTile/RecipeTile";
-import SimpleButton from "../../basics/simpleButton/simpleButton";
+import SimpleButton from "../../basics/simpleButton/SimpleButton";
 
 export default function RecipeSearch() {
 	return (

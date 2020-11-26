@@ -1,4 +1,4 @@
-import "./manageIngrediens.scss";
+import "./ManageIngrediens.scss";
 
 export default function ManageIngredients() {
 	const categories = [];

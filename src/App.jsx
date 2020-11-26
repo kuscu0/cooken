@@ -1,13 +1,14 @@
 import './App.scss';
 import React, {Component} from "react";
-import ManageIngredients from "./pages/manageIngredients/manageIngredients";
+import ManageIngredients from "./pages/manageIngredients/ManageIngredients";
 import {Route, BrowserRouter, Switch, Link} from "react-router-dom";
 import Home from "./pages/home/Home";
 import RecipeSearch from "./pages/recipeSearch/RecipeSearch";
-import MyProfile from "./pages/MyProfile/MyProfile";
+import MyProfile from "./pages/myProfile/MyProfile";
 import Recipe from "./pages/recipe/Recipe";
-import SimpleButton from "./basics/simpleButton/simpleButton";
-import RegisterForm from "./pages/registerForm/registerForm";
+import SimpleButton from "./basics/simpleButton/SimpleButton";
+import RegisterForm from "./pages/RegisterForm/RegisterForm";
+import LoginForm from "./pages/loginForm/LoginForm";
 
 export default function App() {
 	function onNavClick(e) {
@@ -36,6 +37,7 @@ export default function App() {
 						<Route path="/recipeSearch" component={RecipeSearch}/>
 						<Route path="/myProfile" component={MyProfile}/>
 						<Route path="/recipe" component={Recipe}/>
+						<Route path="/login" component={LoginForm}/>
 						<Route path="/register" component={RegisterForm}/>
 						<Route path="/" component={Home}/>
 					</Switch>

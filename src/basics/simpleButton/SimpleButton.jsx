@@ -1,4 +1,4 @@
-import "./_simpleButton.scss";
+import "./SimpleButton.scss";
 
 export default function SimpleButton(props) {
 	return (
