@@ -1,18 +1,20 @@
 import "./LoginForm.scss";
 import {serverAddress} from "../../globals";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
+import {IsLoggedInContext} from "../../context/IsLoggedInContext";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [isLoggedIn, setIsLoggedIn] = useContext(IsLoggedInContext);
 
 	async function login() {
 		const formParams = new URLSearchParams([
 			["email", email],
 			["password", password],
 		]);
-
+		setIsLoggedIn(true);
 		// const response = await fetch(`${serverAddress}/users/create`, {
 		// 	method: "POST",
 		// 	mode: "cors",
