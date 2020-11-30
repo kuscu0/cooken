@@ -37,7 +37,8 @@ export default function App() {
 						<Route path="/myProfile" component={MyProfile}/>
 						<Route path="/recipe" component={Recipe}/>
 						<Route path="/register" component={RegisterForm}/>
-						<Route path="/" component={Home}/>
+						<Route path="/" component={ManageIngredients}/>
+						{/* <Route path="/" component={Home}/> */}
 					</Switch>
 				</main>
 
