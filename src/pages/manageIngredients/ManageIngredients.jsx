@@ -4,14 +4,14 @@ import React from "react";
 export default function ManageIngredients() {
 
 	const categories = [];
+	const fruits = [];
 
 	categories.push({ title: "Fruits", imgUrl: "/img/fruits.png" });
 	categories.push({ title: "Vegetables", imgUrl: "/img/vegetables.png" });
 	categories.push({ title: "Meat", imgUrl: "/img/meat.png" });
 
 	for (let i = 0; i < 20; i++) {
-
-		categories.push({ title: "Orange", imgUrl: "/img/orange.png" });
+		fruits.push({ title: "Orange", imgUrl: "/img/orange.png" });
 	}
 
 	const [searchTerm, setSearchTerm] = React.useState("");
@@ -19,6 +19,7 @@ export default function ManageIngredients() {
 	const handleChange = event => {
 		setSearchTerm(event.target.value);
 	};
+
 	React.useEffect(() => {
 		const results = categories.filter(category =>
 			category.title.toLowerCase().includes(searchTerm)

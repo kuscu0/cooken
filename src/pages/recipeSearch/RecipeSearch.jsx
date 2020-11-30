@@ -1,14 +1,13 @@
 import "./RecipeSearch.scss";
 import InputText from "../../basics/inputText/InputText";
 import DropDown from "../../basics/dropDown/DropDown";
-import RecipeTile from "../../basics/recipeTile/RecipeTile";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
 
 export default function RecipeSearch() {
 	return (
 		<div className="recipeSearch paddedPage">
 			<div className="optionsBar">
-				<InputText placeholder="Search..."/>
+				<InputText placeholder="Search..." autoFocus value={searchTerm} onChange={handleChange}/>
 				<DropDown
 					expanderChildren={
 						<div>Must use</div>
