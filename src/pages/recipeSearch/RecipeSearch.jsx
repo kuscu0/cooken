@@ -21,7 +21,7 @@ export default function RecipeSearch() {
 
 	React.useEffect(() => {
 		const results = recipes.filter(recipe =>
-			recipe.title.toLowerCase().includes(searchTerm)
+			recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
 		);
 		setSearchResults(results);
 	}, [searchTerm]);

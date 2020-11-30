@@ -22,7 +22,7 @@ export default function ManageIngredients() {
 
 	React.useEffect(() => {
 		const results = categories.filter(category =>
-			category.title.toLowerCase().includes(searchTerm)
+			category.title.toLowerCase().includes(searchTerm.toLowerCase())
 		);
 		setSearchResults(results);
 	}, [searchTerm]);
