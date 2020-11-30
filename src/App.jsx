@@ -21,33 +21,30 @@ export default function App() {
 
 	return (
 		<BrowserRouter>
-			<IsLoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
-				<div className="App">
-					<header>
-						<Link to="/" className="logo"><img src="/img/logo.png" alt="logo"/></Link>
-						<nav>
-							<Link to="/manageIngredients" onClick={onNavClick}>Manage Inventory</Link>
-							<Link to="/recipeSearch" onClick={onNavClick}>Search</Link>
-							<Link to="/myProfile" onClick={onNavClick}>My Profile</Link>
-						</nav>
-						<div style={{ visibility: isLoggedIn ? "hidden" : "visible" }}>
-							<Link to="/login" className="login"><SimpleButton>Login</SimpleButton></Link>
-							<Link to="/register" className="register"><SimpleButton>Register</SimpleButton></Link>
-						</div>
-					</header>
-					<main>
-						<Switch>
-							<Route path="/manageIngredients" component={ManageIngredients}/>
-							<Route path="/recipeSearch" component={RecipeSearch}/>
-							<Route path="/myProfile" component={MyProfile}/>
-							<Route path="/recipe" component={Recipe}/>
-							<Route path="/login" component={LoginForm}/>
-							<Route path="/register" component={RegisterForm}/>
-							<Route path="/" component={Home}/>
-						</Switch>
-					</main>
-				</div>
-			</IsLoggedInContext.Provider>
+			<div className="App">
+				<header>
+					<Link to="/" className="logo"><img src="/img/logo.png" alt="logo"/></Link>
+					<nav>
+						<Link to="/manageIngredients" onClick={onNavClick}>Manage Inventory</Link>
+						<Link to="/recipeSearch" onClick={onNavClick}>Search</Link>
+						<Link to="/myProfile" onClick={onNavClick}>My Profile</Link>
+					</nav>
+					<div>
+						<Link to="/login" className="login"><SimpleButton>Login</SimpleButton></Link>
+						<Link to="/register" className="register"><SimpleButton>Register</SimpleButton></Link>
+					</div>
+				</header>
+				<main>
+					<Switch>
+						<Route path="/manageIngredients" component={ManageIngredients}/>
+						<Route path="/recipeSearch" component={RecipeSearch}/>
+						<Route path="/myProfile" component={MyProfile}/>
+						<Route path="/recipe" component={Recipe}/>
+						<Route path="/register" component={RegisterForm}/>
+						<Route path="/" component={ManageIngredients}/>
+					</Switch>
+				</main>
+			</div>
 		</BrowserRouter>
 	);
 }
