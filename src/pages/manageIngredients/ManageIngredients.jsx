@@ -1,4 +1,4 @@
-import "./manageIngrediens.scss";
+import "./ManageIngrediens.scss";
 import React from "react";
 
 export default function ManageIngredients() {

@@ -15,16 +15,16 @@ export default function RegisterForm() {
 			["password", password],
 		]);
 
-		const response = await fetch(`${serverAddress}/users/create`, {
-			method: "POST",
-			mode: "cors",
-			body: formParams
-		});
-		const responseData = await response.json;
-		// success?
-		if (responseData) {
-
-		}
+		// const response = await fetch(`${serverAddress}/users/create`, {
+		// 	method: "POST",
+		// 	mode: "cors",
+		// 	body: formParams
+		// });
+		// const responseData = await response.json;
+		// // success?
+		// if (responseData) {
+		//
+		// }
 	}
 
 	return (
