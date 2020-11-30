@@ -41,7 +41,6 @@ export default function RecipeSearch() {
 						</div>
 					}
 				/>
-				<SimpleButton className="searchButton">Search</SimpleButton>
 			</div>
 			<div className="results">
 				{
