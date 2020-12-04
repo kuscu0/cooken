@@ -6,7 +6,7 @@ class Connection {
     saltRounds = 10
 
     constructor(uri) {
-        this.client = new this.MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+        this.client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
     }
 
     async hashPassword(password) {
@@ -22,30 +22,30 @@ class Connection {
             throw "User Name must not be empty";
         if (usrMail === "")
             throw "User E-Mail must not be empty";
-        const hashedPw = this.hashPassword(usrPW);
+        const hashedPw = await this.hashPassword(usrPW);
         const db = (await this.client.connect()).db("cooken");
         const existingUsers = await db.collection("users").find({ email: usrMail });
         if (await existingUsers.count())
             throw "E-Mail unavailable";
         await db.collection("users").insertOne({
             name: usrName,
+            email: usrMail,
             password: hashedPw,
-            email: usrMail
         });
         return "success";
     }
 
     async updateUser(usrName, usrPW, usrMail) {
-        const hashedPw = this.hashPassword(usrPW);
+        const hashedPw = await this.hashPassword(usrPW);
         const db = (await this.client.connect()).db("cooken");
-        await db.collection("users").update(
+        await db.collection("users").updateOne(
             {
                 email: usrMail
             },
             {
                 name: usrName,
+                email: usrMail,
                 password: hashedPw,
-                email: usrMail
             }
         );
         return "success";
@@ -53,7 +53,7 @@ class Connection {
 
     async removeUser(usrMail) {
         const db = (await this.client.connect()).db("cooken");
-        await db.collection("users").remove(
+        await db.collection("users").deleteOne(
             {
                 email: usrMail
             }
@@ -68,10 +68,11 @@ class Connection {
                 email: usrMail
             }
         );
-        if (await this.checkPasswordValidity(usrPW, result.password))
-            return "success";
-        else
-            throw new connectionErr("Wrong Credentials");
+        return await this.checkPasswordValidity(usrPW, result.password) ? result : null;
+    }
+
+    async login() {
+
     }
 }
 
