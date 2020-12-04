@@ -1,57 +1,56 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const asyncHandler = require('express-async-handler')
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/create', function (req, res, next) {
+router.post('/create', asyncHandler(async (req, res, next) => {
     let DB = req.app.get('DB');
-    DB.createUser(req.body.name, req.body.password, req.body.email)
-        .then(value => {
-            res.send(value);
-            console.log(value);
-        }).catch(err => {
-            res.status(err.statusCode || 500).json(err);
-            console.log(err);
-    });
-});
+    try {
+        res.send(await DB.createUser(req.body.name, req.body.password, req.body.email));
+    }
+    catch (e) {
+        res.status(e.statusCode || 500).json(e);
+        console.error(e);
+    }
+}));
 
-router.post('/update', function (req, res, next) {
+router.post('/update', asyncHandler(async (req, res, next) => {
     let DB = req.app.get('DB');
-    DB.updateUser(req.body.name, req.body.password, req.body.email)
-        .then(value => {
-            res.send(value);
-            console.log(value);
-        }).catch(err => {
-            res.status(err.statusCode || 500).json(err);
-            console.log(err);
-    });
-});
+    try {
+        res.send(await DB.updateUser(req.body.name, req.body.password, req.body.email));
+    }
+    catch (e) {
+        res.status(e.statusCode || 500).json(e);
+        console.error(e);
+    }
+}));
 
-router.post('/remove', function (req, res, next) {
+router.post('/remove', asyncHandler(async (req, res, next) => {
     let DB = req.app.get('DB');
-    DB.removeUser(req.body.name)
-        .then(value => {
-            res.send(value);
-            console.log(value);
-        }).catch(err => {
-            res.status(err.statusCode || 500).json(err);
-            console.log(err);
-    });
-});
+    try {
+        res.send(await DB.removeUser(req.body.email));
 
-router.post('/check', function (req, res, next) {
+    }
+    catch (e) {
+        res.status(e.statusCode || 500).json(e);
+        console.error(e);
+    }
+}));
+
+router.post('/check', asyncHandler(async (req, res, next) => {
     let DB = req.app.get('DB');
-    DB.checkUser(req.body.name, req.body.password)
-        .then(value => {
-            res.send(value);
-            console.log(value);
-        }).catch(err => {
-            res.status(err.statusCode || 512).json(err.name);
-            console.log(err);
-    });
-});
+    try {
+        res.send(await DB.checkUser(req.body.email, req.body.password));
+    }
+    catch (e) {
+        res.status(e.statusCode || 500).json(e);
+        console.error(e);
+    }
+}));
 
 module.exports = router;

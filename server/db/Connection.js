@@ -24,135 +24,55 @@ class Connection {
         });
     }
 
-    createUser(usrName, usrPW, usrMail) {
-        let newPW = this.CryptoJS.SHA256(usrPW).toString();
-        let client = this.client;
-        return new Promise(function (resolve, reject) {
-            function createUser(MongoClient, usrName, usrPW, usrEmail) {
-                return new Promise(function (resolve, reject) {
-                    MongoClient.connect(err => {
-                        if (err) {
-                            reject(err);
-                        }
-                        const collection = MongoClient.db("cooken").collection("users");
-                        // perform actions on the collection object
-                        collection.insertOne({name: usrName, password: usrPW, email: usrEmail}, err => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve(`success`);
-                            }
-                        });
-                    });
-                });
-            }
-
-            createUser(client, usrName, newPW, usrMail)
-                .then(value => {
-                    resolve(value);
-                })
-                .catch(err => {
-                    reject(err);
-                });
+    async createUser(usrName, usrPW, usrMail) {
+        const hashedPw = this.CryptoJS.SHA256(usrPW).toString(), client = this.client;
+        const db = (await client.connect()).db("cooken");
+        await db.collection("users").insertOne({
+            name: usrName,
+            password: hashedPw,
+            email: usrMail
         });
+        return "success";
     }
 
-    updateUser(usrName, usrPW, usrMail) {
-        let newPW = this.CryptoJS.SHA256(usrPW).toString();
-        let client = this.client;
-        return new Promise(function (resolve, reject) {
-            function updateUser(MongoClient, usrName, usrPW, usrEmail) {
-                return new Promise(function (resolve, reject) {
-                    MongoClient.connect(err => {
-                        if (err) {
-                            reject(err);
-                        }
-                        const collection = MongoClient.db("cooken").collection("users");
-                        collection.update({name: usrName}, {name: usrName, password: usrPW, email: usrEmail}, err => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve(`success`);
-                            }
-                        });
-                    });
-                });
+    async updateUser(usrName, usrPW, usrMail) {
+        const hashedPw = this.CryptoJS.SHA256(usrPW).toString();
+        const db = (await this.client.connect()).db("cooken");
+        await db.collection("users").update(
+            {
+                email: usrMail
+            },
+            {
+                name: usrName,
+                password: hashedPw,
+                email: usrMail
             }
-
-            updateUser(client, usrName, newPW, usrMail)
-                .then(value => {
-                    resolve(value);
-                })
-                .catch(err => {
-                    reject(err);
-                });
-        });
+        );
+        return "success";
     }
 
-    removeUser(usrName) {
-        let client = this.client;
-        return new Promise(function (resolve, reject) {
-            function removeUser(MongoClient, usrName) {
-                return new Promise(function (resolve, reject) {
-                    MongoClient.connect(err => {
-                        if (err) {
-                            reject(err);
-                        }
-                        const collection = MongoClient.db("cooken").collection("users");
-                        collection.remove({name: usrName}, err => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve(`success`);
-                            }
-                        });
-                    });
-                });
+    async removeUser(usrMail) {
+        const db = (await this.client.connect()).db("cooken");
+        await db.collection("users").remove(
+            {
+                email: usrMail
             }
-
-            removeUser(client, usrName)
-                .then(value => {
-                    resolve(value);
-                })
-                .catch(err => {
-                    reject(err);
-                });
-        });
+        )
+        return "success";
     }
 
-    checkUser(usrName, usrPW) {
-        let client = this.client;
-        let newPW = this.CryptoJS.SHA256(usrPW).toString();
-        let _this = this;
-        return new Promise(function (resolve, reject) {
-            function checkUser(MongoClient, usrName, usrPW) {
-                return new Promise(function (resolve, reject) {
-                    MongoClient.connect(err => {
-                        if (err) {
-                            reject(err);
-                        }
-                        const collection = MongoClient.db("cooken").collection("users");
-                        collection.findOne({name: usrName}, function (err, result) {
-                            if (err) reject(err);
-                            else {
-                                if (usrPW == result.password) {
-                                    resolve("success");
-                                } else {
-                                    reject(new _this.connectionErr("Wrong Credentials"));
-                                }
-                            }
-                        });
-                    })
-                })
+    async checkUser(usrMail, usrPW) {
+        const hashedPw = this.CryptoJS.SHA256(usrPW).toString();
+        const db = (await this.client.connect()).db("cooken");
+        const result = await db.collection("users").findOne(
+            {
+                email: usrMail
             }
-            checkUser(client, usrName, newPW)
-                .then(value => {
-                    resolve(value)
-                })
-                .catch(err => {
-                    reject(err);
-                });
-        });
+        );
+        if (result.password === hashedPw)
+            return "success";
+        else
+            throw new this.connectionErr("Wrong Credentials");
     }
 }
 
