@@ -1,32 +1,29 @@
+const MongoClient = require("mongodb").MongoClient;
+const connectionErr = require("./connectionErr");
+const bcrypt = require("bcrypt");
+
 class Connection {
+    saltRounds = 10
+
     constructor(uri) {
-        this.MongoClient = require("mongodb").MongoClient;
-        this.uri = uri;
         this.client = new this.MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
-        this.CryptoJS = require("crypto-js");
-        this.connectionErr = require("./connectionErr");
     }
 
-    testDB() {
-        this.client.connect(err => {
-            if (err) {
-                console.log(err);
-            }
-            const collection = this.client.db("cooken").collection("recipes");
-            // perform actions on the collection object
-            collection.insertOne({name: "Spätzle", persons: "20002"}, err => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Inserted");
-                }
-            })
-        });
+    async hashPassword(password) {
+        return await bcrypt.hash(password, this.saltRounds);
+    }
+
+    async checkPasswordValidity(password, hashedPassword) {
+        return await bcrypt.compare(password, hashedPassword);
     }
 
     async createUser(usrName, usrPW, usrMail) {
-        const hashedPw = this.CryptoJS.SHA256(usrPW).toString(), client = this.client;
-        const db = (await client.connect()).db("cooken");
+        if (usrName === "")
+            throw "User Name must not be empty";
+        if (usrMail === "")
+            throw "User E-Mail must not be empty";
+        const hashedPw = this.hashPassword(usrPW);
+        const db = (await this.client.connect()).db("cooken");
         const existingUsers = await db.collection("users").find({ email: usrMail });
         if (await existingUsers.count())
             throw "E-Mail unavailable";
@@ -39,7 +36,7 @@ class Connection {
     }
 
     async updateUser(usrName, usrPW, usrMail) {
-        const hashedPw = this.CryptoJS.SHA256(usrPW).toString();
+        const hashedPw = this.hashPassword(usrPW);
         const db = (await this.client.connect()).db("cooken");
         await db.collection("users").update(
             {
@@ -65,17 +62,16 @@ class Connection {
     }
 
     async checkUser(usrMail, usrPW) {
-        const hashedPw = this.CryptoJS.SHA256(usrPW).toString();
         const db = (await this.client.connect()).db("cooken");
         const result = await db.collection("users").findOne(
             {
                 email: usrMail
             }
         );
-        if (result.password === hashedPw)
+        if (await this.checkPasswordValidity(usrPW, result.password))
             return "success";
         else
-            throw new this.connectionErr("Wrong Credentials");
+            throw new connectionErr("Wrong Credentials");
     }
 }
 
