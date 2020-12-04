@@ -3,11 +3,13 @@ import {serverAddress} from "../../globals";
 import {useContext, useState} from "react";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
 import {IsLoggedInContext} from "../../context/IsLoggedInContext";
+import {useHistory} from "react-router-dom";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isLoggedIn, setIsLoggedIn] = useContext(IsLoggedInContext);
+	const history = useHistory();
 
 	async function login() {
 		const formParams = new URLSearchParams([
@@ -26,7 +28,7 @@ export default function LoginForm() {
 		const responseData = await response.json();
 		localStorage.token = responseData.token;
 		setIsLoggedIn(true);
-
+		history.push("/");
 	}
 
 	return (

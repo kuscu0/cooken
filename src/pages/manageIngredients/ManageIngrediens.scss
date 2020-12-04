@@ -25,16 +25,20 @@
 			margin: 2rem;
 			cursor: pointer;
 
+			&:focus:not(:focus-visible) {
+				outline: none;
+			}
+
 			&:hover {
 				transform: scale(1.2);
-
-				> .image {
-					filter: blur(3px);
-				}
-
-				> .overlay {
-					opacity: 1;
-				}
+				//
+				//> .image {
+				//	filter: blur(3px);
+				//}
+				//
+				//> .overlay {
+				//	opacity: 1;
+				//}
 			}
 
 			> .image {
@@ -53,7 +57,7 @@
 				right: 0;
 				height: 100%;
 				width: 100%;
-				opacity: 0;
+				//opacity: 0;
 				transition: .5s ease;
 
 
@@ -65,7 +69,7 @@
 		color: #333333;
 		font-family: "Roboto Thin", serif;
 		font-weight: bold;
-		font-size: 2vw;
+		font-size: 2rem;
 		position: absolute;
 		top: 50%;
 		left: 50%;
@@ -79,12 +83,35 @@
 		position: sticky;
 		bottom: 0;
 		width: 100%;
-		height: 6rem;
-		background-color: #ffffffbb;
+		//height: 6rem;
+		background-color: #ffffffdd;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 		border-top: 2px solid #333333;
+
+		> .searchResults {
+			width: 60%;
+			max-height: 10rem;
+			overflow-x: auto;
+			overflow-y: hidden;
+			transition: all .125s ease;
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			align-items: center;
+
+			&.empty {
+				max-height: 0;
+			}
+
+			> .ingredientResult {
+				font-size: 1.25rem;
+				padding: .25rem 1rem;
+				cursor: pointer;
+			}
+		}
 
 		> input {
 			width: 20rem;
@@ -96,25 +123,7 @@
 			background-position: 2% 50%;
 			background-repeat: no-repeat;
 			padding: 0.75% 1% 0.75% 1.5%;
+			margin: .5rem;
 		}
 	}
-
 }
-
-//input[type=text] {
-//	width: 25%;
-//	box-sizing: border-box;
-//	border: 2px solid #333333;
-//	border-radius: 10px;
-//	font-size: 0.9vw;
-//	background-color: white;
-//	//background-image: url('/img/logo.png');
-//	background-size: 5%;
-//	background-position: 2% 50%;
-//	background-repeat: no-repeat;
-//	padding: 0.75% 1% 0.75% 2%;
-//	-webkit-transition: width 0.4s ease-in-out;
-//	transition: width 0.4s ease-in-out;
-//	margin-left: calc(75% / 2);
-//	margin-top: 7.5%;
-//}
