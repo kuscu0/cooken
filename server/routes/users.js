@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/create', asyncHandler(async (req, res, next) => {
+router.put('/', asyncHandler(async (req, res, next) => {
     let DB = req.app.get('DB');
     try {
         res.send(await DB.createUser(req.body.name, req.body.password, req.body.email));

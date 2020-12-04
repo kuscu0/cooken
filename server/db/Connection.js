@@ -27,6 +27,9 @@ class Connection {
     async createUser(usrName, usrPW, usrMail) {
         const hashedPw = this.CryptoJS.SHA256(usrPW).toString(), client = this.client;
         const db = (await client.connect()).db("cooken");
+        const existingUsers = await db.collection("users").find({ email: usrMail });
+        if (await existingUsers.count())
+            throw "E-Mail unavailable";
         await db.collection("users").insertOne({
             name: usrName,
             password: hashedPw,
