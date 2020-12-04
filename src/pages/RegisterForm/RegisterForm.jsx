@@ -2,11 +2,13 @@ import "./RegisterForm.scss";
 import {serverAddress} from "../../globals";
 import {useState} from "react";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
+import { useHistory } from "react-router-dom";
 
 export default function RegisterForm() {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const history = useHistory();
 
 	async function registerUser() {
 		const formParams = new URLSearchParams([
@@ -22,7 +24,7 @@ export default function RegisterForm() {
 		});
 		const responseData = await response.text();
 		if (responseData === "success") {
-			console.log("registered")
+			history.push("/login");
 		}
 	}
 
