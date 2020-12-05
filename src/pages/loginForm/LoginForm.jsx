@@ -37,7 +37,7 @@ export default function LoginForm() {
 			<input type="text" autoComplete="email" id="registerEmail" onChange={e => setEmail(e.target.value)}/>
 			<label htmlFor="registerPassword">Password</label>
 			<input type="password" autoComplete="password" id="registerPassword" onChange={e => setPassword(e.target.value)}/>
-			<SimpleButton clicked={login} type="button">Login</SimpleButton>
+			<SimpleButton onClick={login} type="button">Login</SimpleButton>
 		</form>
 	)
 }

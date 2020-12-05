@@ -2,23 +2,53 @@ import "./Recipe.scss";
 import React, {useEffect, useState} from "react";
 import {serverAddress} from "../../globals";
 import {useLocation} from "react-router-dom";
+import SimpleButton from "../../basics/simpleButton/SimpleButton";
 
 export default function Recipe() {
 	const [recipeData, setRecipeData] = useState(null);
+	const [isSaved, setIsSaved] = useState(false);
 	const location = useLocation();
 
 	useEffect(() => {
 		fetch(`${serverAddress}/users${location.pathname}`).then(async response => {
 			if (response.status !== 200)
 				throw "Error getting recipe";
-			setRecipeData(await response.json());
+			const data = await response.json()
+			setRecipeData(data);
+
+			const isSavedResponse = await fetch(
+				`${serverAddress}/users/savedRecipes?recipeId=${encodeURIComponent(data._id)}`,
+				{
+					headers: new Headers({Authorization: `Bearer ${localStorage.token}`}),
+				}
+			);
+			setIsSaved(await isSavedResponse.text() === "true");
 		})
+
 	}, [location.pathname]);
+
+	async function toggleSaveRecipe() {
+		if (!recipeData)
+			throw "No loaded recipe"
+
+		const response = await fetch(`${serverAddress}/users/savedRecipes`, {
+			method: "POST",
+			headers: new Headers({Authorization: `Bearer ${localStorage.token}`}),
+			body: new URLSearchParams([["recipeId", recipeData._id]])
+		})
+		if (response.status !== 200)
+			throw "Error toggling save";
+
+		setIsSaved(await response.text() === "true");
+	}
 
 	return (
 		<div className="recipePage paddedPage">
-			<h1>{recipeData?.title}</h1>
-			<img src={`https://img.chefkoch-cdn.de/rezepte/${recipeData?._id}/bilder/${recipeData?.previewImageId}/crop-552x552/${recipeData?.title.replace(/\s/g, "-")}.jpg`} alt="carbonara" className="recipeImage"/>
+			<div className="title">
+				<h1>{recipeData?.title}</h1>
+				<SimpleButton onClick={toggleSaveRecipe}>{ isSaved ? "Unsave" : "Save"}</SimpleButton>
+			</div>
+			<img src={`https://img.chefkoch-cdn.de/rezepte/${recipeData?._id}/bilder/${recipeData?.previewImageId}/crop-552x552/${recipeData?.title.replace(/\s/g, "-")}.jpg`} alt={recipeData?.title} className="recipeImage"/>
 			<div className="ingredients">
 				{
 					recipeData?.ingredientGroups.map((ingredientsGroup, i) => (
@@ -29,8 +59,8 @@ export default function Recipe() {
 								{ingredientsGroup.ingredients.map((ingredient, i) => (
 									<tr key={i}>
 										<td>
-											<span className="amount">{ingredient.amount}</span>
-											<span className="unit">{ingredient.unit}</span>
+											{ingredient.amount !== 0 && <span className="amount">{ingredient.amount}</span>}
+											<span className="unit">&nbsp;{ingredient.unit}</span>
 										</td>
 										<td>
 											<span className="ingredientName">{ingredient.name}</span>

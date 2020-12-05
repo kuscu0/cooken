@@ -36,7 +36,7 @@ export default function RegisterForm() {
 			<input type="text" autoComplete="email" id="registerEmail" onChange={e => setEmail(e.target.value)}/>
 			<label htmlFor="registerPassword">Password</label>
 			<input type="password" autoComplete="password" id="registerPassword" onChange={e => setPassword(e.target.value)}/>
-			<SimpleButton clicked={registerUser} type="button">Register</SimpleButton>
+			<SimpleButton onClick={registerUser} type="button">Register</SimpleButton>
 		</form>
 	)
 }

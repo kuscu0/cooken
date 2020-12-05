@@ -1,8 +1,10 @@
 
 
 .recipePage {
-	> h1 {
-
+	> .title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	> .recipeImage {
