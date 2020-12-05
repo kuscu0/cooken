@@ -4,5 +4,14 @@
 	> .recipeTile {
 		margin: 1.5rem 0;
 		width: 30rem;
+
+		> div {
+			> .misc {
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				padding-right: 1rem;
+			}
+		}
 	}
 }

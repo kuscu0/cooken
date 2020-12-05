@@ -49,7 +49,7 @@ export default function MyProfile() {
 						recipeUrl={`/recipe/${recipe._id}`}
 						recipeTitle={recipe.title}
 						recipeImg={`https://img.chefkoch-cdn.de/rezepte/${recipe?._id}/bilder/${recipe?.previewImageId}/crop-552x552/${recipe?.title.replace(/\s/g, "-")}.jpg`}
-						other={recipe.instructions.slice(0, 20)}
+						other={recipe.instructions}
 						key={i}
 					/>
 				))

@@ -12,7 +12,7 @@ import LoginForm from "./pages/loginForm/LoginForm";
 import {IsLoggedInContext} from "./context/IsLoggedInContext";
 
 export default function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(false)
+	const [isLoggedIn, setIsLoggedIn] = useState(Boolean(localStorage.token))
 
 	function onNavClick(e) {
 		Array.from(e.currentTarget.parentElement.children).forEach(el => el.classList.remove("current"));

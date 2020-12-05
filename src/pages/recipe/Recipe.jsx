@@ -46,7 +46,7 @@ export default function Recipe() {
 		<div className="recipePage paddedPage">
 			<div className="title">
 				<h1>{recipeData?.title}</h1>
-				<SimpleButton onClick={toggleSaveRecipe}>{ isSaved ? "Unsave" : "Save"}</SimpleButton>
+				{ localStorage.token && <SimpleButton onClick={toggleSaveRecipe}>{isSaved ? "Unsave" : "Save"}</SimpleButton>}
 			</div>
 			<img src={`https://img.chefkoch-cdn.de/rezepte/${recipeData?._id}/bilder/${recipeData?.previewImageId}/crop-552x552/${recipeData?.title.replace(/\s/g, "-")}.jpg`} alt={recipeData?.title} className="recipeImage"/>
 			<div className="ingredients">
