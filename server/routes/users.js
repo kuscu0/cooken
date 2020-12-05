@@ -112,7 +112,7 @@ router.get("/savedRecipes", verifyJwt, asyncHandler(async (req, res, next) => {
 			res.json(await DB.getSavedRecipes(req.uid));
 	}
 	catch (e) {
-		res.status(400).send(e);
+		res.status(400).send(e.toString());
 	}
 }));
 

@@ -203,10 +203,11 @@ class Connection {
 
 	async getSavedRecipes(uid) {
 		const savedRecipesColl = (await this.client.connect()).db("cooken").collection("savedRecipes");
+		const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
 		const savedRecipes = await savedRecipesColl.findOne({ _id: uid });
 		if (!savedRecipes)
 			throw "No saved recipes found";
-		return savedRecipes;
+		return recipesColl.find({_id: {$in: savedRecipes.savedRecipes || []}}).toArray();
 	}
 }
 
