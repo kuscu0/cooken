@@ -15,7 +15,7 @@ MongoClient.connect("mongodb://localhost:27017", {useNewUrlParser: true, useUnif
 					{
 						_id: ingredient.id,
 						name: ingredient.name,
-						category: ingredient.category,
+						category: ingredient.category || "Sonstiges",
 					},
 					{
 						upsert: true

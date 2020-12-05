@@ -59,13 +59,71 @@ router.post("/login", asyncHandler(async (req, res, next) => {
 	}
 }));
 
-router.get("/savedRecipes", verifyJwt, asyncHandler(async (req, res, next) => {
-	res.send("Wow my recipes!");
-}));
+// router.get("/savedRecipes", verifyJwt, asyncHandler(async (req, res, next) => {
+// 	res.send("Wow my recipes!");
+// }));
 
 router.get("/ingredientGroups", asyncHandler(async (req, res, next) => {
 	let DB = req.app.get('DB');
 	res.json({ ingredientGroups: await DB.getIngredientGroups() });
+}));
+
+router.get("/inventory", verifyJwt, asyncHandler(async (req, res, next) => {
+	let DB = req.app.get('DB');
+	res.send(await DB.getUserInventory(req.uid));
+}));
+
+router.put("/inventory", verifyJwt, asyncHandler(async (req, res, next) => {
+	let DB = req.app.get('DB');
+	try {
+		res.send(await DB.addToInventory(req.uid, req.body.ingredient));
+	}
+	catch (e) {
+		res.status(400).send(e);
+	}
+}));
+
+router.delete("/inventory", verifyJwt, asyncHandler(async (req, res, next) => {
+	let DB = req.app.get('DB');
+	try {
+		res.send(await DB.removeFromInventory(req.uid, req.body.ingredient));
+	}
+	catch (e) {
+		res.status(400).send(e);
+	}
+}));
+
+router.get("/recipe/*", asyncHandler(async (req, res, next) => {
+	let DB = req.app.get('DB');
+	try {
+		res.json(await DB.getRecipeData(req.path.match(/[^/]*$/)[0]));
+	}
+	catch (e) {
+		res.status(404).send(e);
+	}
+}));
+
+router.get("/savedRecipes", verifyJwt, asyncHandler(async (req, res, next) => {
+	let DB = req.app.get('DB');
+	try {
+		if (req.query.recipeId)
+			res.send(await DB.isSavedRecipe(req.uid, req.query.recipeId));
+		else
+			res.json(await DB.getSavedRecipes(req.uid));
+	}
+	catch (e) {
+		res.status(400).send(e);
+	}
+}));
+
+router.post("/savedRecipes", verifyJwt, asyncHandler(async (req, res, next) => {
+	let DB = req.app.get('DB');
+	try {
+		res.send(await DB.toggleRecipe(req.uid, req.body.recipeId));
+	}
+	catch (e) {
+		res.status(400).send(e.toString());
+	}
 }));
 
 function verifyJwt(req, res, next) {
