@@ -5,10 +5,10 @@ import {serverAddress} from "../../globals";
 export default function ManageIngredients() {
 	const [categories, setCategories] = React.useState([]);
 	const [selectedCategory, setSelectedCategory] = React.useState("");
-	// const [filteredIngredients, setFilteredIngredients] = React.useState([]);
 	const [allIngredients, setAllIngredients] = React.useState([]);
 	const [searchableIngredients, setSearchableIngredients] = React.useState([]);
 	const [searchTerm, setSearchTerm] = React.useState("");
+	const [selectedIngredients, setSelectedIngredients] = React.useState([]);
 
 
 	useEffect(() => {
@@ -19,6 +19,11 @@ export default function ManageIngredients() {
 			setAllIngredients(allIngredients);
 			setSearchableIngredients(allIngredients)
 		});
+		if (localStorage.token) {
+			fetch(`${serverAddress}/users/inventory`, { headers: new Headers({Authorization: `Bearer ${localStorage.token}`}) }).then(async response => {
+				setSelectedIngredients(await response.json());
+			})
+		}
 	}, []);
 
 	function handleSearchChange(event) {
@@ -39,9 +44,34 @@ export default function ManageIngredients() {
 		}
 	}
 
+	async function toggleSelectedIngredient(event) {
+		const isAdded = event.currentTarget.classList.contains("added");
+		const ingredientId = event.currentTarget.getAttribute("data-ingredient-id");
+		const response = await fetch(
+			`${serverAddress}/users/inventory`,
+			{
+				method: isAdded ? "DELETE" : "PUT",
+				headers: new Headers({Authorization: `Bearer ${localStorage.token}`}),
+				body: new URLSearchParams([["ingredient", ingredientId]]),
+			}
+		);
+		if (await response.text() === "success") {
+			const tmpSelected = selectedIngredients;
+			if (isAdded)
+				tmpSelected.splice(tmpSelected.indexOf(ingredientId), 1);
+			else
+				tmpSelected.push(ingredientId);
+			setSelectedIngredients(tmpSelected);
+		}
+		else {
+			console.error("Error toggling ingredient");
+			// TODO display error
+		}
+	}
+
 
 	const filteredIngredients = searchTerm.length > 0 || selectedCategory
-		? searchableIngredients.filter(value => value.toLowerCase().includes(searchTerm.toLowerCase()))
+		? searchableIngredients.filter(value => value.name.toLowerCase().includes(searchTerm.toLowerCase()))
 		: [];
 	return (
 		<div className="manageIngredients">
@@ -49,7 +79,7 @@ export default function ManageIngredients() {
 			<div className="tiles">
 				{
 					categories.map(({_id: category}) => (
-						<button className="tile" onClick={toggleSelectCategory} data-category={category}>
+						<button className="tile" onClick={toggleSelectCategory} data-category={category} key={category}>
 							{/*<img src={ category.imgUrl } className="image" alt={ category.title }/>*/}
 							<div className="overlay">
 								<div className="text">{category || "Sonstiges"}</div>
@@ -62,7 +92,15 @@ export default function ManageIngredients() {
 				<div className={"searchResults" + (filteredIngredients.length === 0 ? " empty" : "")}>
 					{
 						filteredIngredients.map(ingredient => (
-							<button className="ingredientResult">{ingredient}</button>
+							<button
+								className={"ingredientResult" + (selectedIngredients.includes(ingredient.id) ? " added" : "")}
+								onClick={toggleSelectedIngredient}
+								data-ingredient-id={ingredient.id.toString()}
+								data-added={selectedIngredients.includes(ingredient.id).toString()}
+								key={ingredient.id.toString()}
+							>
+								{ ingredient.name }
+							</button>
 						))
 					}
 				</div>
