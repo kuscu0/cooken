@@ -35,6 +35,3 @@ With this use case the user can search for recipes. Recipes displayed in the res
 
 # 5. Postconditions
 --
-
-# 6. Function Points
---
