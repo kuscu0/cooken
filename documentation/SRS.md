@@ -80,7 +80,7 @@ There are two subsystems:
 | --------------------------------------------- |:----------:| ------------------------- |
 | [GitHub](https://github.com/kuscu0/cooken)    | 21.10.2020 | <Cooken Team>             |
 | [Blog](https://cooken264100434.wordpress.com/)| 21.10.2020 | <Cooken Team>             |
-| [UCD](use_case_diagram.png)                   | 21.10.2020 | <Cooken Team>             |
+| [UCD](use_case_diagram.jpg)                   | 21.10.2020 | <Cooken Team>             |
 | [Use case: find recipes](UC/find-recipes/UC_Find_Recipes.md) | 21.10.2020 | <Cooken Team>             |
 | [Use case: choose ingredients](UC/find-ingredients/UC_Find_Ingredients.md) | 21.10.2020 | <Cooken Team>             |
 | --------------------------------------------- |:----------:| ------------------------- |
@@ -98,7 +98,7 @@ Cooken helps users find recipes online that only require ingredients the user al
 
 ### 2.2 Use Case Diagram
 
-![Use case diagram](use_case_diagram.png)
+![Use case diagram](use_case_diagram.jpg)
 
 ### 2.3 Technology Stack
 Frontend Web App:
