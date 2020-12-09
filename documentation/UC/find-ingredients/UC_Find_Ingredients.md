@@ -12,6 +12,8 @@ With this use case the user can quickly find ingredients. These ingredients are 
 ## 1.3 Screenshot
 --
 
+![Find Ingredients](screenshot.PNG)
+
 # 2. Flow of Events
 --
 

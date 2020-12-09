@@ -19,6 +19,14 @@ A logged in user can save and unsave recipes. Saved recipes can be listed on a p
 ## 1.3 Screenshot
 --
 
+### 1.3.1 List Recipes
+
+![Find Ingredients](screenshot_list.PNG)
+
+### 1.3.2 View Recipe to Save/Unsave
+
+![Find Ingredients](screenshot_view.PNG)
+
 # 2. Flow of Events
 
 ## 2.1 Basic Flow
