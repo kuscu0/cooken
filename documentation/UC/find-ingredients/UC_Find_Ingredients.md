@@ -1,13 +1,13 @@
-# Use-Case Specification: Choose Ingredients
+# Use-Case Specification: Find Ingredients
 
-# 1. Choose Ingredients
+# 1. Find Ingredients
 
 ## 1.1 Brief Description
 
-With this use case the user can quickly choose ingredients. These ingredients are in a database and categorized. The individual ingredients can then be managed.
+With this use case the user can quickly find ingredients. These ingredients are in a database and categorized. The individual ingredients can then be managed.
 
 ## 1.2 Mockup
-![Choose Ingredients](mockup.png)
+![Find Ingredients](mockup.png)
 
 ## 1.3 Screenshot
 --
