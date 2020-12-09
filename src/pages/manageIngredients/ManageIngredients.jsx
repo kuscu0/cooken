@@ -9,6 +9,7 @@ export default function ManageIngredients() {
 	const [searchableIngredients, setSearchableIngredients] = React.useState([]);
 	const [searchTerm, setSearchTerm] = React.useState("");
 	const [selectedIngredients, setSelectedIngredients] = React.useState([]);
+	const forceUpdate = React.useReducer(() => ({}))[1]
 
 
 	useEffect(() => {
@@ -62,6 +63,7 @@ export default function ManageIngredients() {
 			else
 				tmpSelected.push(ingredientId);
 			setSelectedIngredients(tmpSelected);
+			forceUpdate()
 		}
 		else {
 			console.error("Error toggling ingredient");
