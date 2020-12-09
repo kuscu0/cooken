@@ -268,7 +268,7 @@ Conditions:
 - Disclose source
 - Same license
 
-[See License](LICENSE)
+[See License](../LICENSE)
 
 ### 3.12 Applicable Standards
 
