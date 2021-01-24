@@ -1,10 +1,10 @@
-# Use-Case Specification: Manage Saved Recipes (CRUD)
+# Use-Case Specification: Manage Ingredient Inventory (CRUD)
 
-# 1. Manage Saved Recipes
+# 1. Manage Ingredient Inventory
 
 ## 1.1 Brief Description
 
-A logged in user can save and unsave recipes. Saved recipes can be listed on a page. 
+Users can add and remove ingredients from a predefined list. Added ingredient will be added to the users inventory.
 
 ## 1.2 Mockup
 
@@ -33,8 +33,7 @@ A logged in user can save and unsave recipes. Saved recipes can be listed on a p
 --
 
 # 4. Preconditions
-
-The user has to be logged in.
+--
 
 # 5. Postconditions
 --
