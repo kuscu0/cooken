@@ -76,14 +76,18 @@ There are two subsystems:
 
 ### 1.4 References
 
-| Title                                         | Date       | Publishing organization   |
-| --------------------------------------------- |:----------:| ------------------------- |
-| [GitHub](https://github.com/kuscu0/cooken)    | 21.10.2020 | <Cooken Team>             |
-| [Blog](https://cooken264100434.wordpress.com/)| 21.10.2020 | <Cooken Team>             |
-| [UCD](use_case_diagram.jpg)                   | 21.10.2020 | <Cooken Team>             |
-| [Use case: find recipes](UC/find-recipes/UC_Find_Recipes.md) | 21.10.2020 | <Cooken Team>             |
-| [Use case: choose ingredients](UC/find-ingredients/UC_Find_Ingredients.md) | 21.10.2020 | <Cooken Team>             |
-| --------------------------------------------- |:----------:| ------------------------- |
+-  [GitHub](https://github.com/kuscu0/cooken)
+-  [Blog](https://cooken264100434.wordpress.com/)
+-  [SAD](SAD/SAD.md)
+-  [SRS](SRS.md)
+-  [UCD](use_case_diagram.jpg)
+-  [.feature files](features/)
+-  [Use case: Comment on recipe](UC/comment-on-recipe/UC_comment_on_recipe.md)
+-  [Use case: Find ingredients](UC/find-ingredients/UC_Find_Ingredients.md)
+-  [Use case: Find recipes](UC/find-recipes/UC_Find_Recipes.md)
+-  [Use case: choose ingredients](UC/find-ingredients/UC_Find_Ingredients.md)
+-  [Use case: Manage ingredient inventory](UC/manage-ingredient-inventory/UC_manager_saved_recipes.md)
+-  [Use case: Manage saved recipes](UC/manage-saved-recipes/UC_manager_saved_recipes.md)
 
 
 ### 1.5 Overview
