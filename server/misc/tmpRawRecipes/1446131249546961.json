@@ -1,0 +1,242 @@
+{
+    "id": "1446131249546961",
+    "type": 0,
+    "title": "Tomatige Tomatensoße mit getrockneten Tomaten",
+    "subtitle": "",
+    "owner": {
+        "id": "b69d3db75ca4e2476305c62cc3bd2ebc",
+        "username": "Sylvie1979",
+        "rank": 1,
+        "role": "user",
+        "hasAvatar": false,
+        "hasPaid": false,
+        "deleted": false
+    },
+    "rating": {
+        "rating": 3.82,
+        "numVotes": 9
+    },
+    "difficulty": 2,
+    "hasImage": true,
+    "hasVideo": false,
+    "previewImageId": "497127",
+    "preparationTime": 20,
+    "isSubmitted": true,
+    "isRejected": false,
+    "createdAt": "2009-08-06T17:17:50+02:00",
+    "imageCount": 2,
+    "editor": null,
+    "submissionDate": null,
+    "isPremium": false,
+    "status": 99,
+    "servings": 4,
+    "kCalories": 87,
+    "nutrition": {
+        "kCalories": 87,
+        "carbohydrateContent": 10.18,
+        "proteinContent": 3.5,
+        "fatContent": 3.21
+    },
+    "instructions": "Getrocknete Tomaten, Frühlingszwiebeln, Knoblauch, Möhren und Zucchini klein schneiden und alles Gemüse in etwas Öl anbraten. Mit einem Schuss Wasser ablöschen und  ½ TL Gemüsebrühe einrühren. Ca. 10 Minuten köcheln lassen, bis das Gemüse weich ist. Dann mit dem Mixstab pürieren. \r\n\r\nDie passierten Tomaten und etwas Oregano dazu geben und alles verrühren. Noch ein paar Minuten köcheln lassen und mit Salz, Pfeffer, Paprika und evtl. noch etwas gekörnter Brühe abschmecken.",
+    "miscellaneousText": "",
+    "ingredientsText": "",
+    "tags": [
+        "kalorienarm",
+        "Gemüse",
+        "fettarm",
+        "gekocht",
+        "Saucen",
+        "vegetarisch",
+        "vegan",
+        "Paleo"
+    ],
+    "fullTags": [
+        {
+            "id": 18,
+            "name": "Gemüse"
+        },
+        {
+            "id": 32,
+            "name": "Vegetarisch"
+        },
+        {
+            "id": 34,
+            "name": "Saucen"
+        },
+        {
+            "id": 55,
+            "name": "kalorienarm"
+        },
+        {
+            "id": 56,
+            "name": "fettarm"
+        },
+        {
+            "id": 57,
+            "name": "Vegan"
+        },
+        {
+            "id": 144,
+            "name": "gekocht"
+        },
+        {
+            "id": 7710,
+            "name": "Paleo"
+        }
+    ],
+    "viewCount": 70414,
+    "cookingTime": 0,
+    "restingTime": 0,
+    "totalTime": 20,
+    "ingredientGroups": [
+        {
+            "header": " ",
+            "ingredients": [
+                {
+                    "id": "3243170",
+                    "name": "Tomate(n)",
+                    "unit": "g",
+                    "unitId": "3",
+                    "amount": 100.0,
+                    "isBasic": false,
+                    "usageInfo": ", getrocknete",
+                    "url": "https://www.chefkoch.de/magazin/artikel/46,0/Chefkoch/Tomaten-Pflanzen-ernten-tolle-Gerichte-entdecken.html",
+                    "foodId": "25",
+                    "productGroup": "Obst,  Gemüse und Kräuter"
+                },
+                {
+                    "id": "3243171",
+                    "name": "Frühlingszwiebel(n)",
+                    "unit": "",
+                    "unitId": "9",
+                    "amount": 2.0,
+                    "isBasic": false,
+                    "usageInfo": "",
+                    "url": null,
+                    "foodId": "23",
+                    "productGroup": "Obst,  Gemüse und Kräuter"
+                },
+                {
+                    "id": "3243172",
+                    "name": "Knoblauchzehe(n)",
+                    "unit": "",
+                    "unitId": "9",
+                    "amount": 1.0,
+                    "isBasic": false,
+                    "usageInfo": "",
+                    "url": "https://www.chefkoch.de/magazin/artikel/29,0/Chefkoch/Knoblauch.html",
+                    "foodId": "5675",
+                    "productGroup": "Obst,  Gemüse und Kräuter"
+                },
+                {
+                    "id": "3243173",
+                    "name": "Möhre(n)",
+                    "unit": "",
+                    "unitId": "9",
+                    "amount": 2.0,
+                    "isBasic": false,
+                    "usageInfo": "",
+                    "url": "https://www.chefkoch.de/magazin/artikel/2737,0/Chefkoch/Moehren-knackige-und-gesunde-Wurzeln-fuer-alle-Faelle.html",
+                    "foodId": "24",
+                    "productGroup": "Obst,  Gemüse und Kräuter"
+                },
+                {
+                    "id": "3243174",
+                    "name": "Zucchini",
+                    "unit": "",
+                    "unitId": "9",
+                    "amount": 1.0,
+                    "isBasic": false,
+                    "usageInfo": "",
+                    "url": "https://www.chefkoch.de/magazin/artikel/976,0/Chefkoch/Leckere-Zucchini.html",
+                    "foodId": "308",
+                    "productGroup": "Obst,  Gemüse und Kräuter"
+                },
+                {
+                    "id": "3243175",
+                    "name": "Tomate(n)",
+                    "unit": "Pck.",
+                    "unitId": "169",
+                    "amount": 1.0,
+                    "isBasic": false,
+                    "usageInfo": ", passierte",
+                    "url": "https://www.chefkoch.de/magazin/artikel/46,0/Chefkoch/Tomaten-Pflanzen-ernten-tolle-Gerichte-entdecken.html",
+                    "foodId": "25",
+                    "productGroup": "Obst,  Gemüse und Kräuter"
+                },
+                {
+                    "id": "3243176",
+                    "name": "Gemüsebrühe",
+                    "unit": "TL, gehäuft",
+                    "unitId": "58",
+                    "amount": 1.0,
+                    "isBasic": false,
+                    "usageInfo": ", gekörnte",
+                    "url": null,
+                    "foodId": "72",
+                    "productGroup": "Gewürze"
+                },
+                {
+                    "id": "3243177",
+                    "name": "Salz und Pfeffer",
+                    "unit": "",
+                    "unitId": "9",
+                    "amount": 0.0,
+                    "isBasic": false,
+                    "usageInfo": "",
+                    "url": null,
+                    "foodId": "292",
+                    "productGroup": "Gewürze"
+                },
+                {
+                    "id": "3243178",
+                    "name": "Oregano",
+                    "unit": "",
+                    "unitId": "9",
+                    "amount": 0.0,
+                    "isBasic": false,
+                    "usageInfo": "",
+                    "url": null,
+                    "foodId": "457",
+                    "productGroup": "Obst,  Gemüse und Kräuter"
+                },
+                {
+                    "id": "3243179",
+                    "name": "Paprikapulver",
+                    "unit": "",
+                    "unitId": "9",
+                    "amount": 0.0,
+                    "isBasic": false,
+                    "usageInfo": ", edelsüß",
+                    "url": null,
+                    "foodId": "35",
+                    "productGroup": "Gewürze"
+                },
+                {
+                    "id": "3243180",
+                    "name": "Öl",
+                    "unit": "etwas",
+                    "unitId": "22",
+                    "amount": 0.0,
+                    "isBasic": true,
+                    "usageInfo": "",
+                    "url": null,
+                    "foodId": "184",
+                    "productGroup": "Essig,  Öl und Soßen"
+                }
+            ]
+        }
+    ],
+    "categoryIds": [
+        "84",
+        "164",
+        "77",
+        "39",
+        "111",
+        "37",
+        "36"
+    ],
+    "recipeVideoId": null,
+    "isIndexable": true,
+    "siteUrl": "https://www.chefkoch.de/rezepte/1446131249546961/Tomatige-Tomatensosse-mit-getrockneten-Tomaten.html"
+}

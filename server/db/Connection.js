@@ -1,188 +1,214 @@
+const MongoClient = require("mongodb").MongoClient;
+const connectionErr = require("./connectionErr");
+const bcrypt = require("bcrypt");
+
 class Connection {
-    constructor(uri) {
-        this.MongoClient = require("mongodb").MongoClient;
-        this.uri = uri;
-        this.client = new this.MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
-        this.CryptoJS = require("crypto-js");
-        this.connectionErr = require("./connectionErr");
-        this.rCImport = require("./recipeControl");
-        this.recipeControl = new this.rCImport(this.client);
-    }
+	saltRounds = 10
 
-    testDB() {
-        this.client.connect(err => {
-            if (err) {
-                console.log(err);
-            }
-            const collection = this.client.db("cooken").collection("recipes");
-            // perform actions on the collection object
-            collection.insertOne({name: "Spätzle", persons: "20002"}, err => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Inserted");
-                }
-            })
-        });
-    }
+	constructor(uri) {
+		this.client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+	}
 
-    createUser(usrName, usrPW, usrMail) {
-        let newPW = this.CryptoJS.SHA256(usrPW).toString();
-        let client = this.client;
-        return new Promise(function (resolve, reject) {
-            function createUser(MongoClient, usrName, usrPW, usrEmail) {
-                return new Promise(function (resolve, reject) {
-                    MongoClient.connect(err => {
-                        if (err) {
-                            reject(err);
-                        }
-                        const collection = MongoClient.db("cooken").collection("users");
-                        // perform actions on the collection object
-                        collection.insertOne({name: usrName, password: usrPW, email: usrEmail}, err => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve(`success`);
-                            }
-                        });
-                    });
-                });
-            }
+	async hashPassword(password) {
+		return await bcrypt.hash(password, this.saltRounds);
+	}
 
-            createUser(client, usrName, newPW, usrMail)
-                .then(value => {
-                    resolve(value);
-                })
-                .catch(err => {
-                    reject(err);
-                });
-        });
-    }
+	async checkPasswordValidity(password, hashedPassword) {
+		return await bcrypt.compare(password, hashedPassword);
+	}
 
-    updateUser(usrName, usrPW, usrMail) {
-        let newPW = this.CryptoJS.SHA256(usrPW).toString();
-        let client = this.client;
-        return new Promise(function (resolve, reject) {
-            function updateUser(MongoClient, usrName, usrPW, usrEmail) {
-                return new Promise(function (resolve, reject) {
-                    MongoClient.connect(err => {
-                        if (err) {
-                            reject(err);
-                        }
-                        const collection = MongoClient.db("cooken").collection("users");
-                        collection.update({name: usrName}, {name: usrName, password: usrPW, email: usrEmail}, err => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve(`success`);
-                            }
-                        });
-                    });
-                });
-            }
+	async createUser(usrName, usrPW, usrMail) {
+		if (usrName === "")
+			throw "User Name must not be empty";
+		if (usrMail === "")
+			throw "User E-Mail must not be empty";
+		const hashedPw = await this.hashPassword(usrPW);
+		const db = (await this.client.connect()).db("cooken");
+		const existingUsers = await db.collection("users").find({email: usrMail});
+		if (await existingUsers.count())
+			throw "E-Mail unavailable";
+		await db.collection("users").insertOne({
+			name: usrName,
+			email: usrMail,
+			password: hashedPw,
+		});
+		return "success";
+	}
 
-            updateUser(client, usrName, newPW, usrMail)
-                .then(value => {
-                    resolve(value);
-                })
-                .catch(err => {
-                    reject(err);
-                });
-        });
-    }
+	async updateUser(usrName, usrPW, usrMail) {
+		const hashedPw = await this.hashPassword(usrPW);
+		const db = (await this.client.connect()).db("cooken");
+		await db.collection("users").updateOne(
+			{
+				email: usrMail
+			},
+			{
+				name: usrName,
+				email: usrMail,
+				password: hashedPw,
+			}
+		);
+		return "success";
+	}
 
-    removeUser(usrName) {
-        let client = this.client;
-        return new Promise(function (resolve, reject) {
-            function removeUser(MongoClient, usrName) {
-                return new Promise(function (resolve, reject) {
-                    MongoClient.connect(err => {
-                        if (err) {
-                            reject(err);
-                        }
-                        const collection = MongoClient.db("cooken").collection("users");
-                        collection.remove({name: usrName}, err => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve(`success`);
-                            }
-                        });
-                    });
-                });
-            }
+	async removeUser(usrMail) {
+		const db = (await this.client.connect()).db("cooken");
+		await db.collection("users").deleteOne(
+			{
+				email: usrMail
+			}
+		)
+		return "success";
+	}
 
-            removeUser(client, usrName)
-                .then(value => {
-                    resolve(value);
-                })
-                .catch(err => {
-                    reject(err);
-                });
-        });
-    }
+	async checkUser(usrMail, usrPW) {
+		const db = (await this.client.connect()).db("cooken");
+		const result = await db.collection("users").findOne(
+			{
+				email: usrMail
+			}
+		);
+		return await this.checkPasswordValidity(usrPW, result.password) ? result : null;
+	}
 
-    checkUser(usrName, usrPW) {
-        let client = this.client;
-        let newPW = this.CryptoJS.SHA256(usrPW).toString();
-        let _this = this;
-        return new Promise(function (resolve, reject) {
-            function checkUser(MongoClient, usrName, usrPW) {
-                return new Promise(function (resolve, reject) {
-                    MongoClient.connect(err => {
-                        if (err) {
-                            reject(err);
-                        }
-                        const collection = MongoClient.db("cooken").collection("users");
-                        collection.findOne({name: usrName}, function (err, result) {
-                            if (err) reject(err);
-                            else {
-                                if (usrPW == result.password) {
-                                    resolve("success");
-                                } else {
-                                    reject(new _this.connectionErr("Wrong Credentials"));
-                                }
-                            }
-                        });
-                    })
-                })
-            }
-            checkUser(client, usrName, newPW)
-                .then(value => {
-                    resolve(value)
-                })
-                .catch(err => {
-                    reject(err);
-                });
-        });
-    }
+	async getIngredientGroups() {
+		const db = (await this.client.connect()).db("cooken");
+		return new Promise((resolve, reject) => {
+			db.collection("ingredients").aggregate(
+				[
+					{
+						'$group': {
+							'_id': '$category',
+							'ingredients': {
+								'$push': {id: "$_id", name: '$name'}
+							},
+							'count': {
+								'$sum': 1
+							}
+						}
+					},
+					{
+						'$sort': {
+							'count': -1
+						}
+					},
+					{
+						'$unset': "count"
+					}
+				],
+				async (err, result) => {
+					resolve(await result.toArray())
+				}
+			);
+		});
+	}
 
-    createRecipe(rData) {
-        const recipeControl = this.recipeControl;
-        return new Promise(function (resolve, reject) {
-            recipeControl.createRecipe(rData)
-                .then(value => resolve(value))
-                .catch(err => reject(err));
-        });
-    }
+	async getUserInventory(uid) {
+		const inventoryColl = (await this.client.connect()).db("cooken").collection("inventory");
+		let inventory = await inventoryColl.findOne({_id: uid});
+		if (!inventory) {
+			await inventoryColl.insertOne({_id: uid, ingredients: []});
+			inventory = [];
+		}
+		return inventory.ingredients;
+	}
 
-    updateRecipe(rData) {
-        const recipeControl = this.recipeControl;
-        return new Promise(function (resolve,reject) {
-            recipeControl.updateRecipe(rData)
-                .then(value => resolve(value))
-                .catch(err => reject(err));
-        });
-    }
+	async addToInventory(uid, ingredient) {
+		const inventoryColl = (await this.client.connect()).db("cooken").collection("inventory");
+		let inventory = await inventoryColl.findOne({_id: uid});
+		if (!inventory) {
+			await inventoryColl.insertOne({_id: uid, ingredients: []});
+			inventory = [];
+		}
+		if (await inventoryColl.findOne({_id: uid, ingredients: ingredient}))
+			throw "Ingredient already added";
+		inventory = await inventoryColl.updateOne(
+			{
+				_id: uid
+			},
+			{
+				$push: {ingredients: ingredient}
+			}
+		);
+		return "success"
+	}
 
-    removeRecipe(title) {
-        const recipeControl = this.recipeControl;
-        return new Promise(function (resolve, reject) {
-            recipeControl.removeRecipe(title)
-                .then(value => resolve(value))
-                .catch(err => reject(err));
-        });
-    }
+	async removeFromInventory(uid, ingredient) {
+		const inventoryColl = (await this.client.connect()).db("cooken").collection("inventory");
+		let inventory = await inventoryColl.findOne({_id: uid});
+		if (!inventory) {
+			await inventoryColl.insertOne({_id: uid, ingredients: []});
+			inventory = [];
+		}
+		if (!await inventoryColl.findOne({_id: uid, ingredients: ingredient}))
+			throw "Ingredient not in inventory";
+		inventory = await inventoryColl.updateOne(
+			{
+				_id: uid
+			},
+			{
+				$pull: {ingredients: ingredient}
+			}
+		);
+		return "success";
+	}
+
+	async getRecipeData(recipeId) {
+		const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
+		const recipe = await recipesColl.findOne({_id: recipeId});
+		if (!recipe)
+			throw "Invalid ID";
+		return recipe;
+	}
+
+	async toggleRecipe(uid, recipeId) {
+		const savedRecipesColl = (await this.client.connect()).db("cooken").collection("savedRecipes");
+		if (!await savedRecipesColl.findOne({_id: uid})) {
+			await savedRecipesColl.insertOne({_id: uid, savedRecipes: []});
+		}
+		if (await savedRecipesColl.findOne({_id: uid, savedRecipes: recipeId})) {
+			await savedRecipesColl.updateOne(
+				{
+					_id: uid,
+				},
+				{
+					$pull: {savedRecipes: recipeId}
+				}
+			);
+			return false;
+		}
+		else {
+			await savedRecipesColl.updateOne(
+				{
+					_id: uid,
+				},
+				{
+					$push: {savedRecipes: recipeId}
+				}
+			);
+			return true;
+		}
+	}
+
+	async isSavedRecipe(uid, recipeId) {
+		const savedRecipesColl = (await this.client.connect()).db("cooken").collection("savedRecipes");
+		if (!await savedRecipesColl.findOne({_id: uid})) {
+			await savedRecipesColl.insertOne({_id: uid, savedRecipes: []});
+			return false;
+		}
+
+		return Boolean(await savedRecipesColl.findOne({_id: uid, savedRecipes: recipeId}));
+
+	}
+
+	async getSavedRecipes(uid) {
+		const savedRecipesColl = (await this.client.connect()).db("cooken").collection("savedRecipes");
+		const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
+		const savedRecipes = await savedRecipesColl.findOne({ _id: uid });
+		if (!savedRecipes)
+			throw "No saved recipes found";
+		return recipesColl.find({_id: {$in: savedRecipes.savedRecipes || []}}).toArray();
+	}
 }
 
 module.exports = Connection;
