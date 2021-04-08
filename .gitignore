@@ -3,4 +3,4 @@
 
 desktop.ini
 server/node_modules/
-server/misc/tmpRawRecipes/*
+server/misc/tmpRawRecipes
