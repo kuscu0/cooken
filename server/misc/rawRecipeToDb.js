@@ -8,7 +8,8 @@ const lastRecipe = 10000;
 
 MongoClient.connect("mongodb://localhost:27017", {useNewUrlParser: true, useUnifiedTopology: true}).then(async db => {
 	const recipes = db.db("cooken").collection("recipes");
-	// await recipes?.drop();
+	if (recipes.countDocuments() > 0)
+		await recipes.drop();
 	let i = 0;
 	console.log("connected to db \n");
 	console.log("finding files");
