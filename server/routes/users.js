@@ -9,74 +9,20 @@ router.get('/', function (req, res, next) {
 	res.send('respond with a resource');
 });
 
-router.put('/', asyncHandler(async (req, res, next) => {
-	let DB = req.app.get('DB');
-	try {
-		res.send(await DB.createUser(req.body.name, req.body.password, req.body.email));
-	} catch (e) {
-		res.status(e.statusCode || 500).json(e);
-		console.error(e);
-	}
-}));
-
-router.patch('/', asyncHandler(async (req, res, next) => {
-	let DB = req.app.get('DB');
-	try {
-		res.send(await DB.updateUser(req.body.name, req.body.password, req.body.email));
-	} catch (e) {
-		res.status(e.statusCode || 500).json(e);
-		console.error(e);
-	}
-}));
-
-router.delete('/', asyncHandler(async (req, res, next) => {
-	let DB = req.app.get('DB');
-	try {
-		res.send(await DB.removeUser(req.body.email));
-
-	} catch (e) {
-		res.status(e.statusCode || 500).json(e);
-		console.error(e);
-	}
-}));
-
-router.post("/login", asyncHandler(async (req, res, next) => {
-	let DB = req.app.get('DB');
-	const {email, password} = req.body;
-	const foundUser = await DB.checkUser(email, password);
-	if (foundUser) {
-		res.json({
-			token: jwt.sign(
-				{uid: foundUser._id},
-				jwtSecret,
-				{
-					expiresIn: 60 * 60 * 24 * 7      // valid for 6 days
-				}
-			)
-		});
-	} else {
-		res.status(401).send("Wrong credentials");
-	}
-}));
 
 // router.get("/savedRecipes", verifyJwt, asyncHandler(async (req, res, next) => {
 // 	res.send("Wow my recipes!");
 // }));
 
-router.get("/ingredientGroups", asyncHandler(async (req, res, next) => {
-	let DB = req.app.get('DB');
-	res.json({ ingredientGroups: await DB.getIngredientGroups() });
-}));
-
 router.get("/inventory", verifyJwt, asyncHandler(async (req, res, next) => {
 	let DB = req.app.get('DB');
-	res.send(await DB.getUserInventory(req.uid));
+	res.send(await DB.user.getUserInventory(req.uid));
 }));
 
 router.put("/inventory", verifyJwt, asyncHandler(async (req, res, next) => {
 	let DB = req.app.get('DB');
 	try {
-		res.send(await DB.addToInventory(req.uid, req.body.ingredient));
+		res.send(await DB.user.addToInventory(req.uid, req.body.ingredient));
 	}
 	catch (e) {
 		res.status(400).send(e);
@@ -86,20 +32,10 @@ router.put("/inventory", verifyJwt, asyncHandler(async (req, res, next) => {
 router.delete("/inventory", verifyJwt, asyncHandler(async (req, res, next) => {
 	let DB = req.app.get('DB');
 	try {
-		res.send(await DB.removeFromInventory(req.uid, req.body.ingredient));
+		res.send(await DB.user.removeFromInventory(req.uid, req.body.ingredient));
 	}
 	catch (e) {
 		res.status(400).send(e);
-	}
-}));
-
-router.get("/recipe/*", asyncHandler(async (req, res, next) => {
-	let DB = req.app.get('DB');
-	try {
-		res.json(await DB.getRecipeData(req.path.match(/[^/]*$/)[0]));
-	}
-	catch (e) {
-		res.status(404).send(e);
 	}
 }));
 
@@ -107,9 +43,9 @@ router.get("/savedRecipes", verifyJwt, asyncHandler(async (req, res, next) => {
 	let DB = req.app.get('DB');
 	try {
 		if (req.query.recipeId)
-			res.send(await DB.isSavedRecipe(req.uid, req.query.recipeId));
+			res.send(await DB.user.isSavedRecipe(req.uid, req.query.recipeId));
 		else
-			res.json(await DB.getSavedRecipes(req.uid));
+			res.json(await DB.user.getSavedRecipes(req.uid));
 	}
 	catch (e) {
 		res.status(400).send(e.toString());
@@ -119,7 +55,7 @@ router.get("/savedRecipes", verifyJwt, asyncHandler(async (req, res, next) => {
 router.post("/savedRecipes", verifyJwt, asyncHandler(async (req, res, next) => {
 	let DB = req.app.get('DB');
 	try {
-		res.send(await DB.toggleRecipe(req.uid, req.body.recipeId));
+		res.send(await DB.user.toggleRecipe(req.uid, req.body.recipeId));
 	}
 	catch (e) {
 		res.status(400).send(e.toString());

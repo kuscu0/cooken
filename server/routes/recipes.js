@@ -1,29 +1,20 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const asyncHandler = require('express-async-handler');
 
-router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
-});
-
-router.post('/create', function (req, res) {
+router.get("/ingredientGroups", asyncHandler(async (req, res, next) => {
     let DB = req.app.get('DB');
-    DB.createRecipe(req.body.rData)
-        .then(value => res.send(value))
-        .catch(err => res.status(err.statusCode || 500).json(err));
-});
+    res.json({ ingredientGroups: await DB.recipe.getIngredientGroups() });
+}));
 
-router.post('/update', function (req, res) {
+router.get("/*", asyncHandler(async (req, res, next) => {
     let DB = req.app.get('DB');
-    DB.updateRecipe(req.body.rData)
-        .then(value => res.send(value))
-        .catch(err => res.status(err.statusCode || 500).json(err));
-});
-
-router.post('/remove', function (req, res) {
-    let DB = req.app.get('DB');
-    DB.removeRecipe(req.body.title)
-        .then(value =>res.send(value))
-        .catch(err => res.status(err.statusCode || 500).json(err));
-})
+    try {
+        res.json(await DB.recipe.getRecipeData(req.path.match(/[^/]*$/)[0]));
+    }
+    catch (e) {
+        res.status(404).send(e);
+    }
+}));
 
 module.exports = router;

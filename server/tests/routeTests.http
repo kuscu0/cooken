@@ -1,0 +1,11 @@
+GET http://localhost:3000/users/inventory
+###
+GET http://localhost:3000/recipe/ingredientGroups
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "http@testUser.de",
+  "password": "1234"
+}

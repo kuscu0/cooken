@@ -7,7 +7,9 @@ const cors = require('cors');
 const DBConnection = require('./db/Connection');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users');      //Router for user data
+const loginRouter = require('./routes/login');      //Router for everything relevant for login/passwords
+const recipeRouter = require('./routes/recipes');   //Router for recipe data
 
 const app = express();
 
@@ -23,6 +25,8 @@ app.set('DB', localDB);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth', loginRouter);
+app.use('/recipe', recipeRouter);
 
 console.log("Up and running")
 
