@@ -1,0 +1,3 @@
+GET http://localhost:3000/search/title?title=Orangen
+###
+GET http://localhost:3000/search/title?title=Rucola
