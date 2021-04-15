@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {serverAddress} from "../../globals";
 import {useLocation} from "react-router-dom";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
+import {getImgSrcFromRecipeData} from "../../utils/utils";
 
 export default function Recipe() {
 	const [recipeData, setRecipeData] = useState(null);
@@ -48,7 +49,7 @@ export default function Recipe() {
 				<h1>{recipeData?.title}</h1>
 				{ localStorage.token && <SimpleButton onClick={toggleSaveRecipe}>{isSaved ? "Unsave" : "Save"}</SimpleButton>}
 			</div>
-			<img src={`https://img.chefkoch-cdn.de/rezepte/${recipeData?._id}/bilder/${recipeData?.previewImageId}/crop-552x552/${recipeData?.title.replace(/\s/g, "-")}.jpg`} alt={recipeData?.title} className="recipeImage"/>
+			<img src={getImgSrcFromRecipeData(recipeData, "l")} alt={recipeData?.title} className="recipeImage"/>
 			<div className="ingredients">
 				{
 					recipeData?.ingredientGroups.map((ingredientsGroup, i) => (
