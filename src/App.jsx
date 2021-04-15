@@ -10,9 +10,10 @@ import SimpleButton from "./basics/simpleButton/SimpleButton";
 import RegisterForm from "./pages/RegisterForm/RegisterForm";
 import LoginForm from "./pages/loginForm/LoginForm";
 import {IsLoggedInContext} from "./context/IsLoggedInContext";
+import {isLoggedIn} from "./utils/utils";
 
 export default function App() {
-	const [isLoggedIn, setIsLoggedIn] = useState(Boolean(localStorage.token))
+	const [isUserLoggedIn, setUserIsLoggedIn] = useState(isLoggedIn())
 
 	function onNavClick(e) {
 		Array.from(e.currentTarget.parentElement.children).forEach(el => el.classList.remove("current"));
@@ -21,7 +22,7 @@ export default function App() {
 
 	return (
 		<BrowserRouter>
-			<IsLoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
+			<IsLoggedInContext.Provider value={[isUserLoggedIn, setUserIsLoggedIn]}>
 				<div className="App">
 					<header>
 						<Link to="/" className="logo"><img src="/img/logo.png" alt="logo"/></Link>
@@ -30,7 +31,7 @@ export default function App() {
 							<Link to="/recipeSearch" onClick={onNavClick}>Search</Link>
 							<Link to="/myProfile" onClick={onNavClick}>My Profile</Link>
 						</nav>
-						<div style={{ visibility: isLoggedIn ? "hidden" : "visible" }}>
+						<div style={{ visibility: isUserLoggedIn ? "hidden" : "visible" }}>
 							<Link to="/login" className="login"><SimpleButton>Login</SimpleButton></Link>
 							<Link to="/register" className="register"><SimpleButton>Register</SimpleButton></Link>
 						</div>

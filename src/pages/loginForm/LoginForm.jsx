@@ -1,9 +1,9 @@
 import "./LoginForm.scss";
-import {serverAddress} from "../../globals";
 import {useContext, useState} from "react";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
 import {IsLoggedInContext} from "../../context/IsLoggedInContext";
 import {useHistory} from "react-router-dom";
+import {serverAddress} from "../../utils/utils";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState("");

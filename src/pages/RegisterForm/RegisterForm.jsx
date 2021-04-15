@@ -1,8 +1,8 @@
 import "./RegisterForm.scss";
-import {serverAddress} from "../../globals";
 import {useState} from "react";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
 import { useHistory } from "react-router-dom";
+import {serverAddress} from "../../utils/utils";
 
 export default function RegisterForm() {
 	const [username, setUsername] = useState("");

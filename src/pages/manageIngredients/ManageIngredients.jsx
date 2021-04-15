@@ -1,6 +1,6 @@
 import "./ManageIngrediens.scss";
 import React, {useEffect} from "react";
-import {serverAddress} from "../../globals";
+import {authFetch, isLoggedIn, serverAddress} from "../../utils/utils";
 
 export default function ManageIngredients() {
 	const [categories, setCategories] = React.useState([]);
@@ -20,10 +20,8 @@ export default function ManageIngredients() {
 			setAllIngredients(allIngredients);
 			setSearchableIngredients(allIngredients)
 		});
-		if (localStorage.token) {
-			fetch(`${serverAddress}/users/inventory`, { headers: new Headers({Authorization: `Bearer ${localStorage.token}`}) }).then(async response => {
-				setSelectedIngredients(await response.json());
-			})
+		if (isLoggedIn()) {
+			authFetch("/users/inventory", true).then(inventory => setSelectedIngredients(inventory));
 		}
 	}, []);
 
@@ -48,15 +46,14 @@ export default function ManageIngredients() {
 	async function toggleSelectedIngredient(event) {
 		const isAdded = event.currentTarget.classList.contains("added");
 		const ingredientId = event.currentTarget.getAttribute("data-ingredient-id");
-		const response = await fetch(
-			`${serverAddress}/users/inventory`,
+		const response = await authFetch(
+			"/users/inventory", false,
 			{
 				method: isAdded ? "DELETE" : "PUT",
-				headers: new Headers({Authorization: `Bearer ${localStorage.token}`}),
 				body: new URLSearchParams([["ingredient", ingredientId]]),
 			}
 		);
-		if (await response.text() === "success") {
+		if (response === "success") {
 			const tmpSelected = selectedIngredients;
 			if (isAdded)
 				tmpSelected.splice(tmpSelected.indexOf(ingredientId), 1);

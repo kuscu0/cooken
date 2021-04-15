@@ -1,9 +1,8 @@
 import "./Recipe.scss";
 import React, {useEffect, useState} from "react";
-import {serverAddress} from "../../globals";
 import {useLocation} from "react-router-dom";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
-import {getImgSrcFromRecipeData} from "../../utils/utils";
+import {authFetch, getImgSrcFromRecipeData, isLoggedIn, serverAddress} from "../../utils/utils";
 
 export default function Recipe() {
 	const [recipeData, setRecipeData] = useState(null);
@@ -17,13 +16,8 @@ export default function Recipe() {
 			const data = await response.json()
 			setRecipeData(data);
 
-			const isSavedResponse = await fetch(
-				`${serverAddress}/users/savedRecipes?recipeId=${encodeURIComponent(data._id)}`,
-				{
-					headers: new Headers({Authorization: `Bearer ${localStorage.token}`}),
-				}
-			);
-			setIsSaved(await isSavedResponse.text() === "true");
+			const isSavedResponse = await authFetch(`/users/savedRecipes?recipeId=${encodeURIComponent(data._id)}`, false);
+			setIsSaved(isSavedResponse === "true");
 		})
 
 	}, [location.pathname]);
@@ -32,22 +26,19 @@ export default function Recipe() {
 		if (!recipeData)
 			throw "No loaded recipe"
 
-		const response = await fetch(`${serverAddress}/users/savedRecipes`, {
+		const response = await authFetch("/users/savedRecipes", false, {
 			method: "POST",
-			headers: new Headers({Authorization: `Bearer ${localStorage.token}`}),
 			body: new URLSearchParams([["recipeId", recipeData._id]])
 		})
-		if (response.status !== 200)
-			throw "Error toggling save";
 
-		setIsSaved(await response.text() === "true");
+		setIsSaved(response === "true");
 	}
 
 	return (
 		<div className="recipePage paddedPage">
 			<div className="title">
 				<h1>{recipeData?.title}</h1>
-				{ localStorage.token && <SimpleButton onClick={toggleSaveRecipe}>{isSaved ? "Unsave" : "Save"}</SimpleButton>}
+				{ isLoggedIn() && <SimpleButton onClick={toggleSaveRecipe}>{isSaved ? "Unsave" : "Save"}</SimpleButton>}
 			</div>
 			<img src={getImgSrcFromRecipeData(recipeData, "l")} alt={recipeData?.title} className="recipeImage"/>
 			<div className="ingredients">

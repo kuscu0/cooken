@@ -1,7 +1,7 @@
 import "./MyProfile.scss";
 import RecipeTile from "../../basics/recipeTile/RecipeTile";
 import {useEffect, useState} from "react";
-import {serverAddress} from "../../globals";
+import {authFetch, isLoggedIn, serverAddress} from "../../utils/utils";
 
 export default function MyProfile() {
 	const [savedRecipes, setSavedRecipes] = useState([]);
@@ -14,15 +14,10 @@ export default function MyProfile() {
 	}
 
 	useEffect(() => {
-		if (!localStorage.token)
+		if (!isLoggedIn())
 			return;
-		fetch(`${serverAddress}/users/savedRecipes`,
-			{headers: new Headers({Authorization: `Bearer ${localStorage.token}`}),}
-		).then(async response => {
-			if (response.status !== 200)
-				throw "error getting saved recipes";
-			setSavedRecipes((await response.json()).sort(stringSort));
-		});
+		authFetch("/users/savedRecipes", true)
+			.then(response => setSavedRecipes(response.sort(stringSort)));
 	}, []);
 
 	function randStr() {

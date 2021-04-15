@@ -4,8 +4,7 @@ import DropDown from "../../basics/dropDown/DropDown";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
 import RecipeTile from "../../basics/recipeTile/RecipeTile";
 import {useState} from "react";
-import {serverAddress} from "../../globals";
-import {getImgSrcFromRecipeData} from "../../utils/utils";
+import {getImgSrcFromRecipeData, serverAddress} from "../../utils/utils";
 
 export default function RecipeSearch() {
 	const [ searchQuery, setSearchQuery ] = useState("");
