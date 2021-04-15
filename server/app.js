@@ -8,7 +8,7 @@ const DBConnection = require('./db/Connection');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');      //Router for user data
-const loginRouter = require('./routes/login');      //Router for everything relevant for login/passwords
+const loginRouter = require('./routes/login');      //Router for everything relevant for login.js/passwords
 const recipeRouter = require('./routes/recipes');   //Router for recipe data
 
 const app = express();

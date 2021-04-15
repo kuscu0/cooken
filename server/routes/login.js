@@ -35,7 +35,7 @@ router.delete('/', asyncHandler(async (req, res, next) => {
     }
 }));
 
-router.post("/login", asyncHandler(async (req, res, next) => {
+router.post("/login.js", asyncHandler(async (req, res, next) => {
     let DB = req.app.get('DB');
     const {email, password} = req.body;
     const foundUser = await DB.login.checkUser(email, password);
