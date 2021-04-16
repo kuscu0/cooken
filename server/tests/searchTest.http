@@ -1,0 +1,36 @@
+### Search By Title
+GET http://localhost:3000/search?title=Orangen
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Search By Rating
+GET http://localhost:3000/search?minRating=4.8
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Search By Time
+GET http://localhost:3000/search?maxTime=10
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Search By Difficulty
+GET http://localhost:3000/search?difficulty=1
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
