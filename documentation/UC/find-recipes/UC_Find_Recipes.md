@@ -35,3 +35,13 @@ With this use case the user can search for recipes. Recipes displayed in the res
 
 # 5. Postconditions
 --
+
+# 6. Function Points
+
+### Domain Characteristic Table
+
+![domain_characteristic_table](domain_characteristic_table.jpg)
+
+### Function Points
+
+![function_points](function_points.jpg)
