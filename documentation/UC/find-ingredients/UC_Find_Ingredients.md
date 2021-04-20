@@ -39,4 +39,11 @@ With this use case the user can quickly find ingredients. These ingredients are 
 --
 
 # 6. Function Points
---
+
+### Domain Characteristic Table
+
+![domain_characteristic_table](domain_characteristic_table.jpg)
+
+### Function Points
+
+![function_points](function_points.jpg)
