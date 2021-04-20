@@ -38,3 +38,13 @@ The user has to be logged in.
 --
 
 Changes need to be saved on the server.
+
+# 6. Function Points
+
+### Domain Characteristic Table
+
+![domain_characteristic_table](domain_characteristic_table.jpg)
+
+### Function Points
+
+![function_points](function_points.jpg)
