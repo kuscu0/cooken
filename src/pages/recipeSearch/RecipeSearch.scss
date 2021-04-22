@@ -1,9 +1,11 @@
+
 .recipeSearch {
 	display: flex;
 	flex-direction: column;
 
 	> .optionsBar {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		gap: .25rem;
 		margin-bottom: 1rem;
@@ -11,6 +13,37 @@
 		> .searchButton {
 			margin-left: auto;
 			font-size: 1.25rem;
+		}
+
+		.ratingFilter {
+			margin: 0 .5rem;
+
+			.ratingStar {
+				width: 1.5rem;
+				height: 1.5rem;
+				background-image: url("../../static/img/star_empty.png");
+				background-size: cover;
+				cursor: pointer;
+
+				&.active {
+					background-image: url("../../static/img/star_filled.svg");
+				}
+			}
+		}
+
+		.maxTime, .difficulty {
+			button {
+				background: #e8eeef;
+				border-radius: 4px;
+				margin: 0 .1rem;
+				padding: .25rem .4rem;
+				cursor: pointer;
+				user-select: none;
+
+				&.active {
+					background: #c8d4d7;
+				}
+			}
 		}
 	}
 
