@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
 import {authFetch, getImgSrcFromRecipeData, isLoggedIn, serverAddress} from "../../utils/utils";
+import RecipeImg from "../../basics/recipeImage/RecipeImage";
 
 export default function Recipe() {
 	const [recipeData, setRecipeData] = useState(null);
@@ -40,7 +41,7 @@ export default function Recipe() {
 				<h1>{recipeData?.title}</h1>
 				{ isLoggedIn() && <SimpleButton onClick={toggleSaveRecipe}>{isSaved ? "Unsave" : "Save"}</SimpleButton>}
 			</div>
-			<img src={getImgSrcFromRecipeData(recipeData, "l")} alt={recipeData?.title} className="recipeImage"/>
+			<RecipeImg recipeData={recipeData} quality="l"/>
 			<div className="ingredients">
 				{
 					recipeData?.ingredientGroups.map((ingredientsGroup, i) => (

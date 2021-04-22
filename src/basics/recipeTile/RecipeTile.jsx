@@ -1,15 +1,16 @@
 import "./RecipeTile.scss"
 import React from "react"
 import {Link} from "react-router-dom";
+import RecipeImg from "../recipeImage/RecipeImage";
 
-export default function RecipeTile(props) {
+export default function RecipeTile({ recipeData }) {
 	return (
-		<Link className="recipeTile" to={props["recipeUrl"]}>
+		<Link className="recipeTile" to={`/recipe/${recipeData._id}`}>
 			<div>
-				<div className="tile" title={props["recipeTitle"]}>{props["recipeTitle"]}</div>
-				<div className="misc">{props["other"]}</div>
+				<div className="tile" title={recipeData.title}>{recipeData.title}</div>
+				<div className="misc">{recipeData.instructions}</div>
 			</div>
-			<img src={props["recipeImg"]} alt={ props["recipeTitle"] } />
+			<RecipeImg recipeData={recipeData} quality="s"/>
 		</Link>
 	)
 }

@@ -2,6 +2,7 @@ import "./MyProfile.scss";
 import RecipeTile from "../../basics/recipeTile/RecipeTile";
 import {useEffect, useState} from "react";
 import {authFetch, isLoggedIn, serverAddress} from "../../utils/utils";
+import RecipeImg from "../../basics/recipeImage/RecipeImage";
 
 export default function MyProfile() {
 	const [savedRecipes, setSavedRecipes] = useState([]);
@@ -41,10 +42,7 @@ export default function MyProfile() {
 			{
 				savedRecipes.map((recipe, i) => (
 					<RecipeTile
-						recipeUrl={`/recipe/${recipe._id}`}
-						recipeTitle={recipe.title}
-						recipeImg={`https://img.chefkoch-cdn.de/rezepte/${recipe?._id}/bilder/${recipe?.previewImageId}/crop-552x552/${recipe?.title.replace(/\s/g, "-")}.jpg`}
-						other={recipe.instructions}
+						recipeData={recipe}
 						key={i}
 					/>
 				))

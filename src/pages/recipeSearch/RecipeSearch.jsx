@@ -5,6 +5,7 @@ import SimpleButton from "../../basics/simpleButton/SimpleButton";
 import RecipeTile from "../../basics/recipeTile/RecipeTile";
 import {useState} from "react";
 import {getImgSrcFromRecipeData, serverAddress} from "../../utils/utils";
+import RecipeImg from "../../basics/recipeImage/RecipeImage";
 
 export default function RecipeSearch() {
 	const [ searchQuery, setSearchQuery ] = useState("");
@@ -19,13 +20,7 @@ export default function RecipeSearch() {
 		});
 		const r = await fetch(`${serverAddress}/search?${query.toString()}`);
 		const tmpRecipes = await r.json();
-		setRecipeResults(
-			tmpRecipes.map(recipe => ({
-				title: recipe.title,
-				img: getImgSrcFromRecipeData(recipe, "s"),
-				url: `/recipe/${recipe._id}`
-			}))
-		);
+		setRecipeResults(tmpRecipes);
 	}
 
 	return (
@@ -79,9 +74,7 @@ export default function RecipeSearch() {
 				{
 					recipeResults.map((recipe, i) => (
 						<RecipeTile
-							recipeUrl={recipe.url}
-							recipeTitle={recipe.title}
-							recipeImg={recipe.img}
+							recipeData={recipe}
 							key={i}
 						/>
 					))
