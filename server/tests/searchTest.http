@@ -34,3 +34,11 @@ client.test("Request executed successfully", function() {
 });
 %}
 
+### Search By Ingredient
+GET http://localhost:3000/search?ingredient=Eigelb
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}

@@ -26,6 +26,15 @@ class SearchHandler {
         const query = { difficulty: { $lte : parseInt(maxDifficulty)}};
         return recipesColl.find(query, { limit: 20 }).toArray();
     }
+
+    async byIngredient(ingredientName) {
+        const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
+        const ingredientsColl = (await this.client.connect()).db("cooken").collection("ingredients");
+        const ingQuery = { name: new RegExp(ingredientName) };
+        const ingredient = await ingredientsColl.findOne(ingQuery);
+        const query = { "ingredientGroups.ingredients.id": ingredient._id };
+        return recipesColl.find(query).toArray();
+    }
 }
 
 module.exports = SearchHandler;

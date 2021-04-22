@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
 
-router.get("/", asyncHandler(async (req, res, next) => {
+router.get("/", asyncHandler(async (req, res) => {
     let DB = req.app.get('DB');
     if(req.query.title){
         try {
@@ -28,7 +28,13 @@ router.get("/", asyncHandler(async (req, res, next) => {
         } catch (e) {
             res.status(500).send(e);
         }
-    } else {
+    } else if(req.query.ingredient) {
+        try {
+            res.json(await DB.search.byIngredient(req.query.ingredient));
+        } catch (e) {
+            res.status(500).send(e);
+        }
+    }else {
         res.status(422).send("Bad Request Parameter");
     }
 
