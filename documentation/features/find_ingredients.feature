@@ -1,4 +1,4 @@
-Feature: Choose Ingredients
+Feature: Find Ingredients
   As a cook, I would like to know what ingredients are available on this website so I can cook food from them.
 
   Scenario: Show all Categories
