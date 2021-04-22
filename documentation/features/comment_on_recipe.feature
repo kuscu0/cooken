@@ -2,9 +2,9 @@ Feature: Comment on Recipe
   As a cook, I would like to add a comment (note) to a recipe.
 
   Scenario: Enter Comment mode
-    When  The website is visited
+    When The website is visited
     And I am logged in
-    And I click on the 'My Profile' tab in the top bar
+    And I click on the 'My Profile' tab in the navigation bar
     And I have at least one Recipe saved to my profile
     And I click on a saved Recipe
     And I click the 'comment' button
