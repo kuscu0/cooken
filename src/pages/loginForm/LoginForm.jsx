@@ -16,7 +16,7 @@ export default function LoginForm() {
 			["email", email],
 			["password", password],
 		]);
-		const response = await fetch(`${serverAddress}/users/login`, {
+		const response = await fetch(`${serverAddress}/auth/login`, {
 			method: "POST",
 			mode: "cors",
 			body: formParams

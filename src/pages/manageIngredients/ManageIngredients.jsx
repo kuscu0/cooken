@@ -13,7 +13,7 @@ export default function ManageIngredients() {
 
 
 	useEffect(() => {
-		fetch(`${serverAddress}/users/ingredientGroups`).then(async response => {
+		fetch(`${serverAddress}/recipe/ingredientGroups`).then(async response => {
 			const ingredientGroups = await response.json();
 			setCategories(ingredientGroups.ingredientGroups);
 			const allIngredients = ingredientGroups.ingredientGroups.map(group => group.ingredients).flat();

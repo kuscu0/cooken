@@ -17,7 +17,7 @@ export default function RegisterForm() {
 			["password", password],
 		]);
 
-		const response = await fetch(`${serverAddress}/users`, {
+		const response = await fetch(`${serverAddress}/auth`, {
 			method: "PUT",
 			mode: "cors",
 			body: formParams

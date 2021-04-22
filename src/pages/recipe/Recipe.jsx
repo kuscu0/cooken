@@ -10,7 +10,7 @@ export default function Recipe() {
 	const location = useLocation();
 
 	useEffect(() => {
-		fetch(`${serverAddress}/users${location.pathname}`).then(async response => {
+		fetch(`${serverAddress}/recipe${location.pathname}`).then(async response => {
 			if (response.status !== 200)
 				throw "Error getting recipe";
 			const data = await response.json()
