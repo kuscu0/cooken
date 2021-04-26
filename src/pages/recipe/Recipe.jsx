@@ -41,7 +41,7 @@ export default function Recipe() {
 				<h1>{recipeData?.title}</h1>
 				{ isLoggedIn() && <SimpleButton onClick={toggleSaveRecipe}>{isSaved ? "Unsave" : "Save"}</SimpleButton>}
 			</div>
-			<RecipeImg recipeData={recipeData} quality="l"/>
+			{ recipeData && <RecipeImg recipeData={recipeData} quality="l"/>}
 			<div className="ingredients">
 				{
 					recipeData?.ingredientGroups.map((ingredientsGroup, i) => (

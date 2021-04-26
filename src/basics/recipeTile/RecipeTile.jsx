@@ -10,7 +10,7 @@ export default function RecipeTile({ recipeData }) {
 				<div className="tile" title={recipeData.title}>{recipeData.title}</div>
 				<div className="misc">{recipeData.instructions}</div>
 			</div>
-			<RecipeImg recipeData={recipeData} quality="s"/>
+			{ recipeData && <RecipeImg recipeData={recipeData} quality="s"/>}
 		</Link>
 	)
 }

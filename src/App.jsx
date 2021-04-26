@@ -2,7 +2,6 @@ import './App.scss';
 import {useState} from "react";
 import ManageIngredients from "./pages/manageIngredients/ManageIngredients";
 import {Route, BrowserRouter, Switch, Link} from "react-router-dom";
-import Home from "./pages/home/Home";
 import RecipeSearch from "./pages/recipeSearch/RecipeSearch";
 import MyProfile from "./pages/myProfile/MyProfile";
 import Recipe from "./pages/recipe/Recipe";

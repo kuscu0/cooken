@@ -27,6 +27,12 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
+
+		.misc {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 	}
 
 	> img {
