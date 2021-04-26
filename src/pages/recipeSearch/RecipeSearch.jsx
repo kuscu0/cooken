@@ -3,31 +3,43 @@ import InputText from "../../basics/inputText/InputText";
 import DropDown from "../../basics/dropDown/DropDown";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
 import RecipeTile from "../../basics/recipeTile/RecipeTile";
-import {useState} from "react";
-import {getImgSrcFromRecipeData, serverAddress} from "../../utils/utils";
-import RecipeImg from "../../basics/recipeImage/RecipeImage";
+import {useEffect, useState} from "react";
+import {deepClone, serverAddress, useStateCallback} from "../../utils/utils";
 
 export default function RecipeSearch() {
-	const [ searchQuery, setSearchQuery ] = useState("");
+	const [ query, setQuery ] = useStateCallback({ title: "" });
 	const [ recipeResults, setRecipeResults ] = useState([]);
 	const [ rating, setRating ] = useState(-1);
 	const [ maxTime, setMaxTime ] = useState(0);
 	const [ maxDifficulty, setMaxDifficulty ] = useState(0);
 
 	async function search() {
-		const query = new URLSearchParams({
-			title: searchQuery
-		});
-		const r = await fetch(`${serverAddress}/search?${query.toString()}`);
+		const urlQuery = new URLSearchParams(query);
+		const r = await fetch(`${serverAddress}/search?${urlQuery.toString()}`);
 		const tmpRecipes = await r.json();
 		setRecipeResults(tmpRecipes);
+		const url = new URL(window.location.toString());
+		url.search = urlQuery.toString();
+		window.history.replaceState(window.history.state, document.title, url.toString())
 	}
+
+	useEffect(() => {
+		const urlQuery = window.location.search;
+		if (!urlQuery)
+			return;
+		const params = new URLSearchParams(urlQuery);
+		const newSearchQuery = deepClone(urlQuery);
+		if (params.get("title")) {
+			query.title = params.get("title");
+		}
+		setQuery(newSearchQuery, () => search());
+	}, []);
 
 	return (
 		<div className="recipeSearch paddedPage">
 			<div className="optionsBar">
 				<InputText placeholder="Search..." autoFocus
-						   onInput={e => setSearchQuery(e.target.value)}
+						   onInput={e => setQuery({ ...query, title: e.target.value })}
 						   onKeyUp={e => e.code === "Enter" && search()} />
 				<DropDown
 					expanderChildren={
