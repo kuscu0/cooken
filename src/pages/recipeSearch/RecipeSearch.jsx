@@ -7,14 +7,16 @@ import {useEffect, useState} from "react";
 import {deepClone, serverAddress, useStateCallback} from "../../utils/utils";
 
 export default function RecipeSearch() {
-	const [ query, setQuery ] = useStateCallback({ title: "" });
+	const [ query, setQuery ] = useStateCallback({
+		title: "",
+		minRating: 0,
+		maxTime: 99999999,
+		maxDifficulty: 4
+	});
 	const [ recipeResults, setRecipeResults ] = useState([]);
-	const [ rating, setRating ] = useState(-1);
-	const [ maxTime, setMaxTime ] = useState(0);
-	const [ maxDifficulty, setMaxDifficulty ] = useState(0);
 
-	async function search() {
-		const urlQuery = new URLSearchParams(query);
+	async function search(otherQuery) {
+		const urlQuery = new URLSearchParams(otherQuery || query);
 		const r = await fetch(`${serverAddress}/search?${urlQuery.toString()}`);
 		const tmpRecipes = await r.json();
 		setRecipeResults(tmpRecipes);
@@ -28,17 +30,20 @@ export default function RecipeSearch() {
 		if (!urlQuery)
 			return;
 		const params = new URLSearchParams(urlQuery);
-		const newSearchQuery = deepClone(urlQuery);
-		if (params.get("title")) {
-			query.title = params.get("title");
+		const newSearchQuery = deepClone(query);
+		for (const param of Object.keys(query)) {
+			if (params.get(param))
+				newSearchQuery[param] = typeof query[param] === "string" ? params.get(param) : parseInt(params.get(param));
 		}
-		setQuery(newSearchQuery, () => search());
+		setQuery(newSearchQuery);
+		search(newSearchQuery)
 	}, []);
 
 	return (
 		<div className="recipeSearch paddedPage">
 			<div className="optionsBar">
 				<InputText placeholder="Search..." autoFocus
+						   value={query.title}
 						   onInput={e => setQuery({ ...query, title: e.target.value })}
 						   onKeyUp={e => e.code === "Enter" && search()} />
 				<DropDown
@@ -55,8 +60,8 @@ export default function RecipeSearch() {
 				<div className="ratingFilter">
 					{ Array(5).fill(0).map(
 						(_, i) => <button
-							className={"ratingStar" + (i <= rating ? " active" : "")}
-							onClick={() => setRating(i === rating ? -1 : i)}
+							className={"ratingStar" + (i <= query.minRating ? " active" : "")}
+							onClick={() => setQuery({ ...query, minRating: i === query.minRating ? 0 : i })}
 							key={i}
 						/>
 					)}
@@ -65,8 +70,8 @@ export default function RecipeSearch() {
 					<span>Max Time (Minutes)</span>
 					{[15, 30, 45, 60, 90].map(time => (
 						<button
-							onClick={() => setMaxTime(maxTime === time ? 0 : time)}
-							className={maxTime === time ? "active" : ""}
+							onClick={() => setQuery({ ...query, maxTime: query.maxTime === time ? 0 : time})}
+							className={query.maxTime === time ? "active" : ""}
 							key={time}
 						>{time}</button>
 					))}
@@ -74,13 +79,13 @@ export default function RecipeSearch() {
 				<div className="difficulty">
 					{["Easy", "Medium", "Hard"].map((diff, i) => (
 						<button
-							onClick={() => setMaxDifficulty(maxDifficulty === i +1 ? 0 : i + 1)}
-							className={maxDifficulty === i +1 ? "active" : ""}
+							onClick={() => setQuery({ ...query, maxDifficulty: query.maxDifficulty === i +1 ? 0 : i + 1 })}
+							className={query.maxDifficulty === i + 1 ? "active" : ""}
 							key={i}
 						>{diff}</button>
 					))}
 				</div>
-				<SimpleButton onClick={search} className="searchButton">Search</SimpleButton>
+				<SimpleButton onClick={() => search()} className="searchButton">Search</SimpleButton>
 			</div>
 			<div className="results">
 				{
