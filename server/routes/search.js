@@ -2,41 +2,50 @@ const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
 
-router.get("/", asyncHandler(async (req, res, next) => {
+router.get("/", asyncHandler(async (req, res) => {
     let DB = req.app.get('DB');
+    let queryBuffer = new Map();
     if(req.query.title){
         try {
-            res.json(await DB.search.byTitle(req.query.title));
+            queryBuffer = await DB.search.byTitle(queryBuffer, req.query.title);
         } catch (e) {
             res.status(500).send(e);
         }
-    } else if(req.query.minRating) {
+    } if(req.query.minRating) {
         try {
-            res.json(await DB.search.byRating(req.query.minRating));
+            queryBuffer = await DB.search.byRating(queryBuffer, req.query.minRating);
         } catch (e) {
             res.status(500).send(e);
         }
-    } else if(req.query.maxTime) {
+    } if(req.query.maxTime) {
         try {
-            res.json(await DB.search.byTime(req.query.maxTime));
+            queryBuffer = await DB.search.byTime(queryBuffer, req.query.maxTime)
         } catch (e) {
             res.status(500).send(e);
         }
-    } else if(req.query.difficulty){
+    } if(req.query.difficulty){
         try {
-            res.json(await DB.search.byDifficulty(req.query.difficulty));
+            queryBuffer = await DB.search.byDifficulty(queryBuffer, req.query.difficulty)
         } catch (e) {
             res.status(500).send(e);
         }
-    } else if(req.query.ingredient) {
+    } if(req.query.ingredient) {
         try {
-            res.json(await DB.search.byIngredient(req.query.ingredient));
+            queryBuffer = await DB.search.byIngredient(queryBuffer, req.query.ingredient);
         } catch (e) {
             res.status(500).send(e);
         }
-    }else {
+    } if(req.query.tag) {
+        try {
+            queryBuffer = await DB.search.byTag(queryBuffer, req.query.tag);
+        } catch (e) {
+            res.status(500).send(e);
+        }
+    } if(queryBuffer === {}) {
         res.status(422).send("Bad Request Parameter");
     }
+
+    res.json(await DB.search.startSearch(queryBuffer));
 
 }));
 

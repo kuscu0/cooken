@@ -42,3 +42,30 @@ client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200");
 });
 %}
+
+### Search By Tag
+GET http://localhost:3000/search?tag=Schnell
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Search By Title and Difficulty
+GET http://localhost:3000/search?title=Orangen&minRating=4
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Search By Many Tags
+GET http://localhost:3000/search?title=Orangen&minRating=4&difficulty=2&maxTime=30&tag=Hauptspeise
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
