@@ -1,3 +1,39 @@
+const sortAndFilterQueryPreset = [
+    {
+        '$match': {}
+    }, {
+        '$addFields': {
+            'sortScore': {
+                '$divide': [
+                    {
+                        '$add': [
+                            {
+                                '$multiply': [
+                                    2.5, '$rating.numVotes'
+                                ]
+                            }, {
+                                '$multiply': [
+                                    '$rating.rating', 3
+                                ]
+                            }
+                        ]
+                    }, {
+                        '$add': [
+                            '$rating.rating', 3
+                        ]
+                    }
+                ]
+            }
+        }
+    }, {
+        '$sort': {
+            'sortScore': -1
+        }
+    }, {
+        '$limit': 20
+    }
+];
+
 class SearchHandler {
     constructor(mongoClient) {
         this.client = mongoClient;
@@ -32,7 +68,9 @@ class SearchHandler {
 
     async startSearch(queryBuffer) {
         const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
-        return recipesColl.find(queryBuffer, { limit: 20 }).toArray();
+        const aggregateQuery = JSON.parse(JSON.stringify(sortAndFilterQueryPreset));
+        aggregateQuery[0]["$match"] = queryBuffer;
+        return recipesColl.aggregate(aggregateQuery).toArray();
     }
 }
 
