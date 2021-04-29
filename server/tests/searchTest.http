@@ -26,7 +26,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### Search By Difficulty
-GET http://localhost:3000/search?difficulty=1
+GET http://localhost:3000/search?maxDifficulty=1
 
 > {%
 client.test("Request executed successfully", function() {
@@ -62,7 +62,7 @@ client.test("Request executed successfully", function() {
 %}
 
 ### Search By Many Tags
-GET http://localhost:3000/search?title=Orangen&minRating=4&difficulty=2&maxTime=30&tag=Hauptspeise
+GET http://localhost:3000/search?title=Orangen&minRating=4&maxDifficulty=2&maxTime=30&tag=Hauptspeise
 
 > {%
 client.test("Request executed successfully", function() {
