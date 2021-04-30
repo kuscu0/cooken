@@ -26,9 +26,9 @@ router.get("/", asyncHandler(async (req, res) => {
     if (JSON.stringify(queryBuffer) === "{}") {
         res.status(422).send("Bad Request Parameter");
     }
-
     try {
-        res.json(await DB.search.startSearch(queryBuffer));
+        const search = await DB.search.startSearch(queryBuffer);
+        res.json(search);
     }
     catch (e) {
         res.status(400).json({ error: "Search failed" })
