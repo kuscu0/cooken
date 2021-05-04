@@ -172,7 +172,7 @@ The following base software elements are required in the test environment for th
 |---|---|---|
 | Windows | latest | Operating System |
 | NodeJS | latest | Web Server |
-| MongoDB | latest | Database |
+| MongoDB | latest | Database Server |
 
 ### 9.3	Productivity and Support Tools
 The following tools will be employed to support the test process for this Test Plan.
