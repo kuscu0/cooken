@@ -1,4 +1,4 @@
-# Test plan
+# Test Plan
 
 ## 1.	Introduction
 ### 1.1	Purpose
