@@ -8,6 +8,14 @@
     "test": "mocha --exit",
     "coverage": "nyc --reporter html mocha --exit"
   },
+  "nyc": {
+    "all": true,
+    "exclude": [
+      "**/misc/**",
+      "**/manual_tests/**",
+      "**/coverage/**"
+    ]
+  },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "crypto-js": "^4.0.0",
