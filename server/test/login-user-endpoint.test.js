@@ -8,7 +8,7 @@ const it = mocha.it;
 const expect = chai.expect;
 
 const authEndpoint = '/auth';
-const userEndpoint = '/user';
+const userEndpoint = '/users';
 let authToken;
 
 chai.use(chaiHttp);
@@ -41,7 +41,7 @@ describe('Authentication Endpoint Testing', () => {
 
     it('Should be able to put item in users inventory', async () => {
         await chai.request(app)
-            .put(userEndpoint)
+            .put(userEndpoint + '/inventory')
             .auth(authToken, {type: "bearer"})
             .send({
                 ingredient: {"_id":"8333","name":"Bratwürste","category":"Fleisch und Wurstwaren"}
@@ -56,7 +56,6 @@ describe('Authentication Endpoint Testing', () => {
            .get(userEndpoint)
            .auth(authToken, {type: "bearer"})
            .then(res => {
-               console.log(res);
                expect(res.status).to.be.equal(200);
            });
    });
