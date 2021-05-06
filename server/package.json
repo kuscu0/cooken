@@ -16,9 +16,6 @@
       "**/coverage/**"
     ]
   },
-  "exports": {
-    "./": "./server/"
-  },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "crypto-js": "^4.0.0",
