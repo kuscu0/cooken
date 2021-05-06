@@ -1,0 +1,29 @@
+name: Coveralls Sync
+
+on:
+  push:
+    branches: [ Backend-Testing ]
+  pull_request:
+    branches: [ Backend-Testing ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: npm install
+        run: |
+          npm install
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: "./server/coverage/lcov.info"
