@@ -9,7 +9,7 @@ import {deepClone, serverAddress, useStateCallback} from "../../utils/utils";
 export default function RecipeSearch() {
 	const [ query, setQuery ] = useStateCallback({
 		title: "",
-		minRating: 0,
+		minRating: -1,
 		maxTime: 99999999,
 		maxDifficulty: 4
 	});
@@ -33,7 +33,7 @@ export default function RecipeSearch() {
 		const newSearchQuery = deepClone(query);
 		for (const param of Object.keys(query)) {
 			if (params.get(param))
-				newSearchQuery[param] = typeof query[param] === "string" ? params.get(param) : parseInt(params.get(param));
+				newSearchQuery[param] = typeof query[param] === "string" ? params.get(param) : parseFloat(params.get(param));
 		}
 		setQuery(newSearchQuery);
 		search(newSearchQuery)
@@ -61,7 +61,7 @@ export default function RecipeSearch() {
 					{ Array(5).fill(0).map(
 						(_, i) => <button
 							className={"ratingStar" + (i <= query.minRating ? " active" : "")}
-							onClick={() => setQuery({ ...query, minRating: i === query.minRating ? 0 : i })}
+							onClick={() => setQuery({ ...query, minRating: i === query.minRating ? -1 : i })}
 							key={i}
 						/>
 					)}
@@ -70,7 +70,7 @@ export default function RecipeSearch() {
 					<span>Max Time (Minutes)</span>
 					{[15, 30, 45, 60, 90].map(time => (
 						<button
-							onClick={() => setQuery({ ...query, maxTime: query.maxTime === time ? 0 : time})}
+							onClick={() => setQuery({ ...query, maxTime: query.maxTime === time ? 9999999 : time})}
 							className={query.maxTime === time ? "active" : ""}
 							key={time}
 						>{time}</button>
@@ -79,7 +79,7 @@ export default function RecipeSearch() {
 				<div className="difficulty">
 					{["Easy", "Medium", "Hard"].map((diff, i) => (
 						<button
-							onClick={() => setQuery({ ...query, maxDifficulty: query.maxDifficulty === i +1 ? 0 : i + 1 })}
+							onClick={() => setQuery({ ...query, maxDifficulty: query.maxDifficulty === i +1 ? 4 : i + 1 })}
 							className={query.maxDifficulty === i + 1 ? "active" : ""}
 							key={i}
 						>{diff}</button>
