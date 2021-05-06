@@ -26,8 +26,11 @@ router.get("/", asyncHandler(async (req, res) => {
     if (JSON.stringify(queryBuffer) === "{}") {
         res.status(422).send("Bad Request Parameter");
     }
+    let page = parseInt(req.query.page);
+    if (typeof page !== "number" || isNaN(page) || page < 0)
+        page = 0;
     try {
-        const search = await DB.search.startSearch(queryBuffer);
+        const search = await DB.search.startSearch(queryBuffer, page);
         res.json(search);
     }
     catch (e) {

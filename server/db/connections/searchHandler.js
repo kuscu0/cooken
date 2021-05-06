@@ -30,7 +30,9 @@ const sortAndFilterQueryPreset = [
             'sortScore': -1
         }
     }, {
-        '$limit': 20
+        '$skip': 0
+    }, {
+        '$limit': 20,
     }
 ];
 
@@ -66,10 +68,13 @@ class SearchHandler {
         queryBuffer['fullTags.name'] = tagName;
     }
 
-    async startSearch(queryBuffer) {
+    async startSearch(queryBuffer, page = 0) {
         const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
         const aggregateQuery = JSON.parse(JSON.stringify(sortAndFilterQueryPreset));
         aggregateQuery[0]["$match"] = queryBuffer;
+        if (page > 0) {
+            aggregateQuery[3]["$skip"] = page * 20;
+        }
         return recipesColl.aggregate(aggregateQuery).toArray();
     }
 }
