@@ -53,4 +53,10 @@
 		flex-wrap: wrap;
 		gap: 1.5rem;
 	}
+
+	> .paginationBar {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 1rem;
+	}
 }

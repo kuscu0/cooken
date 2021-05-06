@@ -11,7 +11,8 @@ export default function RecipeSearch() {
 		title: "",
 		minRating: -1,
 		maxTime: 99999999,
-		maxDifficulty: 4
+		maxDifficulty: 4,
+		page: 0
 	});
 	const [ recipeResults, setRecipeResults ] = useState([]);
 
@@ -38,6 +39,13 @@ export default function RecipeSearch() {
 		setQuery(newSearchQuery);
 		search(newSearchQuery)
 	}, []);
+
+	function setSearchPage(newPage) {
+		newPage = Math.max(0, newPage);
+		const newQuery = {...query, page: newPage};
+		setQuery(newQuery);
+		search(newQuery);
+	}
 
 	return (
 		<div className="recipeSearch paddedPage">
@@ -96,6 +104,15 @@ export default function RecipeSearch() {
 						/>
 					))
 				}
+			</div>
+			<div className="paginationBar">
+				<SimpleButton
+					onClick={() => setSearchPage(query.page - 1)} disabled={query.page === 0}
+				>Back</SimpleButton>
+				<div>Page {query.page + 1}</div>
+				<SimpleButton
+					onClick={() => setSearchPage(query.page + 1)} disabled={recipeResults.length < 20}
+				>Next</SimpleButton>
 			</div>
 		</div>
 	);
