@@ -84,7 +84,9 @@ MongoDB is used to store our data. MongoDB allows easy storing and accessing of 
 
 ## 5. Logical View
 ### 5.1 Overview
+![Dependency diagram](dependency_diagram.png)
 ### 5.2 Architecturally Significant Design Packages
+n/a
 
 ## 6. Process View
 
