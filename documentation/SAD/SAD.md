@@ -83,8 +83,8 @@ MongoDB is used to store our data. MongoDB allows easy storing and accessing of 
 ![OUCD](../use_case_diagram.jpg)
 
 ## 5. Logical View
-[Overview](#51-overview)
-[Architecturally Significant Design Packages](#52-architecturally-significant-design-packages)
+### 5.1 Overview
+### 5.2 Architecturally Significant Design Packages
 
 ## 6. Process View
 
