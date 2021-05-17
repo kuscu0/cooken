@@ -9,10 +9,14 @@ import SimpleButton from "./basics/simpleButton/SimpleButton";
 import RegisterForm from "./pages/RegisterForm/RegisterForm";
 import LoginForm from "./pages/loginForm/LoginForm";
 import {IsLoggedInContext} from "./context/IsLoggedInContext";
+import {myIngredientsContext} from "./context/myIngredientsContext"
 import {isLoggedIn} from "./utils/utils";
 
 export default function App() {
+	/** global is logged in state */
 	const [isUserLoggedIn, setUserIsLoggedIn] = useState(isLoggedIn())
+	/** global my ingredients state */
+	const [myIngredients, setMyIngredients] = useState([])
 
 	function onNavClick(e) {
 		Array.from(e.currentTarget.parentElement.children).forEach(el => el.classList.remove("current"));
@@ -22,6 +26,7 @@ export default function App() {
 	return (
 		<BrowserRouter>
 			<IsLoggedInContext.Provider value={[isUserLoggedIn, setUserIsLoggedIn]}>
+			<myIngredientsContext.Provider value={[myIngredients, setMyIngredients]}>
 				<div className="App">
 					<header>
 						<Link to="/" className="logo"><img src="/img/logo.png" alt="logo"/></Link>
@@ -47,6 +52,7 @@ export default function App() {
 						</Switch>
 					</main>
 				</div>
+			</myIngredientsContext.Provider>
 			</IsLoggedInContext.Provider>
 		</BrowserRouter>
 	);

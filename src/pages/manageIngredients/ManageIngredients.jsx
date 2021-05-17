@@ -1,6 +1,7 @@
 import "./ManageIngrediens.scss";
 import React, {useEffect} from "react";
 import {authFetch, isLoggedIn, serverAddress} from "../../utils/utils";
+import {myIngredientsContext} from "../../context/myIngredientsContext";
 
 export default function ManageIngredients() {
 	const [categories, setCategories] = React.useState([]);
@@ -8,7 +9,8 @@ export default function ManageIngredients() {
 	const [allIngredients, setAllIngredients] = React.useState([]);
 	const [searchableIngredients, setSearchableIngredients] = React.useState([]);
 	const [searchTerm, setSearchTerm] = React.useState("");
-	const [selectedIngredients, setSelectedIngredients] = React.useState([]);
+	const [selectedIngredients, setSelectedIngredients] = React.useContext(myIngredientsContext);
+	// const [selectedIngredients, setSelectedIngredients] = React.useState([]);
 	const forceUpdate = React.useReducer(() => ({}))[1]
 
 

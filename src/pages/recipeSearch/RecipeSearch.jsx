@@ -3,8 +3,9 @@ import InputText from "../../basics/inputText/InputText";
 import DropDown from "../../basics/dropDown/DropDown";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
 import RecipeTile from "../../basics/recipeTile/RecipeTile";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useContext} from "react";
 import {deepClone, serverAddress, useStateCallback} from "../../utils/utils";
+import {myIngredientsContext} from "../../context/myIngredientsContext";
 
 export default function RecipeSearch() {
 	const [ query, setQuery ] = useStateCallback({
@@ -12,32 +13,43 @@ export default function RecipeSearch() {
 		minRating: -1,
 		maxTime: 99999999,
 		maxDifficulty: 4,
-		page: 0
+		page: 0,
+		onlyFromMyIngredients: false
 	});
 	const [ recipeResults, setRecipeResults ] = useState([]);
+	const [myIngredients] = useContext(myIngredientsContext);
 
 	async function search(otherQuery) {
-		const urlQuery = new URLSearchParams(otherQuery || query);
-		const r = await fetch(`${serverAddress}/search?${urlQuery.toString()}`);
+		const searchQuery = otherQuery || query;
+		if (searchQuery.onlyFromMyIngredients)
+			searchQuery.myIngredients = myIngredients;
+
+		const r = await fetch(`${serverAddress}/search`, {
+			method: "POST",
+			headers: [
+				["Content-Type", "application/json"]
+			],
+			body: JSON.stringify(searchQuery)
+		});
 		const tmpRecipes = await r.json();
 		setRecipeResults(tmpRecipes);
 		const url = new URL(window.location.toString());
-		url.search = urlQuery.toString();
+		url.search = JSON.stringify(query);
 		window.history.replaceState(window.history.state, document.title, url.toString())
 	}
 
 	useEffect(() => {
-		const urlQuery = window.location.search;
-		if (!urlQuery)
-			return;
-		const params = new URLSearchParams(urlQuery);
-		const newSearchQuery = deepClone(query);
-		for (const param of Object.keys(query)) {
-			if (params.get(param))
-				newSearchQuery[param] = typeof query[param] === "string" ? params.get(param) : parseFloat(params.get(param));
+		let urlQuery;
+		try {
+			urlQuery = JSON.parse(decodeURIComponent(window.location.search.slice(1)));
 		}
-		setQuery(newSearchQuery);
-		search(newSearchQuery)
+		catch {
+			return;
+		}
+		if ("myIngredients" in urlQuery)
+			delete urlQuery.myIngredients;
+		setQuery(urlQuery);
+		search(urlQuery);
 	}, []);
 
 	function setSearchPage(newPage) {
@@ -65,6 +77,15 @@ export default function RecipeSearch() {
 						</div>
 					}
 				/>
+				<input
+					id="onlyFromMyIngredientsCheckbox" type="checkbox"
+					checked={query.onlyFromMyIngredients}
+					onChange={e => {
+						console.log(e.currentTarget.value)
+						setQuery({...query, onlyFromMyIngredients: e.currentTarget.checked});
+					}}
+				/>
+				<label htmlFor="onlyFromMyIngredientsCheckbox">Only with my ingredients</label>
 				<div className="ratingFilter">
 					{ Array(5).fill(0).map(
 						(_, i) => <button
