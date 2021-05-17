@@ -1,7 +1,56 @@
-const sortAndFilterQueryPreset = [
+const aggTemplateFlattenIngredientIds = [
     {
-        '$match': {}
-    }, {
+        '$addFields': {
+            'tmp': '$ingredientGroups.ingredients.id'
+        }
+    },
+    {
+        '$unwind': '$tmp'
+    },
+    {
+        '$unwind': '$tmp'
+    },
+    {
+        '$group': {
+            '_id': '$_id',
+            'ingredientsIds': {
+                '$addToSet': '$tmp'
+            },
+            'tmpDoc': {
+                '$first': '$$ROOT'
+            }
+        }
+    },
+    {
+        '$replaceRoot': {
+            'newRoot': {
+                '$mergeObjects': [
+                    '$tmpDoc', {
+                        'ingredientsIds': '$ingredientsIds'
+                    }
+                ]
+            }
+        }
+    },
+    {
+        '$unset': 'tmp'
+    }
+];
+
+const aggTemplateFromMyIngredients = {
+    '$match': {
+        'ingredientsIds': {
+            $not: {
+                $elemMatch: {
+                    $nin: []
+                }
+            }
+        }
+    }
+};
+
+const aggTemplateSortByRating = [
+    {
         '$addFields': {
             'sortScore': {
                 '$divide': [
@@ -25,57 +74,95 @@ const sortAndFilterQueryPreset = [
                 ]
             }
         }
-    }, {
+    },
+    {
         '$sort': {
             'sortScore': -1
         }
-    }, {
+    }
+];
+
+const aggTemplatePagination = [
+    {
         '$skip': 0
-    }, {
+    },
+    {
         '$limit': 20,
     }
 ];
 
+const aggTemplateMatchQuery = {
+    '$match': {}
+};
+
+function cloneObject(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+
 class SearchHandler {
     constructor(mongoClient) {
+        this.matchQuery = {};
+        this.page = 0;
+        this.myIngredients = [];
         this.client = mongoClient;
     }
 
-    byTitle(queryBuffer, recipeTitle) {
-        queryBuffer['title'] = new RegExp(recipeTitle);
+    byTitle(recipeTitle) {
+        this.matchQuery.title = new RegExp(recipeTitle);
     }
 
-    byRating(queryBuffer, minRating) {
-        queryBuffer['rating.rating'] = {$gte: parseFloat(minRating)}; //$gte = greater than equl
+    byRating(minRating) {
+        this.matchQuery["rating.rating"]= { $gte: parseFloat(minRating) };     // $gte = greater than equl
     }
 
-    byTime(queryBuffer, maxTime) {
-        queryBuffer['totalTime'] = { $lte: parseInt(maxTime)};    //$lte = less than equl
+    byTime(maxTime) {
+        this.matchQuery.totalTime = { $lte: parseInt(maxTime) };             // $lte = less than equl
     }
 
-    byDifficulty(queryBuffer, maxDifficulty) {
-        queryBuffer['difficulty'] = { $lte: parseInt(maxDifficulty)};
+    byDifficulty(maxDifficulty) {
+        this.matchQuery.difficulty = { $lte: parseInt(maxDifficulty) };
     }
 
-    async byIngredient(queryBuffer, ingredientName) {
-        const ingredientsColl = (await this.client.connect()).db("cooken").collection("ingredients");
-        const ingQuery = { name: new RegExp(ingredientName) };
-        const ingredient = await ingredientsColl.findOne(ingQuery);
-        queryBuffer['ingredientGroups.ingredients.id'] = ingredient._id;
+    byIngredientsArray(ingredientsArray) {
+        if (!ingredientsArray.length)
+            return;
+       this.myIngredients = ingredientsArray;
     }
 
-    byTag(queryBuffer, tagName) {
-        queryBuffer['fullTags.name'] = tagName;
+    byTag(tagName) {
+        this.matchQuery['fullTags.name'] = tagName;
     }
 
-    async startSearch(queryBuffer, page = 0) {
-        const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
-        const aggregateQuery = JSON.parse(JSON.stringify(sortAndFilterQueryPreset));
-        aggregateQuery[0]["$match"] = queryBuffer;
-        if (page > 0) {
-            aggregateQuery[3]["$skip"] = page * 20;
+    setPage(page) {
+        if (page >= 0) {
+            this.page = page;
         }
-        return recipesColl.aggregate(aggregateQuery).toArray();
+    }
+
+    async startSearch() {
+        const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
+        const aggregateQuery = [];
+
+        const matches = cloneObject(aggTemplateMatchQuery);
+        matches.$match = this.matchQuery;
+        aggregateQuery.push(matches);
+
+        if (this.myIngredients.length > 0) {
+            aggregateQuery.push(...cloneObject(aggTemplateFlattenIngredientIds));
+            const myIngredientsFilter = cloneObject(aggTemplateFromMyIngredients);
+            myIngredientsFilter.$match.ingredientsIds.$not.$elemMatch.$nin = this.myIngredients;
+            aggregateQuery.push(myIngredientsFilter);
+        }
+
+        aggregateQuery.push(...cloneObject(aggTemplateSortByRating))
+
+        const pagination = cloneObject(aggTemplatePagination);
+        pagination[0].$skip = this.page * 20;
+        aggregateQuery.push(...pagination);
+
+        console.log(JSON.stringify(aggregateQuery, null, 4));
+
+        return recipesColl.aggregate(aggregateQuery, { allowDiskUse: true }).toArray();
     }
 }
 
