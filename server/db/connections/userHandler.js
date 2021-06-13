@@ -96,7 +96,7 @@ class UserHandler {
 
     async getSavedRecipes(uid) {
         const savedRecipesColl = (await this.client.connect()).db("cooken").collection("savedRecipes");
-        const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
+        const recipesColl = (await this.client.connect()).db("cooken").collection("recipesNew");
         const savedRecipes = await savedRecipesColl.findOne({ _id: uid });
         if (!savedRecipes)
             throw "No saved recipes found";

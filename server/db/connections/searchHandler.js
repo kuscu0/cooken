@@ -1,41 +1,41 @@
-const aggTemplateFlattenIngredientIds = [
-    {
-        '$addFields': {
-            'tmp': '$ingredientGroups.ingredients.id'
-        }
-    },
-    {
-        '$unwind': '$tmp'
-    },
-    {
-        '$unwind': '$tmp'
-    },
-    {
-        '$group': {
-            '_id': '$_id',
-            'ingredientsIds': {
-                '$addToSet': '$tmp'
-            },
-            'tmpDoc': {
-                '$first': '$$ROOT'
-            }
-        }
-    },
-    {
-        '$replaceRoot': {
-            'newRoot': {
-                '$mergeObjects': [
-                    '$tmpDoc', {
-                        'ingredientsIds': '$ingredientsIds'
-                    }
-                ]
-            }
-        }
-    },
-    {
-        '$unset': 'tmp'
-    }
-];
+// const aggTemplateFlattenIngredientIds = [
+//     {
+//         '$addFields': {
+//             'tmp': '$ingredientGroups.ingredients.id'
+//         }
+//     },
+//     {
+//         '$unwind': '$tmp'
+//     },
+//     {
+//         '$unwind': '$tmp'
+//     },
+//     {
+//         '$group': {
+//             '_id': '$_id',
+//             'ingredientsIds': {
+//                 '$addToSet': '$tmp'
+//             },
+//             'tmpDoc': {
+//                 '$first': '$$ROOT'
+//             }
+//         }
+//     },
+//     {
+//         '$replaceRoot': {
+//             'newRoot': {
+//                 '$mergeObjects': [
+//                     '$tmpDoc', {
+//                         'ingredientsIds': '$ingredientsIds'
+//                     }
+//                 ]
+//             }
+//         }
+//     },
+//     {
+//         '$unset': 'tmp'
+//     }
+// ];
 
 const aggTemplateFromMyIngredients = {
     '$match': {
@@ -140,7 +140,7 @@ class SearchHandler {
     }
 
     async startSearch() {
-        const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
+        const recipesColl = (await this.client.connect()).db("cooken").collection("recipesNew");
         const aggregateQuery = [];
 
         const matches = cloneObject(aggTemplateMatchQuery);
@@ -148,7 +148,7 @@ class SearchHandler {
         aggregateQuery.push(matches);
 
         if (this.myIngredients.length > 0) {
-            aggregateQuery.push(...cloneObject(aggTemplateFlattenIngredientIds));
+            // aggregateQuery.push(...cloneObject(aggTemplateFlattenIngredientIds));
             const myIngredientsFilter = cloneObject(aggTemplateFromMyIngredients);
             myIngredientsFilter.$match.ingredientsIds.$not.$elemMatch.$nin = this.myIngredients;
             aggregateQuery.push(myIngredientsFilter);
@@ -159,8 +159,6 @@ class SearchHandler {
         const pagination = cloneObject(aggTemplatePagination);
         pagination[0].$skip = this.page * 20;
         aggregateQuery.push(...pagination);
-
-        console.log(JSON.stringify(aggregateQuery, null, 4));
 
         return recipesColl.aggregate(aggregateQuery, { allowDiskUse: true }).toArray();
     }

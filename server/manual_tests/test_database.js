@@ -6,7 +6,7 @@ client.connect(err => {
     if(err) {
         console.log(err);
     }
-    const collection = client.db("cooken").collection("recipes");
+    const collection = client.db("cooken").collection("recipesNew");
     // perform actions on the collection object
     collection.insertOne({ name: "Spätzle", persons: "20000" }, err => {
         if (err) {

@@ -36,7 +36,7 @@ class RecipeHandler {
     }
 
     async getRecipeData(recipeId) {
-        const recipesColl = (await this.client.connect()).db("cooken").collection("recipes");
+        const recipesColl = (await this.client.connect()).db("cooken").collection("recipesNew");
         const recipe = await recipesColl.findOne({_id: recipeId});
         if (!recipe)
             throw "Invalid ID";

@@ -2,7 +2,7 @@ const MongoClient = require("mongodb").MongoClient;
 
 
 MongoClient.connect("mongodb://localhost:27017", {useNewUrlParser: true, useUnifiedTopology: true}).then(async db => {
-	const recipes = db.db("cooken").collection("recipes");
+	const recipes = db.db("cooken").collection("recipesNew");
 	const ingredients = db.db("cooken").collection("ingredients");
 	console.log("connected to db");
 	let i = 0;

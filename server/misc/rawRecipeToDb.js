@@ -7,7 +7,7 @@ const startRecipe = 0;
 const lastRecipe = 10000;
 
 MongoClient.connect("mongodb://localhost:27017", {useNewUrlParser: true, useUnifiedTopology: true}).then(async db => {
-	const recipes = db.db("cooken").collection("recipes");
+	const recipes = db.db("cooken").collection("recipesNew");
 	if (recipes.countDocuments() > 0)
 		await recipes.drop();
 	let i = 0;
