@@ -1,6 +1,9 @@
 
 
 .recipePage {
+	width: #{m}in(95vw, 50rem);
+	margin: 2rem auto;
+
 	> .title {
 		display: flex;
 		justify-content: space-between;
@@ -39,4 +42,9 @@
 		}
 	}
 
+	.description {
+		width: #{m}in(95vw, 50rem);
+		margin: auto;
+		line-height: 1.75em;
+	}
 }

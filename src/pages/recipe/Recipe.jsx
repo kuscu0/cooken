@@ -1,31 +1,47 @@
 import "./Recipe.scss";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
-import {authFetch, isLoggedIn, serverAddress} from "../../utils/utils";
+import {authFetch, deepClone, isLoggedIn, serverAddress} from "../../utils/utils";
 import RecipeImg from "../../basics/recipeImage/RecipeImage";
+import {IsLoadingContext} from "../../context/IsLoadingContext";
+import Comment from "./comment/Comment";
 
 export default function Recipe() {
 	const [recipeData, setRecipeData] = useState(null);
 	const [isSaved, setIsSaved] = useState(false);
+	const [comments, setComments] = useState({});
 	const location = useLocation();
+	const [, setIsLoading] = useContext(IsLoadingContext);
+	const recipeId = location.pathname.match(/\d+/)[0];
 
 	useEffect(() => {
-		fetch(`${serverAddress}/recipe${location.pathname}`).then(async response => {
+		setIsLoading(true);
+		fetch(`${serverAddress}/recipe/recipe/${recipeId}`).then(async response => {
 			if (response.status !== 200)
-				throw "Error getting recipe";
+				throw new Error("Error getting recipe");
 			const data = await response.json()
 			setRecipeData(data);
 
 			const isSavedResponse = await authFetch(`/users/savedRecipes?recipeId=${encodeURIComponent(data._id)}`, false);
 			setIsSaved(isSavedResponse === "true");
-		})
+			setIsLoading(false);
+		});
+
+		if (isLoggedIn()) {
+			authFetch(`/users/recipeComment?recipeId=${recipeId}`, true).then(loadedComments => {
+				const newComments = {};
+				for (const [key, value] of Object.entries(loadedComments))
+					newComments[key] = { initialText: value };
+				setComments(newComments);
+			})
+		}
 
 	}, [location.pathname]);
 
 	async function toggleSaveRecipe() {
 		if (!recipeData)
-			throw "No loaded recipe"
+			throw new Error("No loaded recipe");
 
 		const response = await authFetch("/users/savedRecipes", false, {
 			method: "POST",
@@ -35,6 +51,26 @@ export default function Recipe() {
 		setIsSaved(response === "true");
 	}
 
+	function onDescriptionClick(e) {
+		const index = parseInt(e.target.dataset.i);
+		if (isNaN(index))
+			return;
+		if (index in comments)
+			return;
+		const newComments = deepClone(comments);
+		newComments[index] = {
+			initialText: ""
+		};
+		setComments(newComments);
+	}
+
+	function deleteAtIndex(index) {
+		const newComments = deepClone(comments);
+		delete newComments[index];
+		setComments(newComments);
+	}
+
+	let i = 0;
 	return (
 		<div className="recipePage paddedPage">
 			<div className="title">
@@ -46,7 +82,7 @@ export default function Recipe() {
 				{
 					recipeData?.ingredientGroups.map((ingredientsGroup, i) => (
 						<div className="ingredientGroup" key={i}>
-							{!/\s*/.test(ingredientsGroup.header) && <h3>{ingredientsGroup.header}:</h3>}
+							<h3>{ingredientsGroup.header}</h3>
 							<table>
 								<tbody>
 								{ingredientsGroup.ingredients.map((ingredient, i) => (
@@ -68,22 +104,24 @@ export default function Recipe() {
 					))
 				}
 			</div>
-			<div
-				className="description"
-				/* TODO replace that with safer solution */
-				dangerouslySetInnerHTML={{ __html: recipeData?.instructions.replace(/(.*\n)/g, "<p>$1</p>")}}
-			>
-				{/*<h2>Instructions</h2>*/}
-
-				{/*<p>Die Pasta in reichlich Salzwasser bissfest kochen. Den Schinken in Würfel schneiden und in wenig*/}
-				{/*	Butter anbraten.</p>*/}
-
-				{/*<p>Eigelb in einer großen Schüssel mit Salz, Pfeffer und Muskat verquirlen. Die Butter schaumig*/}
-				{/*	rühren und gut unter das Eigelb mischen. Die Schinkenwürfel und den geriebenen Käse gründlich*/}
-				{/*	unterrühren.</p>*/}
-
-				{/*<p>Wenn die Nudeln gar sind, abgießen, sofort zu der Mischung in die Schüssel geben, nochmal alles*/}
-				{/*	gründlich durchmischen, dann sogleich servieren.</p>*/}
+			<div className="description" onClick={onDescriptionClick}>
+				{ recipeData?.instructions.split("\n")
+					.filter(paragraph => Boolean(paragraph))
+					.map((paragraph) => <p key={i}>{
+						paragraph.split("")
+							.map((word) =>
+								<span key={i} data-i={i++}>
+									{ word }
+									{ i in comments &&
+										<Comment
+											index={i}
+											initialText={comments[i].initialText}
+											recipeId={recipeId}
+											onDelete={deleteAtIndex}
+										/> }
+								</span>)
+					}</p>)
+				}
 			</div>
 		</div>
 	)

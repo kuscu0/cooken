@@ -8,7 +8,7 @@ import {serverAddress} from "../../utils/utils";
 export default function LoginForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [isLoggedIn, setIsLoggedIn] = useContext(IsLoggedInContext);
+	const [, setIsLoggedIn] = useContext(IsLoggedInContext);
 	const history = useHistory();
 
 	async function login() {
@@ -23,7 +23,7 @@ export default function LoginForm() {
 		});
 		if (response.status !== 200) {
 			setIsLoggedIn(false);
-			throw "Failed Login";		// TODO display error
+			throw new Error("Failed Login");		// TODO display error
 		}
 		const responseData = await response.json();
 		localStorage.token = responseData.token;
