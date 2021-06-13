@@ -2,7 +2,7 @@ import "./Recipe.scss";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
-import {authFetch, getImgSrcFromRecipeData, isLoggedIn, serverAddress} from "../../utils/utils";
+import {authFetch, isLoggedIn, serverAddress} from "../../utils/utils";
 import RecipeImg from "../../basics/recipeImage/RecipeImage";
 
 export default function Recipe() {

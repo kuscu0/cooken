@@ -1,7 +1,8 @@
 import "./ManageIngrediens.scss";
-import React, {useEffect} from "react";
+import React, {useContext, useEffect} from "react";
 import {authFetch, isLoggedIn, serverAddress} from "../../utils/utils";
 import {myIngredientsContext} from "../../context/myIngredientsContext";
+import {IsLoadingContext} from "../../context/IsLoadingContext";
 
 export default function ManageIngredients() {
 	const [categories, setCategories] = React.useState([]);
@@ -10,21 +11,23 @@ export default function ManageIngredients() {
 	const [searchableIngredients, setSearchableIngredients] = React.useState([]);
 	const [searchTerm, setSearchTerm] = React.useState("");
 	const [selectedIngredients, setSelectedIngredients] = React.useContext(myIngredientsContext);
-	// const [selectedIngredients, setSelectedIngredients] = React.useState([]);
 	const forceUpdate = React.useReducer(() => ({}))[1]
+	const [, setIsLoading] = useContext(IsLoadingContext);
 
 
 	useEffect(() => {
-		fetch(`${serverAddress}/recipe/ingredientGroups`).then(async response => {
+		setIsLoading(true);
+		const getGroups = fetch(`${serverAddress}/recipe/ingredientGroups`).then(async response => {
 			const ingredientGroups = await response.json();
 			setCategories(ingredientGroups.ingredientGroups);
 			const allIngredients = ingredientGroups.ingredientGroups.map(group => group.ingredients).flat();
 			setAllIngredients(allIngredients);
-			setSearchableIngredients(allIngredients)
+			setSearchableIngredients(allIngredients);
 		});
-		if (isLoggedIn()) {
-			authFetch("/users/inventory", true).then(inventory => setSelectedIngredients(inventory));
-		}
+		let getInventory;
+		if (isLoggedIn())
+			getInventory = authFetch("/users/inventory", true).then(inventory => setSelectedIngredients(inventory));
+		Promise.all([getGroups, getInventory]).then(() => setIsLoading(false));
 	}, []);
 
 	function handleSearchChange(event) {
@@ -46,28 +49,27 @@ export default function ManageIngredients() {
 	}
 
 	async function toggleSelectedIngredient(event) {
+		setIsLoading(true);
 		const isAdded = event.currentTarget.classList.contains("added");
 		const ingredientId = event.currentTarget.getAttribute("data-ingredient-id");
-		const response = await authFetch(
-			"/users/inventory", false,
-			{
-				method: isAdded ? "DELETE" : "PUT",
-				body: new URLSearchParams([["ingredient", ingredientId]]),
-			}
-		);
-		if (response === "success") {
-			const tmpSelected = selectedIngredients;
-			if (isAdded)
-				tmpSelected.splice(tmpSelected.indexOf(ingredientId), 1);
-			else
-				tmpSelected.push(ingredientId);
-			setSelectedIngredients(tmpSelected);
-			forceUpdate()
+		if (isLoggedIn()) {
+			await authFetch(
+				"/users/inventory", false,
+				{
+					method: isAdded ? "DELETE" : "PUT",
+					body: new URLSearchParams([["ingredient", ingredientId]]),
+				}
+			);
 		}
-		else {
-			console.error("Error toggling ingredient");
-			// TODO display error
-		}
+
+		const tmpSelected = selectedIngredients;
+		if (isAdded)
+			tmpSelected.splice(tmpSelected.indexOf(ingredientId), 1);
+		else
+			tmpSelected.push(ingredientId);
+		setSelectedIngredients(tmpSelected);
+		forceUpdate()
+		setIsLoading(false);
 	}
 
 

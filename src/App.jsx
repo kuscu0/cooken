@@ -10,6 +10,7 @@ import RegisterForm from "./pages/RegisterForm/RegisterForm";
 import LoginForm from "./pages/loginForm/LoginForm";
 import {IsLoggedInContext} from "./context/IsLoggedInContext";
 import {myIngredientsContext} from "./context/myIngredientsContext"
+import {IsLoadingContext} from "./context/IsLoadingContext"
 import {isLoggedIn} from "./utils/utils";
 
 export default function App() {
@@ -17,6 +18,8 @@ export default function App() {
 	const [isUserLoggedIn, setUserIsLoggedIn] = useState(isLoggedIn())
 	/** global my ingredients state */
 	const [myIngredients, setMyIngredients] = useState([])
+	/** global my ingredients state */
+	const [isLoading, setIsLoading] = useState(false)
 
 	function onNavClick(e) {
 		Array.from(e.currentTarget.parentElement.children).forEach(el => el.classList.remove("current"));
@@ -27,6 +30,7 @@ export default function App() {
 		<BrowserRouter>
 			<IsLoggedInContext.Provider value={[isUserLoggedIn, setUserIsLoggedIn]}>
 			<myIngredientsContext.Provider value={[myIngredients, setMyIngredients]}>
+			<IsLoadingContext.Provider value={[isLoading, setIsLoading]}>
 				<div className="App">
 					<header>
 						<Link to="/" className="logo"><img src="/img/logo.png" alt="logo"/></Link>
@@ -39,6 +43,7 @@ export default function App() {
 							<Link to="/login" className="login"><SimpleButton>Login</SimpleButton></Link>
 							<Link to="/register" className="register"><SimpleButton>Register</SimpleButton></Link>
 						</div>
+						<img src="/img/loading.svg" alt="loading" className={"loading" + (isLoading ? "" : " hide")}/>
 					</header>
 					<main>
 						<Switch>
@@ -52,6 +57,7 @@ export default function App() {
 						</Switch>
 					</main>
 				</div>
+			</IsLoadingContext.Provider>
 			</myIngredientsContext.Provider>
 			</IsLoggedInContext.Provider>
 		</BrowserRouter>

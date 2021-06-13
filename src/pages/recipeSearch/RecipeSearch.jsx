@@ -1,11 +1,11 @@
 import "./RecipeSearch.scss";
 import InputText from "../../basics/inputText/InputText";
-import DropDown from "../../basics/dropDown/DropDown";
 import SimpleButton from "../../basics/simpleButton/SimpleButton";
 import RecipeTile from "../../basics/recipeTile/RecipeTile";
 import {useEffect, useState, useContext} from "react";
-import {deepClone, serverAddress, useStateCallback} from "../../utils/utils";
+import {serverAddress, useStateCallback} from "../../utils/utils";
 import {myIngredientsContext} from "../../context/myIngredientsContext";
+import {IsLoadingContext} from "../../context/IsLoadingContext";
 
 export default function RecipeSearch() {
 	const [ query, setQuery ] = useStateCallback({
@@ -18,8 +18,10 @@ export default function RecipeSearch() {
 	});
 	const [ recipeResults, setRecipeResults ] = useState([]);
 	const [myIngredients] = useContext(myIngredientsContext);
+	const [, setIsLoading] = useContext(IsLoadingContext);
 
 	async function search(otherQuery) {
+		setIsLoading(true);
 		const searchQuery = otherQuery || query;
 		if (searchQuery.onlyFromMyIngredients)
 			searchQuery.myIngredients = myIngredients;
@@ -36,6 +38,7 @@ export default function RecipeSearch() {
 		const url = new URL(window.location.toString());
 		url.search = JSON.stringify(query);
 		window.history.replaceState(window.history.state, document.title, url.toString())
+		setIsLoading(false);
 	}
 
 	useEffect(() => {
@@ -66,17 +69,6 @@ export default function RecipeSearch() {
 						   value={query.title}
 						   onInput={e => setQuery({ ...query, title: e.target.value })}
 						   onKeyUp={e => e.code === "Enter" && search()} />
-				<DropDown
-					expanderChildren={
-						<div>Must use</div>
-					}
-					dropDownChildren={
-						<div>
-							<div>Milk</div>
-							<div>Cheese</div>
-						</div>
-					}
-				/>
 				<input
 					id="onlyFromMyIngredientsCheckbox" type="checkbox"
 					checked={query.onlyFromMyIngredients}

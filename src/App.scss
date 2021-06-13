@@ -64,6 +64,17 @@ header {
 		padding: .75rem 1rem;
 		font-size: 1rem;
 	}
+
+	.loading {
+		height: 5rem;
+		position: absolute;
+		right: 0;
+		transition: opacity .3s ease;
+
+		&.hide {
+			opacity: 0;
+		}
+	}
 }
 
 .paddedPage {
