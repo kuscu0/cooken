@@ -102,6 +102,38 @@ class UserHandler {
             throw "No saved recipes found";
         return recipesColl.find({_id: {$in: savedRecipes.savedRecipes || []}}).toArray();
     }
+
+    async setRecipeDescriptionComment(uid, recipeId, index, text) {
+        const commentsColl = (await this.client.connect()).db("cooken").collection("recipeComments");
+        const updateOperation = {
+            $set: {  }
+        };
+        updateOperation.$set[`description.${index}`] = text;
+        await commentsColl.updateOne(
+            { uid, recipeId },
+            updateOperation,
+            { upsert: true }
+        );
+        return "success"
+    }
+
+    async deleteRecipeComment(uid, recipeId, index) {
+        const commentsColl = (await this.client.connect()).db("cooken").collection("recipeComments");
+        const updateOperation1 = {
+            $unset: {  }
+        };
+        updateOperation1.$unset[`description.${index}`] = "";
+        await commentsColl.updateOne(
+            { uid, recipeId },
+            updateOperation1
+        );
+        return "success";
+    }
+
+    async getRecipeComments(uid, recipeId) {
+        const commentsColl = (await this.client.connect()).db("cooken").collection("recipeComments");
+        return (await commentsColl.findOne({ uid, recipeId }))["description"] || {};
+    }
 }
 
 module.exports = UserHandler;
