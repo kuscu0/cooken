@@ -28,9 +28,11 @@
       min-height: 1.25em;
       min-width: 6rem;
       max-width: 14rem;
+      transition: all .2s ease;
 
       &:focus-within {
         outline: none;
+        margin-left: .5rem;
       }
     }
 
