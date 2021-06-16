@@ -160,7 +160,7 @@ class SearchHandler {
         pagination[0].$skip = this.page * 20;
         aggregateQuery.push(...pagination);
 
-        return recipesColl.aggregate(aggregateQuery, { allowDiskUse: true }).toArray();
+        return await recipesColl.aggregate(aggregateQuery, {allowDiskUse: true}).toArray();
     }
 }
 
