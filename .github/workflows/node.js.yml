@@ -2,31 +2,23 @@ name: Coveralls Sync
 
 on:
   push:
-    branches: [ Backend-Testing ]
+    branches: [ server ]
   pull_request:
-    branches: [ Backend-Testing ]
+    branches: [ server ]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm config set registry https://registry.npmjs.org/
-      - run: npm install
-        working-directory: server
-      - run: npm run coverage
-        working-directory: server
+          node-version: 14.x
+      - run: npm ci --prefix server
+      - run: npm run coverage --prefix server
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
