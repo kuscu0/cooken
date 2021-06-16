@@ -16,9 +16,11 @@ function searchRequest(body) {
         .send(body);
 }
 
-describe('Search Endpoint Testing', () => {
+describe('Search Endpoint Testing', function () {
+    this.timeout(5000);
+
     describe('Search by Title', () => {
-        const body = { title: "Orangen" };
+        const body = {title: "Orangen"};
         it('Should Return Status Code 200', () => {
             return searchRequest(body).then(res => {
                 expect(res.status).to.be.equal(200);
@@ -35,7 +37,7 @@ describe('Search Endpoint Testing', () => {
     });
 
     describe('Search by Min Rating', () => {
-        const body = { minRating: 4.8 };
+        const body = {minRating: 4.8};
 
         it('Should Return Status Code 200', () => {
             return searchRequest(body).then(res => {
@@ -53,7 +55,7 @@ describe('Search Endpoint Testing', () => {
     });
 
     describe('Search by Max Time', () => {
-        const body = { maxTime: 10 };
+        const body = {maxTime: 10};
         it('Should Return Status Code 200', async () => {
             return searchRequest(body).then(res => {
                 expect(res.status).to.be.equal(200);
@@ -70,7 +72,7 @@ describe('Search Endpoint Testing', () => {
     });
 
     describe('Search by Max Difficulty', () => {
-        const body = { maxDifficulty: 1 };
+        const body = {maxDifficulty: 1};
         it('Should Return Status Code 200', async () => {
             return searchRequest(body).then(res => {
                 expect(res.status).to.be.equal(200);
@@ -87,7 +89,7 @@ describe('Search Endpoint Testing', () => {
     });
 
     describe('Search by Ingredient', () => {
-        const body = { ingredient: "Eigelb" };
+        const body = {ingredient: "Eigelb"};
         it('Should Return Status Code 200', async () => {
             return searchRequest(body).then(res => {
                 expect(res.status).to.be.equal(200);
@@ -115,7 +117,7 @@ describe('Search Endpoint Testing', () => {
     }
 
     describe('Search by Tag', () => {
-        const body = { tag: "Schnell" };
+        const body = {tag: "Schnell"};
         it('Should Return Status Code 200', async () => {
             return searchRequest(body).then(res => {
                 expect(res.status).to.be.equal(200);
