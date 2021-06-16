@@ -41,9 +41,11 @@ class LoginHandler {
                 email: usrMail
             },
             {
-                name: usrName,
-                email: usrMail,
-                password: hashedPw,
+                $set: {
+                    name: usrName,
+                    email: usrMail,
+                    password: hashedPw,
+                }
             }
         );
         return "success";
