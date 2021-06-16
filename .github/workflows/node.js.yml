@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ server ]
 
+env:
+  DB_CONNECTION: mongodb://4.tcp.ngrok.io:11440
+#          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+
 jobs:
   Code-Coverage:
 
@@ -21,10 +25,7 @@ jobs:
       - run: npm run coverage --prefix server
       - name: Coveralls
         uses: coverallsapp/github-action@master
-#          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: "./server/coverage/lcov.info"
           base-path: server
-      env:
-        DB_CONNECTION: mongodb://4.tcp.ngrok.io:11440
