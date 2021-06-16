@@ -7,7 +7,7 @@ on:
     branches: [ server ]
 
 jobs:
-  build:
+  Code-Coverage:
 
     runs-on: ubuntu-latest
 

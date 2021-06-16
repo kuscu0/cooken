@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
-const SearchQuery = require("../db/connections/SearchHandler");
+const SearchQuery = require("../db/connections/searchHandler");
 
 router.post("/", asyncHandler(async (req, res) => {
     const DB = req.app.get('DB');
