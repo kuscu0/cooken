@@ -108,7 +108,7 @@ class SearchHandler {
     }
 
     byTitle(recipeTitle) {
-        this.matchQuery.title = new RegExp(recipeTitle);
+        this.matchQuery.title = new RegExp(recipeTitle, "i");
     }
 
     byRating(minRating) {

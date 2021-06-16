@@ -3,6 +3,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+require('dotenv').config()
+
 
 const DBConnection = require('./db/Connection');
 
@@ -20,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
-const localDB = new DBConnection("mongodb://127.0.0.1:27017");
+const localDB = new DBConnection(process.env.DB_CONNECTION);
 
 app.set('DB', localDB);
 

@@ -6,7 +6,6 @@ const SearchQuery = require("../db/connections/SearchHandler");
 router.post("/", asyncHandler(async (req, res) => {
     const DB = req.app.get('DB');
     const searchHandler = DB.makeSearchHandler();
-    console.log(req.body)
     if (req.body.title) {
         searchHandler.byTitle(req.body.title);
     }
