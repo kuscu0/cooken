@@ -24,3 +24,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: "./server/coverage/lcov.info"
+        env:
+          DB_CONNECTION: mongodb://4.tcp.ngrok.io:11440
+#          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
