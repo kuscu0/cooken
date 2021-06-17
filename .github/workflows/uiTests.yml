@@ -27,4 +27,4 @@ jobs:
       - run: npm run build --prefix frontend
         env:
           CI: false
-      - run: npx http-server frontend/build --port 3001 &
+      - run: npx http-server-spa build index.html 3001 &
