@@ -26,7 +26,6 @@
 + scrumming
 + iterative process
 - cost estimation
-> A
 - risk
 - fill in todo
 
@@ -36,11 +35,11 @@
 
 ### Quality
 + class diagram/visual representation of code & architecture
+- TODO update architecture slides
 - DB diagram
 + architecture
 - configuration
 - automation
-> D/A
 - ci
 - (automated) testing (Feature files, unit, third)
 
