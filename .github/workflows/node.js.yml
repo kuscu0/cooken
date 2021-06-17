@@ -27,7 +27,8 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: server/coverage/lcov.info # optional
           name: codecov-cooken # optional
-#          root_dir: server
+          root_dir: server
+          working-directory: server
 #      - name: Coveralls
 #        uses: coverallsapp/github-action@master
 #        with:
