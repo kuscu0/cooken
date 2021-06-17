@@ -14,7 +14,7 @@ let authToken;
 chai.use(chaiHttp);
 
 describe('Authentication Endpoint Testing', function () {
-    this.timeout(5000);
+    this.timeout(10000);
 
     it('Should create a User', async () => {
         await chai.request(app)

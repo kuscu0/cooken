@@ -28,4 +28,3 @@ jobs:
           files: server/coverage/lcov.info
           name: codecov-cooken
           root_dir: server
-#          working-directory: server
