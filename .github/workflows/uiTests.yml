@@ -28,7 +28,7 @@ jobs:
         env:
           CI: false
       - run: npm i -g http-server-spa
-      - run: http-server-spa build index.html 3001 &
+      - run: http-server-spa frontend/build index.html 3001 &
       - name: Cypress UI Test
         uses: cypress-io/github-action@v2
         with:
