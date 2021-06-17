@@ -20,6 +20,11 @@ jobs:
           path: frontend
       - run: npm ci --prefix server/server
       - run: npm start --prefix server/server &
+        env:
+          DB_CONNECTION: mongodb://4.tcp.ngrok.io:11440
+#          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
       - run: npm ci --prefix frontend
+        env:
+          CI: false
       - run: npm run build --prefix frontend
-      - run: npx http-server frontend/build --port 3001
+      - run: npx http-server frontend/build --port 3001 &
