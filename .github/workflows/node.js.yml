@@ -7,8 +7,7 @@ on:
     branches: [ server ]
 
 env:
-  DB_CONNECTION: mongodb://4.tcp.ngrok.io:11440
-#          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+  DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
 
 jobs:
   Code-Coverage:
