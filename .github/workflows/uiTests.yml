@@ -1,0 +1,25 @@
+on:
+  push:
+    branches: [ frontend ]
+jobs:
+  UI-Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Checkout Server
+        uses: actions/checkout@v2
+        with:
+          ref: server
+          path: server
+      - name: Checkout Frontend
+        uses: actions/checkout@v2
+        with:
+          ref: frontend
+          path: frontend
+      - run: npm ci --prefix server/server
+      - run: npm start --prefix server/server &
+      - run: npm ci --prefix frontend
+      - run: npm run build --prefix frontend
+      - run: npx http-server frontend/build --port 3001

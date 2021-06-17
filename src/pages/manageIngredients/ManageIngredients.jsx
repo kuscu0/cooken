@@ -72,7 +72,6 @@ export default function ManageIngredients() {
 		setIsLoading(false);
 	}
 
-
 	const filteredIngredients = searchTerm.length > 0 || selectedCategory
 		? searchableIngredients.filter(value => value.name.toLowerCase().includes(searchTerm.toLowerCase()))
 		: [];
@@ -83,7 +82,6 @@ export default function ManageIngredients() {
 				{
 					categories.map(({_id: category}) => (
 						<button className="tile" onClick={toggleSelectCategory} data-category={category} key={category}>
-							{/*<img src={ category.imgUrl } className="image" alt={ category.title }/>*/}
 							<div className="overlay">
 								<div className="text">{category || "Sonstiges"}</div>
 							</div>

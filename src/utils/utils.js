@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useRef, useState} from "react";
 
-export const serverAddress = "http://localhost:3000";
+export const serverAddress = process.env.REACT_APP_SERVER_NAME;
 
 export async function authFetch(path, isJson, options = {}) {
     const r = await fetch(serverAddress + path, {
