@@ -27,4 +27,11 @@ jobs:
       - run: npm run build --prefix frontend
         env:
           CI: false
-      - run: npx http-server-spa build index.html 3001 &
+      - name: Cypress UI Test
+        uses: cypress-io/github-action@v2
+        with:
+          start: npx http-server-spa build index.html 3001
+          spec: frontend/cypress/**/*.test.js
+          browser: chrome
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

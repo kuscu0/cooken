@@ -1,5 +1,5 @@
 {
-  "testFiles": "**/*.test.{js,jsx}",
+  "testFiles": "**/*.test.js",
   "baseUrl": "http://localhost:3001",
   "viewportWidth": 1500,
   "viewportHeight": 900
