@@ -1,3 +1,5 @@
+name: UI Integration Tests
+
 on:
   push:
     branches: [ frontend ]
