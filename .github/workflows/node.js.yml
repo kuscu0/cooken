@@ -22,9 +22,15 @@ jobs:
           node-version: 14.x
       - run: npm ci --prefix server
       - run: npm run coverage --prefix server
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
+      - uses: codecov/codecov-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: "./server/coverage/lcov.info"
-          base-path: server
+          files: ./server/coverage/lcov.info # optional
+          name: codecov-cooken # optional
+          verbose: true # optional (default = false)
+          working-directory: server
+#      - name: Coveralls
+#        uses: coverallsapp/github-action@master
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          path-to-lcov: "./server/coverage/lcov.info"
+#          base-path: server
