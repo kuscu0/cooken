@@ -21,9 +21,9 @@ jobs:
       - run: npm ci --prefix server/server
       - run: npm start --prefix server/server &
         env:
-          DB_CONNECTION: mongodb://4.tcp.ngrok.io:11440
-#          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
       - run: npm ci --prefix frontend
+      - run: echo "REACT_APP_SERVER_NAME=${{ secrets.REACT_APP_SERVER_NAME }}" > frontend/.env
       - run: npm run build --prefix frontend
         env:
           CI: false
