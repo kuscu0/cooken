@@ -24,9 +24,8 @@ jobs:
       - run: npm run coverage --prefix server
       - uses: codecov/codecov-action@v1
         with:
-          files: ./server/coverage/lcov.info # optional
+          files: server/coverage/lcov.info # optional
           name: codecov-cooken # optional
-          verbose: true # optional (default = false)
           root_dir: server
 #      - name: Coveralls
 #        uses: coverallsapp/github-action@master
