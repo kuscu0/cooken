@@ -1,4 +1,4 @@
-name: Coveralls Sync
+name: Integration Tests
 
 on:
   push:
@@ -25,13 +25,7 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: server/coverage/lcov.info # optional
-          name: codecov-cooken # optional
+          files: server/coverage/lcov.info
+          name: codecov-cooken
           root_dir: server
           working-directory: server
-#      - name: Coveralls
-#        uses: coverallsapp/github-action@master
-#        with:
-#          github-token: ${{ secrets.GITHUB_TOKEN }}
-#          path-to-lcov: "./server/coverage/lcov.info"
-#          base-path: server
