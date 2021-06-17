@@ -36,6 +36,7 @@
 
 ### Quality
 + class diagram/visual representation of code & architecture
+- DB diagram
 + architecture
 - configuration
 - automation
@@ -44,7 +45,6 @@
 - (automated) testing (Feature files, unit, third)
 
 # Written Hand-in
-
 - Blog
 - 29.06.
 - links to
