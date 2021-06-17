@@ -22,7 +22,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
-console.log("DB_CON:", process.env.DB_CONNECTION)
 const localDB = new DBConnection(process.env.DB_CONNECTION);
 
 app.set('DB', localDB);
