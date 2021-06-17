@@ -27,7 +27,7 @@ jobs:
           files: ./server/coverage/lcov.info # optional
           name: codecov-cooken # optional
           verbose: true # optional (default = false)
-          working-directory: server
+#          working-directory: server
 #      - name: Coveralls
 #        uses: coverallsapp/github-action@master
 #        with:
