@@ -29,6 +29,8 @@
 - risk
 - fill in todo
 
+> A
+
 ### Technical ability
 + demo
 - extend of functionality
@@ -39,9 +41,9 @@
 - DB diagram
 + architecture
 - configuration
-- automation
-- ci
-- (automated) testing (Feature files, unit, third)
++ automation
++ ci
++ (automated) testing (Feature files, unit, third)
 
 # Written Hand-in
 - Blog
