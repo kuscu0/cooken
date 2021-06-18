@@ -25,5 +25,5 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: server/coverage/lcov.info
+          files: coverage/lcov.info
           name: codecov-cooken

@@ -4,6 +4,6 @@
 desktop.ini
 node_modules/
 server/misc/tmpRawRecipes
-server/coverage
-server/.nyc_output
+coverage
+.nyc_output
 .env

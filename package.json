@@ -6,8 +6,8 @@
     "start": "node ./server/bin/www",
     "start-dev": "nodemon ./server/bin/www",
     "watch": "nodemon ./server/bin/www",
-    "test": "mocha --exit",
-    "coverage": "nyc --reporter lcov mocha --exit"
+    "test": "mocha server/**/*.test.js --exit",
+    "coverage": "nyc --reporter lcov mocha server/**/*.test.js --exit"
   },
   "nyc": {
     "all": true,
