@@ -20,8 +20,8 @@ jobs:
         with:
           ref: frontend
           path: frontend
-      - run: npm ci --prefix server/server
-      - run: npm start --prefix server/server &
+      - run: npm ci --prefix server
+      - run: npm start --prefix server &
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
       - run: npm ci --prefix frontend
