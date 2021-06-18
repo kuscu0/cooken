@@ -2,7 +2,8 @@
 .vscode
 
 desktop.ini
-server/node_modules/
+node_modules/
 server/misc/tmpRawRecipes
 server/coverage
 server/.nyc_output
+.env

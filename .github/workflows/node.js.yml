@@ -20,11 +20,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - run: npm ci --prefix server
-      - run: npm run coverage --prefix server
+      - run: npm ci
+      - run: npm run coverage
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: server/coverage/lcov.info
           name: codecov-cooken
-          root_dir: server
