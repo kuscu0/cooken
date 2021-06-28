@@ -36,7 +36,8 @@ A logged in user can save and unsave recipes. Saved recipes can be listed on a p
 ![activity-diagram](activity-diagram.jpg)
 
 ### .feature File
---
+
+[Link](../../features/manage_saved_recipes.feature)
 
 ## 2.2 Alternative Flows
 --

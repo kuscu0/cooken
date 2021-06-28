@@ -22,7 +22,8 @@ With this use case the user can search for recipes. Recipes displayed in the res
 ![activity-diagram](activity-diagram.jpg)
 
 ### .feature File
---
+
+[Link](../../features/find_recipes.feature)
 
 ## 2.2 Alternative Flows
 --

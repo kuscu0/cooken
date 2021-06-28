@@ -22,7 +22,8 @@ A logged in user can add comments to a recipe.
 ![activity-diagram](activity-diagram.jpg)
 
 ### .feature File
---
+
+[Link](../../features/comment_on_recipe.feature)
 
 ## 2.2 Alternative Flows
 --

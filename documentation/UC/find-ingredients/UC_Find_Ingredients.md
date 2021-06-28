@@ -24,7 +24,8 @@ With this use case the user can quickly find ingredients. These ingredients are 
 ![activity-diagram](activity-diagram.jpg)
 
 ### .feature File
---
+
+[Link](../../features/find_ingredients.feature)
 
 ## 2.2 Alternative Flows
 --

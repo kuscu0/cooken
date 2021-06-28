@@ -24,7 +24,8 @@ Users can add and remove ingredients from a predefined list. Added ingredient wi
 ![activity-diagram](activity-diagram.jpg)
 
 ### .feature File
---
+
+[Link](../../features/manage_ingredient_inventory.feature)
 
 ## 2.2 Alternative Flows
 --
