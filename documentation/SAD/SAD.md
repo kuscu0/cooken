@@ -84,32 +84,27 @@ MongoDB is used to store our data. MongoDB allows easy storing and accessing of 
 
 ## 5. Logical View
 ### 5.1 Overview
+#### Backend
+![UML](uml_cropped.png)
+#### Frontend
 ![Dependency diagram](dependency_diagram.png)
-### 5.2 Architecturally Significant Design Packages
-n/a
 
 ## 6. Process View
 
-TODO
+n/a
 
 ## 7. Deployment View
 
-TODO
+n/a
 
 ## 8. Data View
 
-### Backend classes
-
-![Backend classes](DBConnection_ClassDiagram.jpg)
-
-### Database
-
-![Database View](db.png)
+![Database View](db2.png)
 
 ## 9. Size and Performance
 
-TODO
+n/a
 
 ## 10. Quality
 
-TODO
+n/a
